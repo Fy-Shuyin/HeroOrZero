@@ -1,0 +1,384 @@
+fileFormatVersion: 2
+guid: 1be4ff3ad49204c538412db776299d9a
+timeCreated: 1465365671
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Dinosaur_Egg
+    100002: //RootNode
+    100004: joint_belly
+    100006: joint_body
+    100008: joint_chest
+    100010: joint_head
+    100012: joint_L_arm1
+    100014: joint_L_arm2
+    100016: joint_L_arm3
+    100018: joint_L_finger1
+    100020: joint_L_finger2
+    100022: joint_L_finger3
+    100024: joint_L_finger4
+    100026: joint_L_finger5
+    100028: joint_L_finger6
+    100030: joint_L_foot1
+    100032: joint_L_foot2
+    100034: joint_L_hand1
+    100036: joint_L_hand2
+    100038: joint_L_hand3
+    100040: joint_L_leg1
+    100042: joint_L_leg2
+    100044: joint_R_arm1
+    100046: joint_R_arm2
+    100048: joint_R_arm3
+    100050: joint_R_finger1
+    100052: joint_R_finger2
+    100054: joint_R_finger3
+    100056: joint_R_finger4
+    100058: joint_R_finger5
+    100060: joint_R_finger6
+    100062: joint_R_foot1
+    100064: joint_R_foot2
+    100066: joint_R_hand1
+    100068: joint_R_hand2
+    100070: joint_R_hand3
+    100072: joint_R_leg1
+    100074: joint_R_leg2
+    100076: joint_tail1
+    100078: joint_tail2
+    100080: joint_tail3
+    100082: joint_tail4
+    400000: Dinosaur_Egg
+    400002: //RootNode
+    400004: joint_belly
+    400006: joint_body
+    400008: joint_chest
+    400010: joint_head
+    400012: joint_L_arm1
+    400014: joint_L_arm2
+    400016: joint_L_arm3
+    400018: joint_L_finger1
+    400020: joint_L_finger2
+    400022: joint_L_finger3
+    400024: joint_L_finger4
+    400026: joint_L_finger5
+    400028: joint_L_finger6
+    400030: joint_L_foot1
+    400032: joint_L_foot2
+    400034: joint_L_hand1
+    400036: joint_L_hand2
+    400038: joint_L_hand3
+    400040: joint_L_leg1
+    400042: joint_L_leg2
+    400044: joint_R_arm1
+    400046: joint_R_arm2
+    400048: joint_R_arm3
+    400050: joint_R_finger1
+    400052: joint_R_finger2
+    400054: joint_R_finger3
+    400056: joint_R_finger4
+    400058: joint_R_finger5
+    400060: joint_R_finger6
+    400062: joint_R_foot1
+    400064: joint_R_foot2
+    400066: joint_R_hand1
+    400068: joint_R_hand2
+    400070: joint_R_hand3
+    400072: joint_R_leg1
+    400074: joint_R_leg2
+    400076: joint_tail1
+    400078: joint_tail2
+    400080: joint_tail3
+    400082: joint_tail4
+    4300000: Dinosaur_Egg
+    7400000: Idle
+    7400002: Run
+    9500000: //RootNode
+    13700000: Dinosaur_Egg
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Dinosaur_Egg
+        weight: 1
+      - path: joint_body
+        weight: 1
+      - path: joint_body/joint_belly
+        weight: 1
+      - path: joint_body/joint_belly/joint_L_leg1
+        weight: 1
+      - path: joint_body/joint_belly/joint_L_leg1/joint_L_leg2
+        weight: 1
+      - path: joint_body/joint_belly/joint_L_leg1/joint_L_leg2/joint_L_foot1
+        weight: 1
+      - path: joint_body/joint_belly/joint_L_leg1/joint_L_leg2/joint_L_foot1/joint_L_foot2
+        weight: 1
+      - path: joint_body/joint_belly/joint_R_leg1
+        weight: 1
+      - path: joint_body/joint_belly/joint_R_leg1/joint_R_leg2
+        weight: 1
+      - path: joint_body/joint_belly/joint_R_leg1/joint_R_leg2/joint_R_foot1
+        weight: 1
+      - path: joint_body/joint_belly/joint_R_leg1/joint_R_leg2/joint_R_foot1/joint_R_foot2
+        weight: 1
+      - path: joint_body/joint_chest
+        weight: 1
+      - path: joint_body/joint_chest/joint_head
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand1
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand1/joint_L_finger1
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand1/joint_L_finger1/joint_L_finger2
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand2
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand2/joint_L_finger3
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand2/joint_L_finger3/joint_L_finger4
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand3
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand3/joint_L_finger5
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand3/joint_L_finger5/joint_L_finger6
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand1
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand1/joint_R_finger1
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand1/joint_R_finger1/joint_R_finger2
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand2
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand2/joint_R_finger3
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand2/joint_R_finger3/joint_R_finger4
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand3
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand3/joint_R_finger5
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand3/joint_R_finger5/joint_R_finger6
+        weight: 1
+      - path: joint_body/joint_tail1
+        weight: 1
+      - path: joint_body/joint_tail1/joint_tail2
+        weight: 1
+      - path: joint_body/joint_tail1/joint_tail2/joint_tail3
+        weight: 1
+      - path: joint_body/joint_tail1/joint_tail2/joint_tail3/joint_tail4
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Run
+      takeName: Take 001
+      firstFrame: 91
+      lastFrame: 130
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Dinosaur_Egg
+        weight: 1
+      - path: joint_body
+        weight: 1
+      - path: joint_body/joint_belly
+        weight: 1
+      - path: joint_body/joint_belly/joint_L_leg1
+        weight: 1
+      - path: joint_body/joint_belly/joint_L_leg1/joint_L_leg2
+        weight: 1
+      - path: joint_body/joint_belly/joint_L_leg1/joint_L_leg2/joint_L_foot1
+        weight: 1
+      - path: joint_body/joint_belly/joint_L_leg1/joint_L_leg2/joint_L_foot1/joint_L_foot2
+        weight: 1
+      - path: joint_body/joint_belly/joint_R_leg1
+        weight: 1
+      - path: joint_body/joint_belly/joint_R_leg1/joint_R_leg2
+        weight: 1
+      - path: joint_body/joint_belly/joint_R_leg1/joint_R_leg2/joint_R_foot1
+        weight: 1
+      - path: joint_body/joint_belly/joint_R_leg1/joint_R_leg2/joint_R_foot1/joint_R_foot2
+        weight: 1
+      - path: joint_body/joint_chest
+        weight: 1
+      - path: joint_body/joint_chest/joint_head
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand1
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand1/joint_L_finger1
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand1/joint_L_finger1/joint_L_finger2
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand2
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand2/joint_L_finger3
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand2/joint_L_finger3/joint_L_finger4
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand3
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand3/joint_L_finger5
+        weight: 1
+      - path: joint_body/joint_chest/joint_L_arm1/joint_L_arm2/joint_L_arm3/joint_L_hand3/joint_L_finger5/joint_L_finger6
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand1
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand1/joint_R_finger1
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand1/joint_R_finger1/joint_R_finger2
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand2
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand2/joint_R_finger3
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand2/joint_R_finger3/joint_R_finger4
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand3
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand3/joint_R_finger5
+        weight: 1
+      - path: joint_body/joint_chest/joint_R_arm1/joint_R_arm2/joint_R_arm3/joint_R_hand3/joint_R_finger5/joint_R_finger6
+        weight: 1
+      - path: joint_body/joint_tail1
+        weight: 1
+      - path: joint_body/joint_tail1/joint_tail2
+        weight: 1
+      - path: joint_body/joint_tail1/joint_tail2/joint_tail3
+        weight: 1
+      - path: joint_body/joint_tail1/joint_tail2/joint_tail3/joint_tail4
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
