@@ -23,7 +23,7 @@ public class EnemyMove : EnemyIState
 		TargetVector = Enemy.AttackTarget.transform.position;
 		if (Vector3.Distance (EnemyVector, TargetVector) < Enemy.AttackRange) 
 		{
-			Enemy.ChangeState (new EnemySoldierAttack());
+			Enemy.ChangeState (new EnemySoldierThink());
 			return;
 		}
 		Enemy.Move (TargetVector);

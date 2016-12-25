@@ -58,7 +58,7 @@ public class CharacterAttribute {
 		//weaponSound = "";				
 		attackType 	= 0;				
 		attackSpeed	= 2.2f;			
-		attackRange = 4f;			
+		attackRange = 5f;			
 		experience	= 0;				
 		leaderShip	= 10;			
 		healthPower = 550;			
@@ -95,7 +95,7 @@ public class CharacterAttribute {
 		//weaponSound = "";					
 		attackType 	= 0;				
 		attackSpeed	= 2.2f;			
-		attackRange = 4f;			
+		attackRange = 5f;			
 		healthPower = 300;			
 		healthPowerAdditional = 0;	
 		attack = 30;					
@@ -119,10 +119,10 @@ public class CharacterAttribute {
 	/// <summary>
 	/// EnemySkillInitialize
 	/// </summary>
-	public void SkillsInitialize(ArrayList activeSkillSelect , ArrayList passiveSkillSelect)
+	public void SkillsInitialize(ref ArrayList activeSkillSelect , ref ArrayList passiveSkillSelect)
 	{
 		activeSkillSelect = new ArrayList();
-		activeSkillSelect = null;
+		activeSkillSelect.Add("NetherJianqi");
 		passiveSkillSelect = new ArrayList();
 		passiveSkillSelect = null;
 	}
@@ -133,9 +133,7 @@ public class CharacterAttribute {
 	public void SkillsInitialize(ArrayList activeSkill , ArrayList activeSkillSelect , ArrayList passiveSkill , ArrayList passiveSkillSelect)
 	{
 		activeSkill = new ArrayList ();
-		activeSkill [0] = "NetherJianqi";
 		activeSkillSelect = new ArrayList ();
-		activeSkillSelect [0] = "NetherJianqi";
 		passiveSkill = new ArrayList ();
 		passiveSkill = null;
 		passiveSkillSelect = new ArrayList ();

@@ -24,7 +24,8 @@ public class HeroChase : HeroIState
 		}
 		if (!Hero.Patterns.TargetIsLife (Hero.AttackTarget)) 
 		{
-			Hero.Target ();
+			Hero.AttackTarget = null;
+			return;
 		}
 		HeroVector = Hero.gameObject.transform.position;
 		TargetVector = Hero.AttackTarget.transform.position;

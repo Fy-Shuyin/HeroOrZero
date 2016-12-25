@@ -5,7 +5,7 @@ public class EnemyController : MonoBehaviour {
 
 	EnemyIState Enemy_State;
 	CharacterAttribute Attribute;
-	public PatternsOfThinking Patterns;
+	public PatternsOfAttribute Patterns;
 
 	public NavMeshAgent EnemyAgent;
 	public Animation EnemyAnimator;
@@ -14,11 +14,13 @@ public class EnemyController : MonoBehaviour {
 	public string TargetTag;			//目标类型
 	public string Type;					//怪物类型
 	public string CharacterName;		//人物名稱
+	public string CharacterType;		//人物性格
 	public GameObject WeaponSound;		//武器声音
 	public int AttackType;				//攻击方式	true 近		false 远
 	public float AttackSpeed;			//攻击速度
 	public float AttackCooldown;		//攻击冷却
 	public float AttackRange;			//攻击距离
+	public int HealthPowerMax;			//最大生命值
 	public int HealthPower;				//生命值
 	public int HealthPowerAdditional;	//追加生命值
 	public float Attack;				//物理攻击力
@@ -42,6 +44,7 @@ public class EnemyController : MonoBehaviour {
 	public ArrayList ActiveSkillSelect;	//选择的主动技能
 	public ArrayList PassiveSkillSelect;//选择的被动技能
 
+	public int Command;
 	public GameObject AttackTarget;
 	bool isSkill;
 
@@ -50,7 +53,7 @@ public class EnemyController : MonoBehaviour {
 		EnemyAgent = GetComponent<NavMeshAgent> ();
 		EnemyAnimator = GetComponent<Animation> ();
 
-		Patterns = new PatternsOfThinking ();
+		Patterns = new PatternsOfAttribute ();
 		Attribute = new CharacterAttribute ();
 		Type = gameObject.name.Substring (gameObject.name.IndexOf ("_") + 1).ToUpper();
 		Attribute.AttributeInitialize (Type , ref CharacterName , ref WeaponSound , ref AttackType , ref AttackSpeed , ref AttackRange , ref HealthPower , ref HealthPowerAdditional ,
@@ -111,9 +114,7 @@ public class EnemyController : MonoBehaviour {
 		GameObject resolution = Instantiate (prefab) as GameObject;
 		resolution.transform.position = point;
 		var attackResolution = resolution.GetComponent<AttackResolution> ();
-		attackResolution.setAttAttr (isSkill , TargetTag, Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
-		var rigidboby = resolution.GetComponent<Rigidbody>();
-		rigidboby.AddForce (gameObject.transform.forward * 200f);
+		attackResolution.setAttAttr (TargetTag, gameObject.transform.position , AttackTarget , AttackType , AttackSpeed ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
 	}
 
 	void Death()

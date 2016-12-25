@@ -7,60 +7,66 @@ public class AttackResolution : MonoBehaviour {
 	public string Effect;
 	public float EffectTime;
 	public Vector3 TriggerPoint;
-	public Vector3 TargetPoint;
+	public GameObject Target;
 	public string TargetTag;
-	public bool IsFly;					//是否飛行
+	public int AttackType;					//是否飛行
 	public float Speed;					//飛行速度
 	public float Attack;				//物理攻击力
 	public float Hit;					//命中率
 	public float Critical;				//暴击率
 	public float TargetDefence;			//目标防御
 	public float TargetDodge;			//目标闪避
-
+	public bool Action;
 
 	void Start () 
 	{
-		Destroy(gameObject,1f);
+		Destroy(gameObject,1.5f);
 	}
 	
 	void Update () 
 	{
-		if (!isSkill) 
+		if (Action) 
 		{
-			
-		}
-		else 
-		{
-			if (IsFly) 
+			Vector3 vector = (Target.transform.position - TriggerPoint).normalized;
+			if (AttackType == 1)
 			{
-
-			} else 
+				vector *= Speed * 2 * Time.deltaTime;
+			} 
+			else
 			{
+				vector *= 3 * Time.deltaTime;
 			}
+			gameObject.transform.Translate (vector);
 		}
 	}
-	public void setAttAttr(bool isSkill , string targetTag , float att , float hit , float cri)
+	public void setAttAttr(string targetTag ,  Vector3 triggerPoint , GameObject target , int attackType , float speed , float att , float hit , float cri)
 	{
-		this.isSkill = isSkill;
+		this.isSkill = false;
+		this.AttackType = attackType;
+		this.Speed = speed;
 		this.TargetTag = targetTag;
+		this.TriggerPoint = triggerPoint;
+		this.Target = target;
 		this.Attack = att;
 		this.Hit = hit;
 		this.Critical = cri;
+		this.Action = true;
 	}
 
-	public void setSkillAttr(bool isSkill , string targetTag , Vector3 triggerPoint , Vector3 targetPoint , string eft , float eftTime , bool isFly , float speed , float att , float hit , float cri)
+	public void setSkillAttr(string targetTag , Vector3 triggerPoint , GameObject target , string eft , float eftTime , int attackType , float speed , float att , float hit , float cri)
 	{
-		this.isSkill = isSkill;
+		this.isSkill = true;
 		this.TargetTag = targetTag;
 		this.TriggerPoint = triggerPoint;
-		this.TargetPoint = targetPoint;
+		this.Target = target;
 		this.Effect = eft;
 		this.EffectTime = eftTime;
-		this.IsFly = isFly;
+		this.AttackType = attackType;
 		this.Speed = speed;
 		this.Attack = att;
 		this.Hit = hit;
 		this.Critical = cri;
+		this.Action = true;
 	}
 
 	void OnTriggerEnter(Collider collider)
@@ -73,13 +79,13 @@ public class AttackResolution : MonoBehaviour {
 
 		}
 
-		if (collider.tag == "Field")
+		if (collider.tag == "Guardian")
 		{
 			Destroy(gameObject);
 			loadEffect (collider.transform.position , Effect , EffectTime);
 		}
 
-		if (collider.tag == TargetTag)
+		if (collider.tag == TargetTag && collider.tag != "Guardian")
 		{
 			Destroy(gameObject);
 			if (isSkill) 

@@ -18,10 +18,17 @@ public class SceneBattle : MonoBehaviour {
 	public int EnemyLoadNum;
 	float LoadRepeat;
 	bool cameraON; 
+	Vector3[] point;
 
 	void Awake()
 	{
 		Battle_Camera = GameObject.Find ("Camera"); 
+
+		point = new Vector3[4];
+		point [0] = GameObject.Find ("StartPosition").transform.position;
+		point [1] = GameObject.Find ("StandbyPosition (1)").transform.position;
+		point [2] = GameObject.Find ("StandbyPosition (2)").transform.position;
+		point [3] = GameObject.Find ("StandbyPosition (3)").transform.position;
 
 		EnemyLoadName = "Enemy_Wolf";
 		EnemyLoadNum = 7;
@@ -31,8 +38,8 @@ public class SceneBattle : MonoBehaviour {
 	{
 		var prefab = Resources.Load ("Heros/Swordman");
 		Hero_One = Instantiate (prefab) as GameObject;
-		Hero_One.transform.position = new Vector3 (-0.7f,0f,-15.6f);
-		Hero_One.AddComponent<NetherJianqi> ();
+		Hero_One.transform.position = point [0];
+		Hero_One.GetComponent<HeroController> ().HeroAgent.SetDestination (point [1]);
 	}
 
 	void Update () 

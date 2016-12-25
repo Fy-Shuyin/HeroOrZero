@@ -6,7 +6,7 @@ public class FriendController : MonoBehaviour {
 	FriendIState FriendState;
 
 	public ArrayList AttributeList;
-	public GameObject TargetEGG;		//攻击目标
+	public GameObject Leader;			//頭領
 	public string TargetTag;			//目标类型
 	public string Type;					//类型
 	public string CharacterName;		//人物名稱
@@ -15,6 +15,7 @@ public class FriendController : MonoBehaviour {
 	public float AttackSpeed;			//攻击速度
 	public float AttackCooldown;		//攻击冷却
 	public float AttackRange;			//攻击距离
+	public int HealthPowerMax;			//最大生命值
 	public int HealthPower;				//生命值
 	public int HealthPowerAdditional;	//追加生命值
 	public float Attack;				//物理攻击力
@@ -36,6 +37,8 @@ public class FriendController : MonoBehaviour {
 
 	public ArrayList ActiveSkillSelect;	//选择的主动技能
 	public ArrayList PassiveSkillSelect;//选择的被动技能
+
+	public GameObject AttackTarget;
 
 	// Use this for initialization
 	void Start () {

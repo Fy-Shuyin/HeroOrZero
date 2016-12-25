@@ -6,7 +6,9 @@ public class HeroController : MonoBehaviour
 	HeroIState Hero_State;
 	FingerEvent FingerEvent;
 	CharacterAttribute Attribute;
-	public PatternsOfThinking Patterns;
+	public PatternsOfAttribute Patterns;
+	public PatternsOfCharacter Character;
+	public PatternsOfSkills Skills;
 
 	public NavMeshAgent HeroAgent;
 	public Animator HeroAnimator;
@@ -16,12 +18,14 @@ public class HeroController : MonoBehaviour
 	Vector3 TouchPosition;
 
 	public string CharacterName;		//人物名稱
+	public string CharacterType;		//人物性格
 	public GameObject WeaponSound;		//武器声音
 	public float Experience;			//经验值
 	public int LeaderShip;				//统帅力
-	public int AttackType;				//攻击方式	true 近		false 远
+	public int AttackType;				//攻击方式	0 近		1 远
 	public float AttackSpeed;			//攻击速度
 	public float AttackRange;			//攻击距离
+	public int HealthPowerMax;			//最大生命值
 	public int HealthPower;				//生命值
 	public int HealthPowerAdditional;	//追加生命值
 	public float Attack;				//物理攻击力
@@ -49,11 +53,12 @@ public class HeroController : MonoBehaviour
 
 	public string[] Friends;			//友軍
 	public int[]	FriendsNumber;		//友軍數量
+	public int 		Command;			//命令
 
+	public Vector3 MovePoint;			//移动地点
 	public GameObject AttackTarget;		//攻击目标
 	public string AttackTargetTag;		//目标类型
 	public float AttackCooldown;		//攻擊冷卻
-	bool isSkill;
 	string Type;
 
 	void Start () 
@@ -62,16 +67,23 @@ public class HeroController : MonoBehaviour
 		HeroAnimator = GetComponent<Animator> ();
 
 		FingerEvent = new FingerEvent ();
-		Patterns = new PatternsOfThinking ();
+
 		Attribute = new CharacterAttribute ();
+		Patterns = new PatternsOfAttribute ();
+		Character = new PatternsOfCharacter ();
+		Skills = new PatternsOfSkills ();
+
+		IsLife = true;
 		Type = gameObject.name.ToUpper();
 		Attribute.AttributeInitialize (Type , ref CharacterName , ref WeaponSound , ref AttackType , ref AttackSpeed , ref AttackRange , 
 			ref Experience , ref LeaderShip , ref HealthPower , ref HealthPowerAdditional , ref Attack , ref AttackAdditional , 
 			ref Defence , ref DefenceAdditional , ref Dexterity , ref DexterityAdditional , ref Hit , ref HitAdditional , ref Agility , ref AgilityAdditional ,
 			ref Dodge , ref DodgeAdditional , ref Critical , ref CriticalAdditional , ref MoveSpeed , ref SightRange);
+		CharacterType = Character.CharcterType (gameObject, 1);
+		HealthPowerMax = HealthPower + HealthPowerAdditional;
 		HeroAgent.speed = MoveSpeed/60f;
-		IsLife = true;
-
+		Attribute.SkillsInitialize (ref ActiveSkillSelect,ref PassiveSkillSelect);
+		Skills.setSkills (gameObject, ActiveSkillSelect);
 		AttackTarget = null;
 		AImode = true;
 
@@ -87,7 +99,6 @@ public class HeroController : MonoBehaviour
 		}
 		if (AImode == false) 
 		{
-			TouchPosition = gameObject.transform.position;
 			Manual ();
 		}
 		Death ();
@@ -141,18 +152,20 @@ public class HeroController : MonoBehaviour
 		}
 	}
 
+	public void movePoint(Vector3 point)
+	{
+		HeroAgent.SetDestination (point);
+	}
+
 	public void runAttack()
 	{
-		isSkill = false;
 		Vector3 point = gameObject.transform.position;
 		point.y += 2f;
 		var prefab = Resources.Load ("AttackResolution");
 		GameObject resolution = Instantiate (prefab) as GameObject;
 		resolution.transform.position = point;
 		var attackResolution = resolution.GetComponent<AttackResolution> ();
-		attackResolution.setAttAttr (isSkill , AttackTargetTag, Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
-		var rigidboby = resolution.GetComponent<Rigidbody>();
-		rigidboby.AddForce (gameObject.transform.forward * 200f);
+		attackResolution.setAttAttr (AttackTargetTag, gameObject.transform.position , AttackTarget , AttackType , AttackSpeed ,Attack + AttackAdditional , Hit + HitAdditional, Critical + CriticalAdditional);
 	}
 
 	public void Death()
