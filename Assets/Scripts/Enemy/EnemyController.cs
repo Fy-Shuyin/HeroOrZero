@@ -65,6 +65,11 @@ public class EnemyController : MonoBehaviour {
 		TargetEGG = GameObject.FindGameObjectWithTag ("Guardian");
 		AttackTarget = TargetEGG;
 
+		//var prefab = Resources.Load<GameObject> ("UI/CharacterHpBar");
+		//var hpBarObject = GameObject.Instantiate<GameObject> (prefab);
+		//var hpBar = hpBarObject.GetComponent<CharacterHpBar> ();
+		//hpBar.Initialize (gameObject);
+
 		Enemy_State = new EnemyMove ();
 		Enemy_State.Enter (this);
 	}

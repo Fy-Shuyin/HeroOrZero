@@ -28,7 +28,7 @@ public class PatternsOfThinking
 	public int FriendHPAverage(GameObject obj)
 	{
 		int average = 0;
-		ArrayList friends = attribute.AlliesFriend (obj);
+		ArrayList friends = attribute.AlliesFriend (obj , 0);
 		ArrayList HP = new ArrayList ();
 		if (friends.Count > 0) 
 		{

@@ -19,10 +19,10 @@ public class PatternsOfAttribute
 		string Tag = obj.gameObject.tag;
 		int Layer = 1 << LayerMask.NameToLayer (Tag);
 		Collider[] cols = Physics.OverlapSphere(obj.transform.position, range, Layer);
-		return cols.Length;
+		return cols.Length - 1;
 	}
 
-	public ArrayList AlliesFriend(GameObject obj)
+	public ArrayList AlliesFriend(GameObject obj , float range)
 	{
 		ArrayList friend = new ArrayList ();
 		string Tag = obj.gameObject.tag;
@@ -30,12 +30,19 @@ public class PatternsOfAttribute
 		Collider[] cols = Physics.OverlapSphere(obj.transform.position, 100, Layer);
 		foreach (Collider col in cols) 
 		{
-			if (col.gameObject.GetComponent<FriendController> () != null) 
+			if (range == 0) 
 			{
-				if (col.gameObject.GetComponent<FriendController> ().Leader.Equals (obj)) 
+				if (col.gameObject.GetComponent<FriendController> () != null) 
 				{
-					friend.Add (col.gameObject);
-				}
+					if (col.gameObject.GetComponent<FriendController> ().Leader.Equals (obj)) 
+					{
+						friend.Add (col.gameObject);
+					}
+				}	
+			}
+			else 
+			{
+				friend.Add (col.gameObject);
 			}
 		}
 		return friend;
@@ -217,11 +224,11 @@ public class PatternsOfAttribute
 	{
 		if (obj.tag.Equals ("Ally")) 
 		{
-			value = obj.GetComponent<HeroController> ().Command = value;
+			obj.GetComponent<HeroController> ().Command = value;
 		} 
 		else if (obj.tag.Equals ("Enemy")) 
 		{
-			value = obj.GetComponent<EnemyController> ().Command = value;
+			obj.GetComponent<EnemyController> ().Command = value;
 		}
 	}
 
@@ -621,5 +628,28 @@ public class PatternsOfAttribute
 		{
 			target.GetComponent<EnemyController> ().AttackTarget = obj.GetComponent<EnemyController> ().AttackTarget;
 		}
+	}
+
+	public Animator getAllyAnimator(GameObject obj)
+	{
+		Animator animator = new Animator();
+		if (obj.transform.tag == "Ally") 
+		{
+			if (obj.GetComponent<HeroController> () != null)
+				animator = obj.GetComponent<HeroController> ().HeroAnimator;
+			else
+				animator = obj.GetComponent<FriendController> ().FriendAnimator;
+		}
+		return animator;
+	}
+
+	public Animation getEnemyAnimator(GameObject obj)
+	{
+		Animation animation = new Animation();
+		if (obj.transform.tag == "Enemy") 
+		{
+			animation = obj.GetComponent<EnemyController> ().EnemyAnimator;
+		}
+		return animation;
 	}
 }

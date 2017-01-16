@@ -2,18 +2,13 @@
 using System.Collections;
 
 public class SceneStart : MonoBehaviour {
-
-	float AlphaTime;
-	float time;
-
-	void Update () 
+	
+	void Update ()
 	{
-		if (AlphaTime <= 0) 
-			time = 1;
-		if (AlphaTime >= 5)
-			time = -1;
-		AlphaTime -= time * Time.deltaTime;
-
+		if (Input.GetKeyDown(KeyCode.Mouse0))
+		{
+			LoadStage.Globe.loadName = 1;
+			Application.LoadLevel(1);
+		}
 	}
-		
 }

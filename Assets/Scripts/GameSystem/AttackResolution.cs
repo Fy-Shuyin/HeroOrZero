@@ -9,7 +9,8 @@ public class AttackResolution : MonoBehaviour {
 	public Vector3 TriggerPoint;
 	public GameObject Target;
 	public string TargetTag;
-	public int AttackType;					//是否飛行
+	public int AttackType;				//是否飛行
+	public int SkillType;				//单体 群体
 	public float Speed;					//飛行速度
 	public float Attack;				//物理攻击力
 	public float Hit;					//命中率
@@ -18,25 +19,28 @@ public class AttackResolution : MonoBehaviour {
 	public float TargetDodge;			//目标闪避
 	public bool Action;
 
-	void Start () 
-	{
-		Destroy(gameObject,1.5f);
-	}
-	
 	void Update () 
 	{
+		if (Target == null || TriggerPoint == null) 
+		{
+			Action = false;
+		}
 		if (Action) 
 		{
 			Vector3 vector = (Target.transform.position - TriggerPoint).normalized;
-			if (AttackType == 1)
+			if (isSkill) 
 			{
-				vector *= Speed * 2 * Time.deltaTime;
+				if (AttackType == 1 && SkillType == 1)
+				{
+					vector *= Speed * 2 * Time.deltaTime;
+					gameObject.transform.position += vector;
+				}
 			} 
 			else
 			{
 				vector *= 3 * Time.deltaTime;
+				gameObject.transform.position += vector;
 			}
-			gameObject.transform.Translate (vector);
 		}
 	}
 	public void setAttAttr(string targetTag ,  Vector3 triggerPoint , GameObject target , int attackType , float speed , float att , float hit , float cri)
@@ -51,9 +55,10 @@ public class AttackResolution : MonoBehaviour {
 		this.Hit = hit;
 		this.Critical = cri;
 		this.Action = true;
+		Destroy(gameObject,1.5f);
 	}
 
-	public void setSkillAttr(string targetTag , Vector3 triggerPoint , GameObject target , string eft , float eftTime , int attackType , float speed , float att , float hit , float cri)
+	public void setSkillAttr(string targetTag , Vector3 triggerPoint , GameObject target , string eft , float eftTime , int attackType , int skillType , float speed , float att , float hit , float cri)
 	{
 		this.isSkill = true;
 		this.TargetTag = targetTag;
@@ -62,6 +67,7 @@ public class AttackResolution : MonoBehaviour {
 		this.Effect = eft;
 		this.EffectTime = eftTime;
 		this.AttackType = attackType;
+		this.SkillType = skillType;
 		this.Speed = speed;
 		this.Attack = att;
 		this.Hit = hit;
@@ -71,10 +77,30 @@ public class AttackResolution : MonoBehaviour {
 
 	void OnTriggerEnter(Collider collider)
 	{
+		if (collider.tag == "Finish")
+		{
+			Destroy(gameObject);
+			if (isSkill) 
+			{
+				if (Effect != null) 
+				{
+					loadEffect (collider , Effect , EffectTime);
+				}
+			}
+			//图标 文字生成
+
+		}
+
 		if (collider.tag == "Field")
 		{
 			Destroy(gameObject);
-			loadEffect (collider.transform.position , Effect , EffectTime);
+			if (isSkill) 
+			{
+				if (Effect != null) 
+				{
+					loadEffect (collider , Effect , EffectTime);
+				}
+			}
 			//图标 文字生成
 
 		}
@@ -82,17 +108,26 @@ public class AttackResolution : MonoBehaviour {
 		if (collider.tag == "Guardian")
 		{
 			Destroy(gameObject);
-			loadEffect (collider.transform.position , Effect , EffectTime);
-		}
-
-		if (collider.tag == TargetTag && collider.tag != "Guardian")
-		{
-			Destroy(gameObject);
 			if (isSkill) 
 			{
 				if (Effect != null) 
 				{
-					loadEffect (collider.transform.position , Effect , EffectTime);
+					loadEffect (collider , Effect , EffectTime);
+				}
+			}
+		}
+
+		if (collider.tag == TargetTag && collider.tag != "Guardian")
+		{
+			if (SkillType <= 1) 
+			{
+				Destroy(gameObject);
+			}
+			if (isSkill) 
+			{
+				if (Effect != null) 
+				{
+					loadEffect (collider , Effect , EffectTime);
 				}
 			}
 			if (TargetTag == "Ally") 
@@ -123,12 +158,12 @@ public class AttackResolution : MonoBehaviour {
 				}
 
 				int damage = (int)(Attack - TargetDefence);
+				if (damage <= 0) 
+				{
+					damage = 1;
+				}
 				if (TargetTag == "Ally") 
 				{
-					if (damage <= 0) 
-					{
-						damage = 1;
-					}
 					Component com = collider.GetComponent<HeroController> ();
 					if (com != null) 
 					{
@@ -147,13 +182,18 @@ public class AttackResolution : MonoBehaviour {
 		}
 	}
 
-	void loadEffect(Vector3 Point , string eftName , float destroyTime)
+	void loadEffect(Collider collider , string eftName , float destroyTime)
 	{
 		if (!eftName.Equals ("")) 
 		{
-			var prefab = Resources.Load(eftName);
+			var prefab = Resources.Load("SkillEffect/"+eftName);
 			GameObject effect = Instantiate(prefab) as GameObject;
-			effect.transform.position = Point;
+			Vector3 point = collider.transform.position;
+			point.x += (collider.bounds.size.x/2) * collider.transform.forward.normalized.x;
+			point.y += (collider.bounds.size.y/2);
+			point.z += (collider.bounds.size.z/2) * collider.transform.forward.normalized.z;
+			effect.transform.position = point;
+			effect.transform.rotation = collider.transform.rotation;
 			Destroy(effect , destroyTime);
 
 		}

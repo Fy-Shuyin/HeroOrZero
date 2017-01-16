@@ -34,6 +34,7 @@ public class CharacterAttribute {
 	public float Critical;				//暴击率
 	public float CriticalAdditional;	//追加暴击率
 	public float MoveSpeed;				//移动速度
+	public float FieldOfVision;			//视野范围
 	public float SightRange;			//追击距离
 
 	public ArrayList ActiveSkill;		//主动技能
@@ -50,7 +51,7 @@ public class CharacterAttribute {
 	public void AttributeInitialize(string type , ref string charcterName , ref GameObject weaponSound ,ref int attackType , ref float attackSpeed , ref float attackRange ,
 		ref float experience , ref int leaderShip , ref int healthPower , ref int healthPowerAdditional , ref float attack , ref float attackAdditional ,
 		ref float defence , ref float defenceAdditional , ref float dexterity , ref float dexterityAdditional , ref float hit , ref float hitAdditional , ref float agility , ref float agilityAdditional ,
-		ref float dodge , ref float dodgeAdditional , ref float critical , ref float criticalAdditional , ref float moveSpeed , ref float sightRange)
+		ref float dodge , ref float dodgeAdditional , ref float critical , ref float criticalAdditional , ref float moveSpeed , ref float fieldOfVision , ref float sightRange)
 	{
 		//sql = new DBAccess("data source = GameSystem.db");
 		//reader = sql.ReadOneTable(tag, new string[] { "TYPE" }, new string[] { "==" }, new string[] {"'WOLF'"});
@@ -77,7 +78,8 @@ public class CharacterAttribute {
 		dodgeAdditional = 0;		
 		critical = (dexterity + agility)/3 ;				
 		criticalAdditional = 0;		
-		moveSpeed = 320;				
+		moveSpeed = 320;
+		fieldOfVision = 50;
 		sightRange = 20;							
 	}
 
@@ -123,8 +125,11 @@ public class CharacterAttribute {
 	{
 		activeSkillSelect = new ArrayList();
 		activeSkillSelect.Add("NetherJianqi");
+		activeSkillSelect.Add("WarRant");
+		activeSkillSelect.Add("CrossSwords");
 		passiveSkillSelect = new ArrayList();
-		passiveSkillSelect = null;
+		passiveSkillSelect.Add("Barrier");
+		passiveSkillSelect.Add("Captain");
 	}
 
 	/// <summary>

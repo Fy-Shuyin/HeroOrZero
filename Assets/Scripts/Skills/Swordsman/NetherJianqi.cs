@@ -9,7 +9,7 @@ public class NetherJianqi : MonoBehaviour {
 	public bool isTrigger;
 	public bool isSpell;
 	private Vector3 TriggerPoint;
-	private GameObject Target;
+	public GameObject Target;
 	private string TargetTag;
 	private bool TargetSelect;
 	private int TargetLayer;
@@ -49,43 +49,34 @@ public class NetherJianqi : MonoBehaviour {
 	
 	void Update () 
 	{
-		if (!isTrigger) 
+		if (isSpell) 
 		{
-			if (isSpell) 
-			{
-				if (patterns.Distance (gameObject, SpellRange) != null) 
-				{
-					Target = patterns.Distance (gameObject, SpellRange) [0].gameObject;
-					if (Target != null) 
-					{
-						skillStatus ();
-						isTrigger = true;
-						isSpell = false;
-						CooldownCount = Cooldown;
-					}
-				}
-			}	
+			skillStatus ();
+			isTrigger = true;
+			isSpell = false;
+			CooldownCount = Cooldown;
+		}	
+
+		if (CooldownCount == 0) 
+		{
+			isTrigger = false;
 		} 
-		else
+		else 
 		{
-			if (CooldownCount == 0) 
+			CooldownCount -= Time.deltaTime;
+			if (CooldownCount < 0) 
 			{
-				isTrigger = false;
-			} 
-			else 
-			{
-				CooldownCount -= Time.deltaTime;
-				if (CooldownCount < 0) 
-				{
-					CooldownCount = 0;
-				}
+				CooldownCount = 0;
 			}
 		}
 	}
 
 	void skillStatus()
 	{
-		TriggerPoint = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z + 5f);
+		Collider collider = gameObject.GetComponent<Collider> ();
+		TriggerPoint = gameObject.transform.position;
+		TriggerPoint.y += collider.bounds.size.y/2;
+		TriggerPoint.z += 5f;
 		RealAttack = Attack + AttackLevel * Level;
 		Hit = patterns.getHit(gameObject);
 		Critical = patterns.getCritical(gameObject);
@@ -94,8 +85,10 @@ public class NetherJianqi : MonoBehaviour {
 		var prefab = Resources.Load ("Skills/NetherJianqi");
 		GameObject effect = Instantiate (prefab) as GameObject;
 		effect.transform.position = TriggerPoint;
+		effect.transform.LookAt (Target.transform.position);
 		var attRes = effect.AddComponent<AttackResolution> ();
-		attRes.setSkillAttr ( TargetTag, TriggerPoint, Target, Effect, EffectTime, AttackType, Speed, Attack, Hit, Critical);
+		attRes.setSkillAttr ( TargetTag, TriggerPoint, Target, Effect, EffectTime, AttackType, SkillMethod, Speed, Attack, Hit, Critical);
+		Destroy(effect,1.5f);
 	}
 
 	void skllInitialize()
@@ -103,11 +96,10 @@ public class NetherJianqi : MonoBehaviour {
 		isTrigger = false;
 		isSpell = false;
 		Level = 1;
-		SkilType = "Attack";
+		SkilType = "Attack1";
 		SkillMethod = 1;
-		Effect = "";
-		EffectTime = 0;
-		LifeTime = 3f;
+		Effect = "NetherJianqi_Effect";
+		EffectTime = 1;
 		AttackType = 1;		
 		SpellRange = 20f;			
 		Speed = 20f;
@@ -117,5 +109,25 @@ public class NetherJianqi : MonoBehaviour {
 		Cooldown = 7f;
 		TriggerPoint = new Vector3 ();
 		Target = null;
+	}
+
+	public void Spell()
+	{
+		if (isTrigger) 
+		{
+			Debug.Log ("Skills in preparation。");
+			return;
+		}
+		Target = patterns.getAttactTarget (gameObject);
+		if (Target == null) 
+		{
+			Debug.Log ("no target");	
+			return;
+		} else 
+		{
+			gameObject.transform.LookAt (Target.transform.position);
+			patterns.getAllyAnimator(gameObject).SetTrigger ("Attack");
+			isSpell = true;
+		}
 	}
 }

@@ -4,6 +4,10 @@ using System.Collections;
 public class PatternsOfCharacter : PatternsOfPerfectType
 {
 	PatternsOfAttribute attribute = new PatternsOfAttribute ();
+
+	/// <summary>
+	/// 1.Perfect type
+	/// </summary>
 	public string CharcterType(GameObject obj , int value)
 	{
 		string type = "";
@@ -15,9 +19,7 @@ public class PatternsOfCharacter : PatternsOfPerfectType
 
 		return type;
 	}
-	/// <summary>
-	/// 1.Perfect type
-	/// </summary>
+
 	public void runCharcterType(GameObject obj)
 	{
 		string type = attribute.getCharcterType (obj).ToLower().Replace(" ","");
@@ -26,6 +28,17 @@ public class PatternsOfCharacter : PatternsOfPerfectType
 			PerfectType (obj);
 		}
 	}
+
+	public void thinkCharacterType(GameObject obj)
+	{
+		string type = attribute.getCharcterType (obj).ToLower().Replace(" ","");
+		if (type == "perfecttype") 
+		{
+			PatternsOfPerfectType perfectType = new PatternsOfPerfectType ();
+			perfectType.PerfectType (obj);
+		}
+	}
+
 	public void PerfectAttribute(GameObject obj)
 	{
 		attribute.setLeaderShip (obj , 2);

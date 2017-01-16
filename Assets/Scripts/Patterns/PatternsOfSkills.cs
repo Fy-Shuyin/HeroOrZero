@@ -18,6 +18,14 @@ public class PatternsOfSkills
 			{
 				obj.AddComponent<NetherJianqi> ();
 			}
+			if (skill == "WarRant") 
+			{
+				obj.AddComponent<WarRant> ();
+			}
+			if (skill == "CrossSwords") 
+			{
+				obj.AddComponent<CrossSwords> ();
+			}
 		}
 	}
 
@@ -42,6 +50,14 @@ public class PatternsOfSkills
 		{
 			type = obj.GetComponent<NetherJianqi> ().SkilType;
 		}
+		if (name == "WarRant") 
+		{
+			type = obj.GetComponent<WarRant> ().SkilType;
+		}
+		if (name == "CrossSwords") 
+		{
+			type = obj.GetComponent<CrossSwords> ().SkilType;
+		}
 
 		return type;
 	}
@@ -54,12 +70,34 @@ public class PatternsOfSkills
 		{
 			method = obj.GetComponent<NetherJianqi> ().SkillMethod;
 		}
+		if (name == "WarRant") 
+		{
+			method = obj.GetComponent<WarRant> ().SkillMethod;
+		}
+		if (name == "CrossSwords") 
+		{
+			method = obj.GetComponent<CrossSwords> ().SkillMethod;
+		}
 
 		return method;
 	}
 
 	public void SkillSpell(GameObject obj , string name)
 	{
-		
+		if (name == "NetherJianqi") 
+		{
+			obj.GetComponent<NetherJianqi> ().Spell ();
+			return;
+		}
+		if (name == "WarRant") 
+		{
+			obj.GetComponent<WarRant> ().Spell ();
+			return;
+		}
+		if (name == "CrossSwords") 
+		{
+			obj.GetComponent<CrossSwords> ().Spell ();
+			return;
+		}
 	}
 }

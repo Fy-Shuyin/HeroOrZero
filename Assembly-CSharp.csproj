@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Character\HeroController.cs" />
      <Compile Include="Assets\Scripts\Character\HeroDeath.cs" />
      <Compile Include="Assets\Scripts\Character\HeroIdle.cs" />
+     <Compile Include="Assets\Scripts\Character\HeroMove.cs" />
      <Compile Include="Assets\Scripts\Character\HeroThink.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyBossAttack.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
@@ -62,10 +63,14 @@
      <Compile Include="Assets\Scripts\Enemy\EnemyVariationAttack.cs" />
      <Compile Include="Assets\Scripts\GameSystem\AttackResolution.cs" />
      <Compile Include="Assets\Scripts\GameSystem\CharacterAttribute.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\CharacterHpBar.cs" />
      <Compile Include="Assets\Scripts\GameSystem\CharacterIState.cs" />
      <Compile Include="Assets\Scripts\GameSystem\DBAccess.cs" />
      <Compile Include="Assets\Scripts\GameSystem\FingerEvent.cs" />
      <Compile Include="Assets\Scripts\GameSystem\GameSystem.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\LoadStage.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\ObjectEffect.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\RangeResolution.cs" />
      <Compile Include="Assets\Scripts\GameSystem\SQLiteDemo.cs" />
      <Compile Include="Assets\Scripts\GameSystem\SceneBattle.cs" />
      <Compile Include="Assets\Scripts\GameSystem\SceneStart.cs" />

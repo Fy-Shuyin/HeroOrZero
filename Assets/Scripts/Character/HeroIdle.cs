@@ -3,6 +3,7 @@ using System.Collections;
 
 public class HeroIdle : HeroIState
 {
+	Vector3 HeroVector, TargetVector;
 	public void Enter(HeroController Hero)
 	{
 	}
@@ -20,6 +21,9 @@ public class HeroIdle : HeroIState
 		} 
 		else 
 		{
+			HeroVector = Hero.gameObject.transform.position;
+			TargetVector = Hero.AttackTarget.transform.position;
+			if(Vector3.Distance (HeroVector, TargetVector) < Hero.SightRange)
 			Hero.ChangeState (new HeroChase ());
 			return;
 		}

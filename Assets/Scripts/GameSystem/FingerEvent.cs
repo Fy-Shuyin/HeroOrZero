@@ -1,25 +1,31 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.EventSystems;
 
-public class FingerEvent {
+public class FingerEvent{
 
-	public bool MouthClick()
+	public void MouthClickForPoint(GameObject hero)
 	{
-		var putDown = Input.GetKeyDown (KeyCode.Mouse0);
-		return putDown;
-	}
-
-	public Vector3 MouthClickForPoint(Vector3 putPoint)
-	{
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		RaycastHit hit;
-		if (!Physics.Raycast (ray, out hit, 100, 5)) 
+		var putDown = Input.GetKey (KeyCode.Mouse0);
+		if (putDown) 
 		{
-			putPoint = hit.point;
-			Debug.Log (putPoint);
+			if (EventSystem.current.IsPointerOverGameObject()) {
+				return;
+			}
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast (ray, out hit)) 
+			{
+				if (hit.collider.tag.Equals ("Enemy")) {
+					hero.GetComponent<HeroController> ().Target (hit.transform);
+				}
+				else 
+				{
+					hero.GetComponent<HeroController> ().ChangeToMoveStage (hit.point);
+				}
+			}
 		}
-		return putPoint;
 	}
 
 	public string MouthClickForName()

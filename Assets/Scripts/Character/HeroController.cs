@@ -15,7 +15,7 @@ public class HeroController : MonoBehaviour
 
 	private bool AImode;
 	Ray TouchRay;
-	Vector3 TouchPosition;
+	public Vector3 TouchPosition;
 
 	public string CharacterName;		//人物名稱
 	public string CharacterType;		//人物性格
@@ -43,6 +43,7 @@ public class HeroController : MonoBehaviour
 	public float Critical;				//暴击率
 	public float CriticalAdditional;	//追加暴击率
 	public float MoveSpeed;				//移动速度
+	public float FieldOfVision;			//视野范围
 	public float SightRange;			//追击距离
 	public bool IsLife;					//存活
 
@@ -78,14 +79,21 @@ public class HeroController : MonoBehaviour
 		Attribute.AttributeInitialize (Type , ref CharacterName , ref WeaponSound , ref AttackType , ref AttackSpeed , ref AttackRange , 
 			ref Experience , ref LeaderShip , ref HealthPower , ref HealthPowerAdditional , ref Attack , ref AttackAdditional , 
 			ref Defence , ref DefenceAdditional , ref Dexterity , ref DexterityAdditional , ref Hit , ref HitAdditional , ref Agility , ref AgilityAdditional ,
-			ref Dodge , ref DodgeAdditional , ref Critical , ref CriticalAdditional , ref MoveSpeed , ref SightRange);
-		CharacterType = Character.CharcterType (gameObject, 1);
+			ref Dodge , ref DodgeAdditional , ref Critical , ref CriticalAdditional , ref MoveSpeed , ref FieldOfVision , ref SightRange);
 		HealthPowerMax = HealthPower + HealthPowerAdditional;
+		CharacterType = Character.CharcterType (gameObject, 1);
+		Character.runCharcterType (gameObject);
 		HeroAgent.speed = MoveSpeed/60f;
 		Attribute.SkillsInitialize (ref ActiveSkillSelect,ref PassiveSkillSelect);
 		Skills.setSkills (gameObject, ActiveSkillSelect);
+
 		AttackTarget = null;
 		AImode = true;
+
+		var prefab = Resources.Load<GameObject> ("UI/CharacterHpBar");
+		var hpBarObject = GameObject.Instantiate<GameObject> (prefab);
+		var hpBar = hpBarObject.GetComponent<CharacterHpBar> ();
+		hpBar.Initialize (gameObject);
 
 		Hero_State = new HeroIdle ();
 		Hero_State.Enter (this);
@@ -93,44 +101,27 @@ public class HeroController : MonoBehaviour
 
 	void Update () 
 	{
-		if (AImode == true) 
-		{
-			Automatic ();
-		}
-		if (AImode == false) 
+		Automatic ();
+		if (!AImode) 
 		{
 			Manual ();
 		}
 		Death ();
 	}
-
+	//モードを設定する
 	public void setAIMode(bool aiMode)
 	{
 		this.AImode = aiMode;
 	}
-
+	//自動モード
 	void Automatic()
 	{
 		Hero_State.Execute (this);
 	}
-
+	//操作モード
 	void Manual()
 	{
-		var putDown = Input.GetKeyDown (KeyCode.Mouse0);
-		if (putDown) 
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-
-			int i = ~(1 << 5);
-			if (Physics.Raycast (ray, out hit)) {
-				
-				Debug.DrawLine (ray.origin, hit.point, Color.red, 2);
-				TouchPosition = hit.point;
-				Debug.Log (TouchPosition);
-			}
-			HeroAgent.SetDestination (TouchPosition);
-		}
+		FingerEvent.MouthClickForPoint (gameObject);
 	}
 
 	public void ChangeState(HeroIState nextState)
@@ -142,14 +133,29 @@ public class HeroController : MonoBehaviour
 		Hero_State.Enter(this);
 	}
 
+	public void ChangeToMoveStage(Vector3 point)
+	{
+		TouchPosition = point;
+		if (!Hero_State.ToString().Equals("HeroMove")) 
+		{
+			ChangeState (new HeroMove ());
+		}
+	}
+
 	public void Target()
 	{
-		Collider[] cols = Patterns.Distance(gameObject,SightRange);
+		Collider[] cols = Patterns.Distance(gameObject,FieldOfVision);
 		if (cols.Length > 0) 
 		{
 			AttackTarget = cols[0].gameObject;
 			AttackTargetTag = AttackTarget.tag;
 		}
+	}
+
+	public void Target(Transform target)
+	{
+		AttackTarget = target.gameObject;
+		AttackTargetTag = target.tag;
 	}
 
 	public void movePoint(Vector3 point)

@@ -5,6 +5,9 @@ public class FriendController : MonoBehaviour {
 
 	FriendIState FriendState;
 
+	public NavMeshAgent FriendAgent;
+	public Animator FriendAnimator;
+
 	public ArrayList AttributeList;
 	public GameObject Leader;			//頭領
 	public string TargetTag;			//目标类型

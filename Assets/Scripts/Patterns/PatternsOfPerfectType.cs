@@ -8,7 +8,7 @@ public class PatternsOfPerfectType : PatternsOfThinking
 	public void PerfectType(GameObject obj)
 	{
 		if (attribute.getHealthPower (obj) < attribute.getHealthPowerMax (obj) * 0.7) {
-			Debug.Log ("HP");
+			Debug.Log ("HP"+attribute.getHealthPower (obj));
 			if (skills.getSkillTypeCount (obj, attribute.getActiveSkillSelect (obj), "Defence") > 0) 
 			{
 				Debug.Log ("DefenceSkill");	
@@ -37,5 +37,47 @@ public class PatternsOfPerfectType : PatternsOfThinking
 				}
 			} 
 		}
+	}
+
+	public int iPerfectType(GameObject obj)
+	{
+		int actNum = 0;
+		if (attribute.getHealthPower (obj) < attribute.getHealthPowerMax (obj) * 0.7) {
+			Debug.Log ("HP"+attribute.getHealthPower (obj));
+			actNum++;
+		}
+
+		if (skills.getSkillTypeCount (obj, attribute.getActiveSkillSelect (obj), "Defence") > 0) 
+		{
+			Debug.Log ("DefenceSkill");	
+			actNum++;
+		} 
+		if (attribute.getCommand (obj) != Instruction (obj)) 
+		{
+			Debug.Log ("Command");
+			int command = Instruction (obj);
+			if (command == 1) {
+				attribute.setCommand (obj, 1);
+			} else if (command == 0) {
+				attribute.setCommand (obj, 0);
+			} else if (command == -1) {
+				attribute.setCommand (obj, -1);
+			}
+		}
+
+		if (FriendHPAverage (obj) < 5) 
+		{
+
+		} 
+				
+		int numEnemy = attribute.NumberOfEnemies (obj, attribute.getSightRange (obj));
+		if (numEnemy > 0 && numEnemy < 2) 
+		{
+
+		} else if (numEnemy > 2) 
+		{
+		}	
+
+		return actNum;
 	}
 }
