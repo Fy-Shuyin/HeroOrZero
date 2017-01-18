@@ -12,7 +12,7 @@ public class HeroChase : HeroIState
 
 	public void Execute(HeroController Hero)
 	{
-		if (!Hero.IsLife) 
+		if (!Hero.IsLive) 
 		{
 			Hero.ChangeState (new HeroDeath ());
 			return;
@@ -22,7 +22,7 @@ public class HeroChase : HeroIState
 			Hero.ChangeState (new HeroIdle ());
 			return;
 		}
-		if (!Hero.Patterns.TargetIsLife (Hero.AttackTarget)) 
+		if (!Hero.Patterns.TargetIsLive (Hero.AttackTarget)) 
 		{
 			Hero.AttackTarget = null;
 			return;

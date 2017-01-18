@@ -56,7 +56,9 @@ public class ATTUP : MonoBehaviour {
 
 		var prefab = Resources.Load ("SkillEffect/" + effectName);
 		effect = Instantiate (prefab) as GameObject;
-		effect.transform.position = effectPoint(target);
+		effect.transform.position = effectPoint (target);
+		effect.transform.SetParent(target.transform);
+		effect.transform.localScale = new Vector3 (1,1,1);
 		Attribute.setAttack (target, attUp);
 
 		runEffect = true;

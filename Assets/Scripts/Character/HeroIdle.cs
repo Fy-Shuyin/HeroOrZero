@@ -10,7 +10,7 @@ public class HeroIdle : HeroIState
 
 	public void Execute(HeroController Hero)
 	{
-		if (!Hero.IsLife) 
+		if (!Hero.IsLive) 
 		{
 			Hero.ChangeState (new HeroDeath ());
 			return;

@@ -4,7 +4,7 @@ using System.Collections;
 public class PatternsOfAttribute
 {
 
-	public bool TargetIsLife(GameObject target)
+	public bool TargetIsLive(GameObject target)
 	{
 		bool isLife = true;
 		if (getHealthPower (target) <= 0) 
@@ -12,6 +12,21 @@ public class PatternsOfAttribute
 			isLife = false;
 		}
 		return isLife;
+	}
+
+	public void setTargetLive(GameObject target)
+	{
+		if (target.transform.tag == "Ally") 
+		{
+			if (target.GetComponent<HeroController> () != null)
+				target.GetComponent<HeroController> ().IsLive = true;
+			else
+				target.GetComponent<FriendController> ().IsLive = true;
+		}
+		if (target.transform.tag == "Enemy") 
+		{
+			target.GetComponent<EnemyController> ().IsLive = true;
+		}
 	}
 
 	public int NumberOfAllies(GameObject obj , float range)
@@ -24,28 +39,41 @@ public class PatternsOfAttribute
 
 	public ArrayList AlliesFriend(GameObject obj , float range)
 	{
-		ArrayList friend = new ArrayList ();
+		ArrayList alliesList = new ArrayList ();
 		string Tag = obj.gameObject.tag;
 		int Layer = 1 << LayerMask.NameToLayer (Tag);
-		Collider[] cols = Physics.OverlapSphere(obj.transform.position, 100, Layer);
-		foreach (Collider col in cols) 
+		if (range == 0) 
 		{
-			if (range == 0) 
+			Collider[] cols = Physics.OverlapSphere(obj.transform.position, 100 , Layer);
+			foreach (Collider col in cols) 
 			{
+
 				if (col.gameObject.GetComponent<FriendController> () != null) 
 				{
 					if (col.gameObject.GetComponent<FriendController> ().Leader.Equals (obj)) 
 					{
-						friend.Add (col.gameObject);
+						alliesList.Add (col.gameObject);
 					}
 				}	
 			}
-			else 
+		}
+		else
+		{
+			Collider[] cols = Physics.OverlapSphere(obj.transform.position, range , Layer);
+			foreach (Collider col in cols) 
 			{
-				friend.Add (col.gameObject);
+				if(col.gameObject != obj)
+					alliesList.Add (col.gameObject);
 			}
 		}
-		return friend;
+		return alliesList;
+	}
+
+	public int NumberOfEnemies()
+	{
+		int Layer = 1 << LayerMask.NameToLayer ("Enemy");;
+		Collider[] cols = Physics.OverlapSphere(new Vector3() , 500f , Layer);
+		return cols.Length;
 	}
 
 	public int NumberOfEnemies(GameObject obj , float range)
@@ -358,14 +386,32 @@ public class PatternsOfAttribute
 			}
 			else 
 			{
-				value = obj.GetComponent<FriendController> ().HealthPower += value;
-				value = obj.GetComponent<FriendController> ().HealthPowerMax += value;
+				obj.GetComponent<FriendController> ().HealthPower += value;
+				obj.GetComponent<FriendController> ().HealthPowerMax += value;
 			}
 		}
 		if (obj.transform.tag == "Enemy") 
 		{
-			value = obj.GetComponent<EnemyController> ().HealthPower += value;
-			value = obj.GetComponent<EnemyController> ().HealthPowerMax += value;
+			obj.GetComponent<EnemyController> ().HealthPower += value;
+			obj.GetComponent<EnemyController> ().HealthPowerMax += value;
+		}
+	}
+
+	public void resetHealthPower(GameObject obj)
+	{
+		if (obj.transform.tag == "Ally") 
+		{
+			if (obj.GetComponent<HeroController> () != null) {
+				obj.GetComponent<HeroController> ().HealthPower = obj.GetComponent<HeroController> ().HealthPowerMax;
+			}
+			else 
+			{
+				obj.GetComponent<FriendController> ().HealthPower = obj.GetComponent<FriendController> ().HealthPowerMax;
+			}
+		}
+		if (obj.transform.tag == "Enemy") 
+		{
+			obj.GetComponent<EnemyController> ().HealthPower = obj.GetComponent<EnemyController> ().HealthPowerMax;
 		}
 	}
 

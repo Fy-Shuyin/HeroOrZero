@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour {
 	public string Type;					//怪物类型
 	public string CharacterName;		//人物名稱
 	public string CharacterType;		//人物性格
-	public GameObject WeaponSound;		//武器声音
+	public string WeaponSound;		//武器声音
 	public int AttackType;				//攻击方式	true 近		false 远
 	public float AttackSpeed;			//攻击速度
 	public float AttackCooldown;		//攻击冷却
@@ -38,8 +38,9 @@ public class EnemyController : MonoBehaviour {
 	public float Critical;				//暴击率
 	public float CriticalAdditional;	//追加暴击率
 	public float MoveSpeed;				//移动速度
+	public float FieldOfVision;			//视野范围
 	public float SightRange;			//追击距离
-	public bool IsLife;					//存活
+	public bool IsLive;					//存活
 
 	public ArrayList ActiveSkillSelect;	//选择的主动技能
 	public ArrayList PassiveSkillSelect;//选择的被动技能
@@ -55,14 +56,14 @@ public class EnemyController : MonoBehaviour {
 
 		Patterns = new PatternsOfAttribute ();
 		Attribute = new CharacterAttribute ();
-		Type = gameObject.name.Substring (gameObject.name.IndexOf ("_") + 1).ToUpper();
+		Type = gameObject.name.Replace("(Clone)","");
 		Attribute.AttributeInitialize (Type , ref CharacterName , ref WeaponSound , ref AttackType , ref AttackSpeed , ref AttackRange , ref HealthPower , ref HealthPowerAdditional ,
 			ref Attack , ref AttackAdditional , ref Defence , ref DefenceAdditional , ref Dexterity , ref DexterityAdditional , ref Hit , ref HitAdditional , ref Agility , ref AgilityAdditional ,
-			ref Dodge , ref DodgeAdditional , ref Critical , ref CriticalAdditional , ref MoveSpeed , ref SightRange);
+			ref Dodge , ref DodgeAdditional , ref Critical , ref CriticalAdditional , ref MoveSpeed , ref FieldOfVision , ref SightRange);
 		EnemyAgent.speed = MoveSpeed/60f;
-		IsLife = true;
+		IsLive = true;
 
-		TargetEGG = GameObject.FindGameObjectWithTag ("Guardian");
+		TargetEGG = GameObject.Find ("TownHall");
 		AttackTarget = TargetEGG;
 
 		//var prefab = Resources.Load<GameObject> ("UI/CharacterHpBar");
@@ -128,7 +129,7 @@ public class EnemyController : MonoBehaviour {
 		{
 			gameObject.GetComponent<Collider> ().enabled = false;
 			Destroy (gameObject, 2f);
-			IsLife = false;
+			IsLive = false;
 		}
 	}
 }

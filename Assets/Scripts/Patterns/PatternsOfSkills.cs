@@ -26,6 +26,54 @@ public class PatternsOfSkills
 			{
 				obj.AddComponent<CrossSwords> ();
 			}
+			if (skill == "Barrier") 
+			{
+				obj.AddComponent<Barrier> ();
+			}
+			if (skill == "Captain") 
+			{
+				obj.AddComponent<Captain> ();
+			}
+			if (skill == "InstantChop") 
+			{
+				obj.AddComponent<InstantChop> ();
+			}
+			if (skill == "PoisonBlade") 
+			{
+				obj.AddComponent<PoisonBlade> ();
+			}
+			if (skill == "ShadowAttack") 
+			{
+				obj.AddComponent<ShadowAttack> ();
+			}
+			if (skill == "LoneWalker") 
+			{
+				obj.AddComponent<LoneWalker> ();
+			}
+			if (skill == "DrawBlood") 
+			{
+				obj.AddComponent<DrawBlood> ();
+			}
+			if (skill == "SpiritSpear") 
+			{
+				obj.AddComponent<SpiritSpear> ();
+			}
+			if (skill == "NightAndDream") 
+			{
+				obj.AddComponent<NightAndDream> ();
+			}
+			if (skill == "BloodthirstyGlare") 
+			{
+				obj.AddComponent<BloodthirstyGlare> ();
+			}
+			if (skill == "FireShield") 
+			{
+				obj.AddComponent<FireShield> ();
+			}
+			if (skill == "VoodooCurse") 
+			{
+				obj.AddComponent<VoodooCurse> ();
+			}
 		}
 	}
 
@@ -58,6 +106,14 @@ public class PatternsOfSkills
 		{
 			type = obj.GetComponent<CrossSwords> ().SkilType;
 		}
+		if (name == "Barrier") 
+		{
+			type = obj.GetComponent<Barrier> ().SkilType;
+		}
+		if (name == "Captain") 
+		{
+			type = obj.GetComponent<Captain> ().SkilType;
+		}
 
 		return type;
 	}
@@ -77,6 +133,14 @@ public class PatternsOfSkills
 		if (name == "CrossSwords") 
 		{
 			method = obj.GetComponent<CrossSwords> ().SkillMethod;
+		}
+		if (name == "Barrier") 
+		{
+			method = obj.GetComponent<Barrier> ().SkillMethod;
+		}
+		if (name == "Captain") 
+		{
+			method = obj.GetComponent<Captain> ().SkillMethod;
 		}
 
 		return method;

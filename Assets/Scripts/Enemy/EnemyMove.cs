@@ -12,26 +12,44 @@ public class EnemyMove : EnemyIState
 
 	public void Execute(EnemyController Enemy)
 	{
-		if (Enemy.AttackTarget == Enemy.TargetEGG) 
+		if (!Enemy.IsLive) 
 		{
-			Enemy.Target ();
-		} else if (!Enemy.Patterns.TargetIsLife(Enemy.AttackTarget)) 
-		{
-			Enemy.Target ();
-		}
-		EnemyVector = Enemy.gameObject.transform.position;
-		TargetVector = Enemy.AttackTarget.transform.position;
-		if (Vector3.Distance (EnemyVector, TargetVector) < Enemy.AttackRange) 
-		{
-			Enemy.ChangeState (new EnemySoldierThink());
+			Enemy.ChangeState (new EnemyDeath ());
 			return;
 		}
-		Enemy.Move (TargetVector);
+		if (Enemy.AttackTarget == Enemy.TargetEGG)
+		{
+			Enemy.Target ();
+			stateToThink (Enemy, 15f);
+		} 
+		else if (!Enemy.Patterns.TargetIsLive (Enemy.AttackTarget)) 
+		{
+			Enemy.Target ();
+		} 
+		else 
+		{
+			stateToThink (Enemy, Enemy.AttackRange);
+		}
+
 	}
 
 	public void Exit(EnemyController Enemy)
 	{
 		Enemy.EnemyAgent.Stop ();
 		Enemy.EnemyAgent.velocity = Vector3.zero;
+	}
+
+	public void stateToThink(EnemyController Enemy , float attackRange)
+	{
+		EnemyVector = Enemy.gameObject.transform.position;
+		TargetVector = Enemy.AttackTarget.transform.position;
+		EnemyVector.y = 0;
+		TargetVector.y = 0;
+		if (Vector3.Distance (EnemyVector, TargetVector) < attackRange) 
+		{
+			Enemy.ChangeState (new EnemySoldierThink());
+			return;
+		}
+		Enemy.Move (TargetVector);
 	}
 }

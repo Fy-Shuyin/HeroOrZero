@@ -243,10 +243,7 @@ public class DBAccess
         string queryString = "SELECT * FROM " + tableName;
 
         queryString +=  " WHERE " + colNames[0] + " " + operations[0] + " " + colValues[0];
-        for (int i = 0; i < colNames.Length; i++)
-        {
-            queryString += " AND " + colNames[i] + " " + operations[i] + " " + colValues[0] + " ";
-        }
+
         return ExecuteQuery(queryString);
     }
 

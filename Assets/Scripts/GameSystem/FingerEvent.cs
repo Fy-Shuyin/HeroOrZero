@@ -5,30 +5,50 @@ using UnityEngine.EventSystems;
 
 public class FingerEvent{
 
-	public void MouthClickForPoint(GameObject hero)
+	public void ClickPoint(GameObject hero)
 	{
 		var putDown = Input.GetKey (KeyCode.Mouse0);
-		if (putDown) 
-		{
-			if (EventSystem.current.IsPointerOverGameObject()) {
+		int touch = Input.touchCount;
+		if (putDown) {
+			if (EventSystem.current.IsPointerOverGameObject ()) {
 				return;
 			}
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray clickRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit)) 
+			if (Physics.Raycast (clickRay, out hit)) 
 			{
 				if (hit.collider.tag.Equals ("Enemy")) {
 					hero.GetComponent<HeroController> ().Target (hit.transform);
 				}
 				else 
 				{
-					hero.GetComponent<HeroController> ().ChangeToMoveStage (hit.point);
+					if(hit.collider.name.Equals ("GroundOfBattle"))
+						hero.GetComponent<HeroController> ().ChangeToMoveStage (hit.point);
+				}
+			}
+		}
+
+		if (touch == 1) {
+			if (EventSystem.current.IsPointerOverGameObject ()) {
+				return;
+			}
+			Ray touchRay = Camera.main.ScreenPointToRay (Input.touches[0].position);
+			RaycastHit hit;
+			if (Physics.Raycast (touchRay, out hit)) 
+			{
+				if (hit.collider.tag.Equals ("Enemy")) {
+					hero.GetComponent<HeroController> ().Target (hit.transform);
+				}
+				else 
+				{
+					if(hit.collider.name.Equals ("GroundOfBattle"))
+						hero.GetComponent<HeroController> ().ChangeToMoveStage (hit.point);
 				}
 			}
 		}
 	}
 
-	public string MouthClickForName()
+	public string ClickName()
 	{
 		string putName = "";
 		var putDown = Input.GetKeyDown (KeyCode.Mouse0);
@@ -45,7 +65,7 @@ public class FingerEvent{
 		return putName;
 	}
 
-	public string MouthClickForTag()
+	public string ClickTag()
 	{
 		var putDown = Input.GetKeyDown (KeyCode.Mouse0);
 		string targetTag = "";
@@ -60,50 +80,5 @@ public class FingerEvent{
 		}
 		Debug.Log (targetTag);
 		return targetTag;
-	}
-
-	public bool SelectUnit(Vector3 point , bool selected)
-	{
-		float time = 300f;
-		point = new Vector3();
-		selected = false;
-
-		Time.timeScale = 0;
-		if (MouthClickForTag () == "Hero" || MouthClickForTag () == "Friend" || MouthClickForTag () == "Enemy") {
-
-			selected = true;
-			Time.timeScale = 1;
-
-			Debug.Log (MouthClickForTag());
-		} 
-		else 
-		{
-			time--;
-			if (time <= 0) 
-			{
-				Time.timeScale = 1;
-			}
-		}
-		Debug.Log (point);
-		Debug.Log (selected);
-		Debug.Log (time);
-		return selected;
-	}
-
-	public void SelectGroup()
-	{
-	}
-
-	public void MouthClick(Button button)
-	{
-		
-	}
-
-	void TouchCount () 
-	{
-		if (Input.touchCount > 0) 
-		{
-			
-		}
 	}
 }

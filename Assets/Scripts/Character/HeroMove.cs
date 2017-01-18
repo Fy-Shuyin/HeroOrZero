@@ -10,12 +10,14 @@ public class HeroMove : HeroIState
 
 	public void Execute(HeroController Hero)
 	{
-		if (!Hero.IsLife) 
+		if (!Hero.IsLive) 
 		{
 			Hero.ChangeState (new HeroDeath ());
 			return;
 		}
-		if (Vector3.Distance(Hero.transform.position,Hero.TouchPosition) < 2) 
+		Vector3 heroPos = Hero.transform.position;
+		heroPos.y = 0;
+		if (Vector3.Distance(heroPos,Hero.TouchPosition) < 3) 
 		{
 			Hero.ChangeState (new HeroIdle ());
 			return;

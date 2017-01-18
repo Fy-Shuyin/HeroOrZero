@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class LoadStage : MonoBehaviour {
@@ -8,6 +9,7 @@ public class LoadStage : MonoBehaviour {
 
     //读取场景的进度，它的取值范围在0 - 1 之间。
     int progress = 0;
+	public Slider load;
 
     void Start()
     {
@@ -39,7 +41,7 @@ public class LoadStage : MonoBehaviour {
         progress = (int)(async.progress * 100);
 
         //有了读取进度的数值，大家可以自行制作进度条啦。
-        Debug.Log("StageLoad" + progress + "%");
+		load.value = progress;
     }
 
     public class Globe

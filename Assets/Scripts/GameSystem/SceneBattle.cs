@@ -5,7 +5,7 @@ using Mono.Data.Sqlite;
 
 public class SceneBattle : MonoBehaviour {
 
-	GameSystem gamesystem;
+	GameSystem gameSystem = new GameSystem();
 	PatternsOfAttribute Patterns = new PatternsOfAttribute();
 	PatternsOfSkills Skills = new PatternsOfSkills();
 
@@ -13,6 +13,8 @@ public class SceneBattle : MonoBehaviour {
 	bool Battle_CameraOn;
 	public GameObject Battle_Camera_Target;
 	public GameObject UI_Target;
+
+	public GameObject DefensiveTownHall;
 
 	public GameObject Hero_One_Icon;
 	public GameObject Hero_Two_Icon;
@@ -64,6 +66,10 @@ public class SceneBattle : MonoBehaviour {
 	public GameObject Hero_Three;
 
 	public int StageLevel;
+	private float StageStartCountDown;
+	private float StageTime;
+	private ArrayList HeroList;
+	private ArrayList EnemyList;
 	public string EnemyLoadName;
 	public int EnemyLoadNum;
 	private float LoadRepeat;
@@ -78,37 +84,97 @@ public class SceneBattle : MonoBehaviour {
 		UI_Hero_One_Status = GameObject.Find ("StatusPanel");
 		UI_Hero_One_Status.SetActive (false);
 
+		Hero_One_Icon = GameObject.Find ("Hero_One_Icon");
+		Hero_One_Icon.SetActive (false);
+		Hero_Two_Icon = GameObject.Find ("Hero_Two_Icon");
+		Hero_Two_Icon.SetActive (false);
+		Hero_Three_Icon = GameObject.Find ("Hero_Three_Icon");
+		Hero_Three_Icon.SetActive (false);
+
+		DefensiveTownHall = GameObject.Find ("TownHall");
+
 		point = new Vector3[4];
 		point [0] = GameObject.Find ("StartPosition").transform.position;
 		point [1] = GameObject.Find ("StandbyPosition (1)").transform.position;
 		point [2] = GameObject.Find ("StandbyPosition (2)").transform.position;
 		point [3] = GameObject.Find ("StandbyPosition (3)").transform.position;
 
-		EnemyLoadName = "Enemy_Wolf";
-		EnemyLoadNum = 7;
+		StageLevel = 0; 
 	}
 
 	void Start ()
 	{
-		HeroLoad ();
+		StageStartCountDown = 3;
+		StageTime = 0;
+		NextStage ();
 	}
 
 	void Update () 
 	{
-		LoadRepeat -= Time.deltaTime;
-		if (LoadRepeat < 0) 
+		StageStartCountDown -= Time.deltaTime;
+		if (StageStartCountDown <= 0)
+			StageStartCountDown = 0;
+		if (StageStartCountDown == 0) 
 		{
-			LoadRepeat = 0;
+			StageTime += Time.deltaTime;
+			if (StageTime >= 10f) 
+			{
+				StageListen ();
+			}
+			LoadRepeat -= Time.deltaTime;
+			if (LoadRepeat < 0) 
+			{
+				LoadRepeat = 0;
+			}
+			if (LoadRepeat == 0 && EnemyLoadNum != 0) 
+			{
+				EnemyLoad ();
+				LoadRepeat = 1f;
+			}
 		}
-		if (LoadRepeat == 0 && EnemyLoadNum != 0) 
-		{
-			EnemyLoad ();
-			LoadRepeat = 1f;
-		}
+
 		CameraOn ();
 		isHeroLive ();
-		HeroAllStatusUI (Hero_One, Hero_One, Hero_One);
-		HeroOneStatusUI (Battle_Camera_Target);
+		HeroAllStatusUI (Hero_One, Hero_Two, Hero_Three);
+		HeroOneStatusUI (Battle_Camera_Target);	
+	}
+
+	void StageListen()
+	{
+		int count = Patterns.NumberOfEnemies ();
+		if (count == 0 && EnemyLoadNum == 0) 
+		{
+			StageStartCountDown = 3;
+			StageTime = 0;
+			NextStage ();
+		}
+	}
+
+	void NextStage()
+	{
+		StageLevel++;
+		if (StageLevel == 16) 
+		{
+			LoadStage.Globe.loadName = 3;
+			Application.LoadLevel(0);
+		}
+		gameSystem.BattleStart (StageLevel , ref HeroList , ref EnemyList);
+		setEnemy (EnemyList);
+		if (StageLevel == 1 || StageLevel == 6 || StageLevel == 11 || StageLevel == 15) 
+		{
+			setHero (HeroList);
+		}
+	}
+
+	void GameOver()
+	{
+		var townHallAtt = DefensiveTownHall.GetComponent<TownHallAttribute> ();
+		if (!townHallAtt.isLife) 
+		{
+			//GameOver
+			LoadStage.Globe.loadName = 4;
+			Application.LoadLevel(0);
+		}
 	}
 
 	void CameraOn()
@@ -118,34 +184,149 @@ public class SceneBattle : MonoBehaviour {
 			Battle_Camera.transform.position = new Vector3(Battle_Camera_Target.transform.position.x,25f,Battle_Camera_Target.transform.position.z-15);
 		} else 
 		{
-			Battle_Camera.transform.position = new Vector3 (0,80,-70);
+			Battle_Camera.transform.position = new Vector3 (0,75,-60);
 		}
 	}
 
-	void HeroLoad()
+	void setHero(ArrayList heroList)
 	{
-		var prefab_One = Resources.Load ("Heros/Swordman");
-		Hero_One_Icon = GameObject.Find ("Hero_One_Icon");
-		if (prefab_One != null) 
+		for (int i = 0; i < heroList.Count; i++) 
 		{
-			Hero_One = Instantiate (prefab_One) as GameObject;
-			Hero_One.AddComponent<HeroController> ();
-			Hero_One.transform.position = point [1];
-			Hero_One_Icon.GetComponent<Button> ().onClick.AddListener (delegate() {
-				OnButtonClick (Hero_One);
-			});
-			string iconPath = ("Icon/Icon_" + Hero_One.gameObject.name).Replace ("(Clone)", ""); 
-			Hero_One_Icon.GetComponentInChildren<RawImage> ().texture = (Texture)Resources.Load (iconPath);
+			HeroLoad (heroList[i].ToString() , i);
 		}
-		else 
+	}
+
+	void HeroLoad(string heroName , int num)
+	{
+		if (num == 0) 
 		{
-			Hero_One_Icon.SetActive (false);
+			if (Hero_One != null) 
+			{
+				if (Patterns.TargetIsLive (Hero_One)) 
+				{
+					Patterns.resetHealthPower(Hero_One);
+				} 
+				else 
+				{
+					Patterns.resetHealthPower(Hero_One);
+					Patterns.setTargetLive (Hero_One);
+					Hero_One.GetComponent<HeroController> ().ChangeToMoveStage (point[1]);
+					Hero_One.GetComponent<Collider> ().enabled = true;
+					Hero_One_Icon.GetComponent<Button> ().onClick.AddListener (delegate() {
+						OnButtonClick (Hero_One);
+					});
+				}
+			} 
+			else 
+			{
+				var prefab_One = Resources.Load ("Heros/"+ heroName);
+				Hero_One = Instantiate (prefab_One) as GameObject;
+				Hero_One.AddComponent<HeroController> ();
+				Hero_One.transform.position = point [1];
+				Hero_One_Icon.GetComponent<Button> ().onClick.AddListener (delegate() {
+					OnButtonClick (Hero_One);
+				});
+				string iconPath = ("Icon/Icon_" + Hero_One.gameObject.name).Replace ("(Clone)", ""); 
+				Hero_One_Icon.GetComponentInChildren<RawImage> ().texture = (Texture)Resources.Load (iconPath);
+				Hero_One_Icon.SetActive (true);
+			}
 		}
+
+		if (num == 1) 
+		{
+			if (Hero_Two != null) 
+			{
+				if (Patterns.TargetIsLive (Hero_Two)) 
+				{
+					Patterns.resetHealthPower(Hero_Two);
+				} 
+				else 
+				{
+					Patterns.resetHealthPower(Hero_Two);
+					Patterns.setTargetLive (Hero_Two);
+					Hero_Two.GetComponent<HeroController> ().ChangeToMoveStage (point[2]);
+					Hero_Two.GetComponent<Collider> ().enabled = true;
+					Hero_Two_Icon.GetComponent<Button> ().onClick.AddListener (delegate() {
+						OnButtonClick (Hero_Two);
+					});
+				}
+			} 
+			else 
+			{
+				var prefab_Two = Resources.Load ("Heros/"+ heroName);
+				Hero_Two = Instantiate (prefab_Two) as GameObject;
+				Hero_Two.AddComponent<HeroController> ();
+				Hero_Two.transform.position = point [2];
+				Hero_Two_Icon.GetComponent<Button> ().onClick.AddListener (delegate() {
+					OnButtonClick (Hero_Two);
+				});
+				string iconPath = ("Icon/Icon_" + Hero_Two.gameObject.name).Replace ("(Clone)", ""); 
+				Hero_Two_Icon.GetComponentInChildren<RawImage> ().texture = (Texture)Resources.Load (iconPath);
+				Hero_Two_Icon.SetActive (true);
+			}
+		}
+
+		if (num == 2) 
+		{
+			if (Hero_Three != null) 
+			{
+				if (Patterns.TargetIsLive (Hero_Three)) 
+				{
+					Patterns.resetHealthPower(Hero_Three);
+				} 
+				else 
+				{
+					Patterns.resetHealthPower(Hero_Three);
+					Patterns.setTargetLive (Hero_Three);
+					Hero_Three.GetComponent<HeroController> ().ChangeToMoveStage (point[3]);
+					Hero_Three.GetComponent<Collider> ().enabled = true;
+					Hero_Three_Icon.GetComponent<Button> ().onClick.AddListener (delegate() {
+						OnButtonClick (Hero_Three);
+					});
+				}
+			} 
+			else 
+			{
+				var prefab_Three = Resources.Load ("Heros/"+ heroName);
+				Hero_Three = Instantiate (prefab_Three) as GameObject;
+				Hero_Three.AddComponent<HeroController> ();
+				Hero_Three.transform.position = point [3];
+				Hero_Three_Icon.GetComponent<Button> ().onClick.AddListener (delegate() {
+					OnButtonClick (Hero_Three);
+				});
+				string iconPath = ("Icon/Icon_" + Hero_Three.gameObject.name).Replace ("(Clone)", ""); 
+				Hero_Three_Icon.GetComponentInChildren<RawImage> ().texture = (Texture)Resources.Load (iconPath);
+				Hero_Three_Icon.SetActive (true);
+			}
+		}
+	}
+
+	void setEnemy(ArrayList enemyList)
+	{
+		LoadRepeat = 2;
+		for (int i = 0; i < enemyList.Count; i++) 
+		{
+			ArrayList list = (ArrayList)enemyList [i];
+			EnemyLoadName = list[0].ToString();
+			EnemyLoadNum = (int)list[1];
+			//EnemyLoadNum = 2;
+		}
+	}
+
+	void EnemyLoad()
+	{
+		var prefab = Resources.Load("Enemies/" + EnemyLoadName);
+		var enemy = Instantiate(prefab) as GameObject;
+		enemy.AddComponent<EnemyController> ();
+		float x = Random.Range(-25f, 25f);
+		float z = 60f;
+		enemy.transform.position = new Vector3(x, 1f,z);
+		EnemyLoadNum--;
 	}
 
 	void isHeroLive()
 	{
-		if (!Hero_One.GetComponent<HeroController> ().IsLife || Hero_One == null) 
+		if (!Patterns.TargetIsLive(Hero_One) || Hero_One == null) 
 		{
 			Hero_One_Icon.GetComponent<Button> ().onClick.RemoveAllListeners ();
 			if (Battle_CameraOn) 
@@ -156,24 +337,24 @@ public class SceneBattle : MonoBehaviour {
 		}
 	}
 
-	void EnemyLoad()
-	{
-		var prefab = Resources.Load("Enemies/" + EnemyLoadName);
-		var enemy = Instantiate(prefab) as GameObject;
-		float x = Random.Range(-25f, 25f);
-		float z = 60f;
-		enemy.transform.position = new Vector3(x, 1f,z);
-		EnemyLoadNum--;
-	}
-
 	void OnButtonClick(GameObject hero)
 	{ 
 		if (Battle_CameraOn) 
 		{
-			Battle_CameraOn = false;
-			hero.GetComponent<HeroController> ().setAIMode (true);
-			setBattleCameraTargetandGUITarget (null);
-		} else if (!Battle_CameraOn) 
+			if (Battle_Camera_Target != null && Battle_Camera_Target != hero) 
+			{
+				Battle_Camera_Target.GetComponent<HeroController> ().setAIMode (true);
+				hero.GetComponent<HeroController> ().setAIMode (false);
+				setBattleCameraTargetandGUITarget (hero);
+			}
+			else
+			{
+				Battle_CameraOn = false;
+				hero.GetComponent<HeroController> ().setAIMode (true);
+				setBattleCameraTargetandGUITarget (null);
+			}
+		} 
+		else if (!Battle_CameraOn) 
 		{
 			Battle_CameraOn = true;
 			hero.GetComponent<HeroController> ().setAIMode (false);
@@ -274,6 +455,13 @@ public class SceneBattle : MonoBehaviour {
 		}
 	}
 		
+	void HeroOneStatusInitialize()
+	{
+		UI_Hero_One_Skill_Active1.GetComponent<Button> ().onClick.RemoveAllListeners ();
+		UI_Hero_One_Skill_Active2.GetComponent<Button> ().onClick.RemoveAllListeners ();
+		UI_Hero_One_Skill_Active3.GetComponent<Button> ().onClick.RemoveAllListeners ();
+	}
+
 	void HeroOneStatusTexture(GameObject target)
 	{
 		if(UI_Target != target)
@@ -285,6 +473,8 @@ public class SceneBattle : MonoBehaviour {
 			UI_Hero_One_AgiIcon.texture = (Texture)Resources.Load ("Icon/Icon_Agi");
 
 			//skill
+
+			HeroOneStatusInitialize ();
 			ArrayList activeSkill = Patterns.getActiveSkillSelect (target);
 			UI_Hero_One_Skill_Active1.GetComponent<Button>().onClick.AddListener(delegate {
 				OnBUttonClickForSkill(target , activeSkill[0].ToString());

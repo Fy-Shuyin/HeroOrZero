@@ -29,22 +29,22 @@ public class SceneUIManeger : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (fingerEvent.MouthClickForName () == "TownHall") 
+		if (fingerEvent.ClickName () == "TownHall") 
 		{
 		}
 
-		if (fingerEvent.MouthClickForName () == "Tavern") 
+		if (fingerEvent.ClickName () == "Tavern") 
 		{
-			Debug.Log (fingerEvent.MouthClickForName ());
+			Debug.Log (fingerEvent.ClickName ());
 			panelHeroStatus.SetActive(true);
 		}
 
-		if (fingerEvent.MouthClickForName () == "Farm") 
+		if (fingerEvent.ClickName () == "Farm") 
 		{
-			Debug.Log (fingerEvent.MouthClickForName ());
+			Debug.Log (fingerEvent.ClickName ());
 		}
 
-		if (fingerEvent.MouthClickForName () == "Team Select (1)" || fingerEvent.MouthClickForName () == "Team Select (2)") 
+		if (fingerEvent.ClickName () == "Team Select (1)" || fingerEvent.ClickName () == "Team Select (2)") 
 		{
 			panelTeamStatus.SetActive (true);
 		}
@@ -52,7 +52,7 @@ public class SceneUIManeger : MonoBehaviour {
 
 	void OnButtonClick(string buttonName)
 	{
-		buttonName = fingerEvent.MouthClickForName ();
+		buttonName = fingerEvent.ClickName ();
 		Debug.Log (buttonName);
 		for (int i = 0; i < closePanel.Length; i++) 
 		{

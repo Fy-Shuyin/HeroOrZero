@@ -21,7 +21,7 @@ public class AttackResolution : MonoBehaviour {
 
 	void Update () 
 	{
-		if (Target == null || TriggerPoint == null) 
+		if (Target == null) 
 		{
 			Action = false;
 		}
@@ -38,7 +38,7 @@ public class AttackResolution : MonoBehaviour {
 			} 
 			else
 			{
-				vector *= 3 * Time.deltaTime;
+				vector *= 5 * Time.deltaTime;
 				gameObject.transform.position += vector;
 			}
 		}
@@ -115,6 +115,13 @@ public class AttackResolution : MonoBehaviour {
 					loadEffect (collider , Effect , EffectTime);
 				}
 			}
+			TargetDefence = collider.GetComponent<TownHallAttribute> ().Defence;
+			int damage = (int)(Attack - TargetDefence);
+			if (damage <= 0) 
+			{
+				damage = 1;
+			}
+			collider.GetComponent<TownHallAttribute> ().HealthPower -= damage;
 		}
 
 		if (collider.tag == TargetTag && collider.tag != "Guardian")
@@ -130,6 +137,12 @@ public class AttackResolution : MonoBehaviour {
 					loadEffect (collider , Effect , EffectTime);
 				}
 			}
+
+			if (isSkillBarrier (collider)) 
+			{
+				return;
+			}
+
 			if (TargetTag == "Ally") 
 			{
 				Component com = collider.GetComponent<HeroController> ();
@@ -197,5 +210,17 @@ public class AttackResolution : MonoBehaviour {
 			Destroy(effect , destroyTime);
 
 		}
+	}
+
+	bool isSkillBarrier(Collider collider)
+	{
+		bool isExist = false;
+		var barrier = collider.GetComponent<Barrier> ();
+		if (barrier != null)
+		{
+			if (Random.Range (0, 101) < barrier.RealValue)
+				isExist = true;
+		}
+		return isExist;
 	}
 }

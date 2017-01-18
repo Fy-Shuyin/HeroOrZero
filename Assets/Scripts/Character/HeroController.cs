@@ -19,7 +19,7 @@ public class HeroController : MonoBehaviour
 
 	public string CharacterName;		//人物名稱
 	public string CharacterType;		//人物性格
-	public GameObject WeaponSound;		//武器声音
+	public string WeaponSound;			//武器声音
 	public float Experience;			//经验值
 	public int LeaderShip;				//统帅力
 	public int AttackType;				//攻击方式	0 近		1 远
@@ -45,7 +45,7 @@ public class HeroController : MonoBehaviour
 	public float MoveSpeed;				//移动速度
 	public float FieldOfVision;			//视野范围
 	public float SightRange;			//追击距离
-	public bool IsLife;					//存活
+	public bool IsLive;					//存活
 
 	public ArrayList ActiveSkill;		//主动技能
 	public ArrayList ActiveSkillSelect;	//选择的主动技能
@@ -74,8 +74,8 @@ public class HeroController : MonoBehaviour
 		Character = new PatternsOfCharacter ();
 		Skills = new PatternsOfSkills ();
 
-		IsLife = true;
-		Type = gameObject.name.ToUpper();
+		IsLive = true;
+		Type = gameObject.name.Replace("(Clone)","");
 		Attribute.AttributeInitialize (Type , ref CharacterName , ref WeaponSound , ref AttackType , ref AttackSpeed , ref AttackRange , 
 			ref Experience , ref LeaderShip , ref HealthPower , ref HealthPowerAdditional , ref Attack , ref AttackAdditional , 
 			ref Defence , ref DefenceAdditional , ref Dexterity , ref DexterityAdditional , ref Hit , ref HitAdditional , ref Agility , ref AgilityAdditional ,
@@ -84,8 +84,11 @@ public class HeroController : MonoBehaviour
 		CharacterType = Character.CharcterType (gameObject, 1);
 		Character.runCharcterType (gameObject);
 		HeroAgent.speed = MoveSpeed/60f;
-		Attribute.SkillsInitialize (ref ActiveSkillSelect,ref PassiveSkillSelect);
+		Attribute.SkillsInitialize (Type , ref ActiveSkill , ref ActiveSkillSelect , ref PassiveSkill , ref PassiveSkillSelect);
+		ActiveSkillSelect = ActiveSkill;
+		PassiveSkillSelect = PassiveSkill;
 		Skills.setSkills (gameObject, ActiveSkillSelect);
+		Skills.setSkills (gameObject, PassiveSkillSelect);
 
 		AttackTarget = null;
 		AImode = true;
@@ -121,7 +124,7 @@ public class HeroController : MonoBehaviour
 	//操作モード
 	void Manual()
 	{
-		FingerEvent.MouthClickForPoint (gameObject);
+		FingerEvent. ClickPoint (gameObject);
 	}
 
 	public void ChangeState(HeroIState nextState)
@@ -135,6 +138,7 @@ public class HeroController : MonoBehaviour
 
 	public void ChangeToMoveStage(Vector3 point)
 	{
+		point.y = 0;
 		TouchPosition = point;
 		if (!Hero_State.ToString().Equals("HeroMove")) 
 		{
@@ -178,7 +182,7 @@ public class HeroController : MonoBehaviour
 	{
 		if (HealthPower + HealthPowerAdditional <= 0) 
 		{
-			IsLife = false;
+			IsLive = false;
 			gameObject.GetComponent<Collider> ().enabled = false;
 		}
 	}

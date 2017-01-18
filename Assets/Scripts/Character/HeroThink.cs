@@ -10,22 +10,18 @@ public class HeroThink : HeroIState
 
 	public void Execute(HeroController Hero)
 	{
-		if (!Hero.IsLife) 
+		if (!Hero.IsLive) 
 		{
 			Hero.ChangeState (new HeroDeath ());
 			return;
 		}
-		if (Hero.AttackTarget == null) 
+		if (Hero.AttackTarget == null || !Hero.Patterns.TargetIsLive (Hero.AttackTarget)) 
 		{
 			Hero.ChangeState (new HeroIdle ());
 			return;
 		}
 		else
 		{
-			if (!Hero.Patterns.TargetIsLife (Hero.AttackTarget)) 
-			{
-				Hero.Target ();
-			}
 			HeroVector = Hero.gameObject.transform.position;
 			TargetVector = Hero.AttackTarget.transform.position;
 			if (Vector3.Distance (HeroVector, TargetVector) < Hero.AttackRange) 

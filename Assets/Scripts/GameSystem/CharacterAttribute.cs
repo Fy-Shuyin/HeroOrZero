@@ -48,100 +48,152 @@ public class CharacterAttribute {
 	/// <summary>
 	/// HeroAttributeInitialize
 	/// </summary>
-	public void AttributeInitialize(string type , ref string charcterName , ref GameObject weaponSound ,ref int attackType , ref float attackSpeed , ref float attackRange ,
+	public void AttributeInitialize(string type , ref string charcterName , ref string weaponSound ,ref int attackType , ref float attackSpeed , ref float attackRange ,
 		ref float experience , ref int leaderShip , ref int healthPower , ref int healthPowerAdditional , ref float attack , ref float attackAdditional ,
 		ref float defence , ref float defenceAdditional , ref float dexterity , ref float dexterityAdditional , ref float hit , ref float hitAdditional , ref float agility , ref float agilityAdditional ,
 		ref float dodge , ref float dodgeAdditional , ref float critical , ref float criticalAdditional , ref float moveSpeed , ref float fieldOfVision , ref float sightRange)
 	{
-		//sql = new DBAccess("data source = GameSystem.db");
-		//reader = sql.ReadOneTable(tag, new string[] { "TYPE" }, new string[] { "==" }, new string[] {"'WOLF'"});
-		charcterName = "オリン";	
-		//weaponSound = "";				
-		attackType 	= 0;				
-		attackSpeed	= 2.2f;			
-		attackRange = 5f;			
-		experience	= 0;				
-		leaderShip	= 10;			
-		healthPower = 550;			
-		healthPowerAdditional = 0;	
-		attack = 40;					
-		attackAdditional = 0;		
-		defence = 22;				
-		defenceAdditional = 0;		
-		dexterity = 22;				
-		dexterityAdditional = 0;	
-		hit = 50 + dexterity;					
-		hitAdditional = 0;			
-		agility = 15;				
-		agilityAdditional = 0;		
-		dodge = agility/5;					
-		dodgeAdditional = 0;		
-		critical = (dexterity + agility)/3 ;				
-		criticalAdditional = 0;		
-		moveSpeed = 320;
-		fieldOfVision = 50;
-		sightRange = 20;							
+		sql = new DBAccess("data source = HeroOrZero.db");
+		reader = sql.ReadOneTable("Heros", new string[] { "ObjectName" }, new string[] { "==" }, new string[] {"'" + type + "'"});
+		while (reader.Read ()) 
+		{
+			charcterName = reader.GetString(reader.GetOrdinal("CharacterName"));	
+			//weaponSound = reader.GetString(reader.GetOrdinal("WeaponSound"));				
+			experience	= reader.GetInt32(reader.GetOrdinal("Experience"));
+			leaderShip	= reader.GetInt32(reader.GetOrdinal("LeaderShip"));
+			attackType 	= reader.GetInt32(reader.GetOrdinal("AttackType"));				
+			attackSpeed	= reader.GetFloat(reader.GetOrdinal("AttackSpeed"));				
+			attackRange = reader.GetFloat(reader.GetOrdinal("AttackRange"));	
+			healthPower = reader.GetInt32(reader.GetOrdinal("HealthPower"));		
+			healthPowerAdditional = 0;
+			attack = reader.GetFloat(reader.GetOrdinal("Attack"));		
+			attackAdditional = 0;		
+			defence = reader.GetFloat(reader.GetOrdinal("Defence"));	
+			defenceAdditional = 0;		
+			dexterity = reader.GetFloat(reader.GetOrdinal("Dexterity"));	
+			dexterityAdditional = 0;	
+			agility = reader.GetFloat(reader.GetOrdinal("Agility"));	
+			agilityAdditional = 0;		
+			hit = 50 + dexterity;					
+			hitAdditional = 0;
+			dodge = agility/5;					
+			dodgeAdditional = 0;		
+			critical = (dexterity + agility)/3 ;				
+			criticalAdditional = 0;
+			moveSpeed = reader.GetFloat(reader.GetOrdinal("MoveSpeed"));	
+			fieldOfVision = reader.GetFloat(reader.GetOrdinal("FieldOfVision"));	
+			sightRange = reader.GetFloat(reader.GetOrdinal("SightRange"));	
+		}					
+		sql.CloseConnection();
+	}
+
+
+	/// <summary>
+	/// HeroSkillsInitialize
+	/// </summary>
+	public void SkillsInitialize(string type , ref ArrayList activeSkill , ref ArrayList activeSkillSelect , ref ArrayList passiveSkill , ref ArrayList passiveSkillSelect)
+	{
+		activeSkill = new ArrayList ();
+		activeSkillSelect = new ArrayList ();
+		passiveSkill = new ArrayList ();
+		passiveSkillSelect = new ArrayList ();
+		sql = new DBAccess("data source = HeroOrZero.db");
+		reader = sql.ReadOneTable("HeroSkills", new string[] { "ObjectName" }, new string[] { "==" }, new string[] {"'" + type + "'"});
+		while (reader.Read ()) 
+		{
+			if(!reader.IsDBNull(reader.GetOrdinal("ActiveSkill1")))
+				activeSkill.Add (reader.GetString(reader.GetOrdinal("ActiveSkill1")));
+			if(!reader.IsDBNull(reader.GetOrdinal("ActiveSkill2")))
+				activeSkill.Add (reader.GetString(reader.GetOrdinal("ActiveSkill2")));
+			if(!reader.IsDBNull(reader.GetOrdinal("ActiveSkill3")))
+				activeSkill.Add (reader.GetString(reader.GetOrdinal("ActiveSkill3")));
+			if(!reader.IsDBNull(reader.GetOrdinal("ActiveSkill4")))
+				activeSkill.Add (reader.GetString(reader.GetOrdinal("ActiveSkill4")));
+			if(!reader.IsDBNull(reader.GetOrdinal("ActiveSkill5")))
+				activeSkill.Add (reader.GetString(reader.GetOrdinal("ActiveSkill5")));
+			if(!reader.IsDBNull(reader.GetOrdinal("ActiveSkill6")))
+				activeSkill.Add (reader.GetString(reader.GetOrdinal("ActiveSkill6")));
+
+			if(!reader.IsDBNull(reader.GetOrdinal("PassiveSkill1")))
+				passiveSkill.Add (reader.GetString(reader.GetOrdinal("PassiveSkill1")));
+			if(!reader.IsDBNull(reader.GetOrdinal("PassiveSkill2")))
+				passiveSkill.Add (reader.GetString(reader.GetOrdinal("PassiveSkill2")));
+			if(!reader.IsDBNull(reader.GetOrdinal("PassiveSkill3")))
+				passiveSkill.Add (reader.GetString(reader.GetOrdinal("PassiveSkill3")));
+			if(!reader.IsDBNull(reader.GetOrdinal("PassiveSkill4")))
+				passiveSkill.Add (reader.GetString(reader.GetOrdinal("PassiveSkill4")));
+			if(!reader.IsDBNull(reader.GetOrdinal("PassiveSkill5")))
+				passiveSkill.Add (reader.GetString(reader.GetOrdinal("PassiveSkill5")));
+			if(!reader.IsDBNull(reader.GetOrdinal("PassiveSkill6")))
+				passiveSkill.Add (reader.GetString(reader.GetOrdinal("PassiveSkill6")));
+		}
+		sql.CloseConnection ();
 	}
 
 	/// <summary>
 	/// EnemyAttributeInitialize
 	/// </summary>
-	public void AttributeInitialize(string type , ref string charcterName , ref GameObject weaponSound , 
+	public void AttributeInitialize(string type , ref string charcterName , ref string weaponSound , 
 		ref int attackType , ref float attackSpeed , ref float attackRange , ref int healthPower , ref int healthPowerAdditional , ref float attack , ref float attackAdditional ,
 		ref float defence , ref float defenceAdditional , ref float dexterity , ref float dexterityAdditional , ref float hit , ref float hitAdditional , ref float agility , ref float agilityAdditional ,
-		ref float dodge , ref float dodgeAdditional , ref float critical , ref float criticalAdditional , ref float moveSpeed , ref float sightRange)
+		ref float dodge , ref float dodgeAdditional , ref float critical , ref float criticalAdditional , ref float moveSpeed , ref float fieldOfVision , ref float sightRange)
 	{
-		//sql = new DBAccess("data source = GameSystem.db");
-		//reader = sql.ReadOneTable(tag, new string[] { "TYPE" }, new string[] { "==" }, new string[] {"'WOLF'"});
-		charcterName = "Wolf";	
-		//weaponSound = "";					
-		attackType 	= 0;				
-		attackSpeed	= 2.2f;			
-		attackRange = 5f;			
-		healthPower = 300;			
-		healthPowerAdditional = 0;	
-		attack = 30;					
-		attackAdditional = 0;		
-		defence = 12;				
-		defenceAdditional = 0;		
-		dexterity = 20;				
-		dexterityAdditional = 0;	
-		hit = 50 + dexterity;					
-		hitAdditional = 0;			
-		agility = 10;				
-		agilityAdditional = 0;		
-		dodge = agility/5;					
-		dodgeAdditional = 0;		
-		critical = (dexterity + agility)/3 ;				
-		criticalAdditional = 0;		
-		moveSpeed = 320;				
-		sightRange = 20;							
+		sql = new DBAccess("data source = HeroOrZero.db");
+		reader = sql.ReadOneTable("Enemies", new string[] { "ObjectName" }, new string[] { "==" }, new string[] {"'" + type +"'"});
+		while (reader.Read ()) 
+		{
+			if(!reader.IsDBNull(reader.GetOrdinal("CharacterName")))
+				charcterName = reader.GetString(reader.GetOrdinal("CharacterName"));	
+			//weaponSound = reader.GetString(reader.GetOrdinal("WeaponSound"));					
+			attackType 	= reader.GetInt32(reader.GetOrdinal("AttackType"));				
+			attackSpeed	= reader.GetFloat(reader.GetOrdinal("AttackSpeed"));				
+			attackRange = reader.GetFloat(reader.GetOrdinal("AttackRange"));	
+			healthPower = reader.GetInt32(reader.GetOrdinal("HealthPower"));		
+			healthPowerAdditional = 0;
+			attack = reader.GetFloat(reader.GetOrdinal("Attack"));		
+			attackAdditional = 0;		
+			defence = reader.GetFloat(reader.GetOrdinal("Defence"));	
+			defenceAdditional = 0;		
+			dexterity = reader.GetFloat(reader.GetOrdinal("Dexterity"));	
+			dexterityAdditional = 0;	
+			agility = reader.GetFloat(reader.GetOrdinal("Agility"));	
+			agilityAdditional = 0;		
+			hit = 50 + dexterity;					
+			hitAdditional = 0;
+			dodge = agility/5;					
+			dodgeAdditional = 0;		
+			critical = (dexterity + agility)/3 ;				
+			criticalAdditional = 0;
+			moveSpeed = reader.GetFloat(reader.GetOrdinal("MoveSpeed"));	
+			fieldOfVision = reader.GetFloat(reader.GetOrdinal("FieldOfVision"));	
+			sightRange = reader.GetFloat(reader.GetOrdinal("SightRange"));	
+		}					
+		sql.CloseConnection();
 	}
 
 	/// <summary>
 	/// EnemySkillInitialize
 	/// </summary>
-	public void SkillsInitialize(ref ArrayList activeSkillSelect , ref ArrayList passiveSkillSelect)
+	public void SkillsInitialize(string type , ref ArrayList activeSkill , ref ArrayList passiveSkill)
 	{
-		activeSkillSelect = new ArrayList();
-		activeSkillSelect.Add("NetherJianqi");
-		activeSkillSelect.Add("WarRant");
-		activeSkillSelect.Add("CrossSwords");
-		passiveSkillSelect = new ArrayList();
-		passiveSkillSelect.Add("Barrier");
-		passiveSkillSelect.Add("Captain");
-	}
+		activeSkill = new ArrayList();
+		passiveSkill = new ArrayList();
+		sql = new DBAccess("data source = HeroOrZero.db");
+		reader = sql.ReadOneTable("EnemySkills", new string[] { "ObjectName" }, new string[] { "==" }, new string[] {"'" + type + "'"});
+		while (reader.Read ()) 
+		{
+			if(!reader.IsDBNull(reader.GetOrdinal("ActiveSkill1")))
+				activeSkill.Add (reader.GetString(reader.GetOrdinal("ActiveSkill1")));
+			if(!reader.IsDBNull(reader.GetOrdinal("ActiveSkill2")))
+				activeSkill.Add (reader.GetString(reader.GetOrdinal("ActiveSkill2")));
+			if(!reader.IsDBNull(reader.GetOrdinal("ActiveSkill3")))
+				activeSkill.Add (reader.GetString(reader.GetOrdinal("ActiveSkill3")));
 
-	/// <summary>
-	/// HeroSkillsInitialize
-	/// </summary>
-	public void SkillsInitialize(ArrayList activeSkill , ArrayList activeSkillSelect , ArrayList passiveSkill , ArrayList passiveSkillSelect)
-	{
-		activeSkill = new ArrayList ();
-		activeSkillSelect = new ArrayList ();
-		passiveSkill = new ArrayList ();
-		passiveSkill = null;
-		passiveSkillSelect = new ArrayList ();
-		passiveSkillSelect = null;			
+			if(!reader.IsDBNull(reader.GetOrdinal("PassiveSkill1")))
+				passiveSkill.Add (reader.GetString(reader.GetOrdinal("PassiveSkill1")));
+			if(!reader.IsDBNull(reader.GetOrdinal("PassiveSkill2")))
+				passiveSkill.Add (reader.GetString(reader.GetOrdinal("PassiveSkill2")));
+		}
+		sql.CloseConnection ();
 	}
 }

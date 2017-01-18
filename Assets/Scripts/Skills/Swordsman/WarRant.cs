@@ -81,14 +81,15 @@ public class WarRant : MonoBehaviour {
 		effect.transform.position = TriggerPoint;
 		Destroy (effect, 2f);
 
-
+		var attUp = gameObject.AddComponent<ATTUP> ();
+		attUp.setSkillAttr (gameObject, realAttack, reakEffectTime, Effect);
 		ArrayList TargetList = patterns.AlliesFriend (gameObject , SpellRange);
 		if (TargetList.Count > 0) 
 		{
 			foreach (GameObject target in TargetList) 
 			{
-				var attUp = target.AddComponent<ATTUP> ();
-				attUp.setSkillAttr (gameObject, realAttack, reakEffectTime, Effect);
+				attUp = target.AddComponent<ATTUP> ();
+				attUp.setSkillAttr (target, realAttack, reakEffectTime, Effect);
 			}	
 		}
 
@@ -104,7 +105,7 @@ public class WarRant : MonoBehaviour {
 		Effect = "WarRant_Effect";
 		EffectTime = 10;
 		EffectTimeLevel = 0.5f;
-		SpellRange = 20f;			
+		SpellRange = 30f;			
 		Speed = 0f;
 		LifeTime = 3f;			
 		Attack = 25;//25%

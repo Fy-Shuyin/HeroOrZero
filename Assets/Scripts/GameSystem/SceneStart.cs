@@ -7,8 +7,8 @@ public class SceneStart : MonoBehaviour {
 	{
 		if (Input.GetKeyDown(KeyCode.Mouse0))
 		{
-			LoadStage.Globe.loadName = 1;
-			Application.LoadLevel(1);
+			LoadStage.Globe.loadName = 2;
+			Application.LoadLevel(0);
 		}
 	}
 }

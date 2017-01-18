@@ -37,6 +37,7 @@ public class FriendController : MonoBehaviour {
 	public float CriticalAdditional;	//追加暴击率
 	public float MoveSpeed;				//移动速度
 	public float SightRange;			//追击距离
+	public bool IsLive;					//存活
 
 	public ArrayList ActiveSkillSelect;	//选择的主动技能
 	public ArrayList PassiveSkillSelect;//选择的被动技能
