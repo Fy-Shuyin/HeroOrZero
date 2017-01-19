@@ -28,8 +28,8 @@ public class FingerEvent{
 			}
 		}
 
-		if (touch == 1) {
-			if (EventSystem.current.IsPointerOverGameObject ()) {
+		if (touch == 1 && Input.GetTouch(0).phase == TouchPhase.Began) {
+			if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) {
 				return;
 			}
 			Ray touchRay = Camera.main.ScreenPointToRay (Input.touches[0].position);

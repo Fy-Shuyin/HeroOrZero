@@ -25,7 +25,8 @@ public class GameSystem
 	ArrayList Heros(int num)
 	{
 		ArrayList heroList = new ArrayList ();
-		sql = new DBAccess("data source = HeroOrZero.db");
+		string appDBPath = Application.dataPath + "/HeroOrZero.db";
+		sql = new DBAccess("Data Source = " + appDBPath);
 		reader = sql.ReadOneTable("StageAttribute", new string[] { "ID" }, new string[] { "==" }, new string[] { num.ToString() });
 		while (reader.Read ()) 
 		{
@@ -44,7 +45,8 @@ public class GameSystem
 	ArrayList Enemy(int num)
 	{
 		ArrayList enemyList = new ArrayList ();
-		sql = new DBAccess("data source = HeroOrZero.db");
+		string appDBPath = Application.dataPath + "/HeroOrZero.db";
+		sql = new DBAccess("Data Source = " + appDBPath);
 		reader = sql.ReadOneTable("StageAttribute", new string[] { "ID" }, new string[] { "==" }, new string[] { num.ToString() });
 		while (reader.Read ()) 
 		{
@@ -72,7 +74,8 @@ public class GameSystem
 
 	public void ChangeData(string table , string key , string keyValue , string type , string value)
 	{
-		sql = new DBAccess("data source = HeroOrZero.db");
+		string appDBPath = Application.dataPath + "/HeroOrZero.db";
+		sql = new DBAccess("Data Source = " + appDBPath);
 		sql.UpdateValues(table, new string[]{ type }, new string[]{"'" + value + "'"}, key , "=", "'" + keyValue +"'");
 		sql.CloseConnection ();
 	}

@@ -137,6 +137,7 @@ public class SceneBattle : MonoBehaviour {
 		isHeroLive ();
 		HeroAllStatusUI (Hero_One, Hero_Two, Hero_Three);
 		HeroOneStatusUI (Battle_Camera_Target);	
+		GameOver ();
 	}
 
 	void StageListen()
@@ -155,8 +156,7 @@ public class SceneBattle : MonoBehaviour {
 		StageLevel++;
 		if (StageLevel == 16) 
 		{
-			LoadStage.Globe.loadName = 3;
-			Application.LoadLevel(0);
+			StartCoroutine(GameOver(5f , 3));
 		}
 		gameSystem.BattleStart (StageLevel , ref HeroList , ref EnemyList);
 		setEnemy (EnemyList);
@@ -172,9 +172,15 @@ public class SceneBattle : MonoBehaviour {
 		if (!townHallAtt.isLife) 
 		{
 			//GameOver
-			LoadStage.Globe.loadName = 4;
-			Application.LoadLevel(0);
+			StartCoroutine(GameOver(5f , 4));
 		}
+	}
+
+	IEnumerator GameOver(float waitTime , int loadNum)
+	{
+		yield return new WaitForSeconds(waitTime);
+		LoadStage.Globe.loadName = loadNum;
+		Application.LoadLevel(0);
 	}
 
 	void CameraOn()
@@ -326,13 +332,42 @@ public class SceneBattle : MonoBehaviour {
 
 	void isHeroLive()
 	{
-		if (!Patterns.TargetIsLive(Hero_One) || Hero_One == null) 
+		if (Hero_One != null) 
 		{
-			Hero_One_Icon.GetComponent<Button> ().onClick.RemoveAllListeners ();
-			if (Battle_CameraOn) 
+			if (!Patterns.TargetIsLive(Hero_One)) 
 			{
-				Battle_CameraOn = false;
-				setBattleCameraTargetandGUITarget (null);
+				Hero_One_Icon.GetComponent<Button> ().onClick.RemoveAllListeners ();
+				if (Battle_CameraOn) 
+				{
+					Battle_CameraOn = false;
+					setBattleCameraTargetandGUITarget (null);
+				}
+			}
+		}
+
+		if (Hero_Two != null) 
+		{
+			if (!Patterns.TargetIsLive(Hero_Two) || Hero_Two == null) 
+			{
+				Hero_Two_Icon.GetComponent<Button> ().onClick.RemoveAllListeners ();
+				if (Battle_CameraOn) 
+				{
+					Battle_CameraOn = false;
+					setBattleCameraTargetandGUITarget (null);
+				}
+			}
+		}
+
+		if (Hero_Three != null) 
+		{
+			if (!Patterns.TargetIsLive(Hero_Three) || Hero_Three == null) 
+			{
+				Hero_Three_Icon.GetComponent<Button> ().onClick.RemoveAllListeners ();
+				if (Battle_CameraOn) 
+				{
+					Battle_CameraOn = false;
+					setBattleCameraTargetandGUITarget (null);
+				}
 			}
 		}
 	}

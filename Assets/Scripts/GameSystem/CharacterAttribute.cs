@@ -53,7 +53,8 @@ public class CharacterAttribute {
 		ref float defence , ref float defenceAdditional , ref float dexterity , ref float dexterityAdditional , ref float hit , ref float hitAdditional , ref float agility , ref float agilityAdditional ,
 		ref float dodge , ref float dodgeAdditional , ref float critical , ref float criticalAdditional , ref float moveSpeed , ref float fieldOfVision , ref float sightRange)
 	{
-		sql = new DBAccess("data source = HeroOrZero.db");
+		string appDBPath = Application.dataPath + "/HeroOrZero.db";
+		sql = new DBAccess("Data Source = " + appDBPath);
 		reader = sql.ReadOneTable("Heros", new string[] { "ObjectName" }, new string[] { "==" }, new string[] {"'" + type + "'"});
 		while (reader.Read ()) 
 		{
@@ -97,7 +98,8 @@ public class CharacterAttribute {
 		activeSkillSelect = new ArrayList ();
 		passiveSkill = new ArrayList ();
 		passiveSkillSelect = new ArrayList ();
-		sql = new DBAccess("data source = HeroOrZero.db");
+		string appDBPath = Application.dataPath + "/HeroOrZero.db";
+		sql = new DBAccess("Data Source = " + appDBPath);
 		reader = sql.ReadOneTable("HeroSkills", new string[] { "ObjectName" }, new string[] { "==" }, new string[] {"'" + type + "'"});
 		while (reader.Read ()) 
 		{
@@ -138,7 +140,8 @@ public class CharacterAttribute {
 		ref float defence , ref float defenceAdditional , ref float dexterity , ref float dexterityAdditional , ref float hit , ref float hitAdditional , ref float agility , ref float agilityAdditional ,
 		ref float dodge , ref float dodgeAdditional , ref float critical , ref float criticalAdditional , ref float moveSpeed , ref float fieldOfVision , ref float sightRange)
 	{
-		sql = new DBAccess("data source = HeroOrZero.db");
+		string appDBPath = Application.dataPath + "/HeroOrZero.db";
+		sql = new DBAccess("Data Source = " + appDBPath);
 		reader = sql.ReadOneTable("Enemies", new string[] { "ObjectName" }, new string[] { "==" }, new string[] {"'" + type +"'"});
 		while (reader.Read ()) 
 		{
@@ -178,7 +181,8 @@ public class CharacterAttribute {
 	{
 		activeSkill = new ArrayList();
 		passiveSkill = new ArrayList();
-		sql = new DBAccess("data source = HeroOrZero.db");
+		string appDBPath = Application.dataPath + "/HeroOrZero.db";
+		sql = new DBAccess("Data Source = " + appDBPath);
 		reader = sql.ReadOneTable("EnemySkills", new string[] { "ObjectName" }, new string[] { "==" }, new string[] {"'" + type + "'"});
 		while (reader.Read ()) 
 		{

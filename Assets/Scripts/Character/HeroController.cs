@@ -183,6 +183,7 @@ public class HeroController : MonoBehaviour
 		if (HealthPower + HealthPowerAdditional <= 0) 
 		{
 			IsLive = false;
+			AImode = true;
 			gameObject.GetComponent<Collider> ().enabled = false;
 		}
 	}
