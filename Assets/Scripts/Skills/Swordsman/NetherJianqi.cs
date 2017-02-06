@@ -1,32 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NetherJianqi : MonoBehaviour {
+public class NetherJianqi : MonoBehaviour 
+{
 
-	FingerEvent finger = new FingerEvent ();
 	PatternsOfAttribute patterns = new PatternsOfAttribute();
 
 	public bool isTrigger;
 	public bool isSpell;
 	private Vector3 TriggerPoint;
 	public GameObject Target;
-	private string TargetTag;
-	private bool TargetSelect;
-	private int TargetLayer;
 
 	//DataBase
 	public int Level;
-	public string SkilType;
+	public string SkillType;
 	public int SkillMethod;
 	private string Effect;
 	private float EffectTime;
-	private int   AttackType;			//是否飛行
 	private float SpellRange;			//飞行距离
 	private float Speed;				//飛行速度
+	private float Angle;				//飛行角度
 	private float LifeTime;				//存在时间
 	private float Attack;				//攻击力
-	private float AttackLevel;			//攻击力增长
-	private float RealAttack;			//实际攻击力
 	private float Hit;					//命中率
 	private float Critical;				//暴击率
 	private float Cooldown;				//冷却时间
@@ -34,16 +29,6 @@ public class NetherJianqi : MonoBehaviour {
 
 	void Start () 
 	{
-		if (gameObject.tag.Equals ("Ally")) 
-		{
-			TargetLayer = 1 << LayerMask.NameToLayer ("Enemy");
-			TargetTag = "Enemy";
-		} 
-		else if (gameObject.tag.Equals ("Enemy")) 
-		{
-			TargetLayer = 1 << LayerMask.NameToLayer ("Ally");
-			TargetTag = "Ally";
-		}
 		skllInitialize ();
 	}
 	
@@ -75,19 +60,19 @@ public class NetherJianqi : MonoBehaviour {
 	{
 		Collider collider = gameObject.GetComponent<Collider> ();
 		TriggerPoint = gameObject.transform.position;
-		TriggerPoint.y += collider.bounds.size.y/2;
-		TriggerPoint.z += 5f;
-		RealAttack = Attack + AttackLevel * Level;
+		TriggerPoint.x += (collider.bounds.size.x/2) * collider.transform.forward.normalized.x;
+		TriggerPoint.y += (collider.bounds.size.y/2);
+		TriggerPoint.z += (collider.bounds.size.z/2) * collider.transform.forward.normalized.z;
 		Hit = patterns.getHit(gameObject);
 		Critical = patterns.getCritical(gameObject);
 
-		Debug.Log ("att-" + RealAttack + "hit-" + Hit + "cri-" + Critical);
+		Debug.Log ("att-" + Attack + "hit-" + Hit + "cri-" + Critical);
 		var prefab = Resources.Load ("Skills/NetherJianqi");
 		GameObject effect = Instantiate (prefab) as GameObject;
 		effect.transform.position = TriggerPoint;
 		effect.transform.LookAt (Target.transform.position);
 		var attRes = effect.AddComponent<AttackResolution> ();
-		attRes.setSkillAttr ( TargetTag, TriggerPoint, Target, Effect, EffectTime, AttackType, SkillMethod, Speed, Attack, Hit, Critical);
+		attRes.setSkillAttr (TriggerPoint, Target, Effect, EffectTime, SkillMethod, Speed, Angle, Attack, Hit, Critical, true);
 		Destroy(effect,1.5f);
 	}
 
@@ -96,16 +81,15 @@ public class NetherJianqi : MonoBehaviour {
 		isTrigger = false;
 		isSpell = false;
 		Level = 1;
-		SkilType = "Attack1";
+		SkillType = "Attack1";
 		SkillMethod = 1;
 		Effect = "NetherJianqi_Effect";
-		EffectTime = 1;
-		AttackType = 1;		
+		EffectTime = 1;	
 		SpellRange = 20f;			
 		Speed = 20f;
+		Angle = 0;
 		LifeTime = 3f;			
 		Attack = 75;
-		AttackLevel = 30;
 		Cooldown = 7f;
 		TriggerPoint = new Vector3 ();
 		Target = null;

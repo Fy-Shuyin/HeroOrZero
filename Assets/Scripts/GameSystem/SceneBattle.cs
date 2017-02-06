@@ -99,7 +99,7 @@ public class SceneBattle : MonoBehaviour {
 		point [2] = GameObject.Find ("StandbyPosition (2)").transform.position;
 		point [3] = GameObject.Find ("StandbyPosition (3)").transform.position;
 
-		StageLevel = 0; 
+		StageLevel = 10; 
 	}
 
 	void Start ()
@@ -187,10 +187,10 @@ public class SceneBattle : MonoBehaviour {
 	{
 		if (Battle_CameraOn)
 		{
-			Battle_Camera.transform.position = new Vector3(Battle_Camera_Target.transform.position.x,25f,Battle_Camera_Target.transform.position.z-15);
+			Battle_Camera.transform.position = new Vector3(Battle_Camera_Target.transform.position.x,30f,Battle_Camera_Target.transform.position.z-5);
 		} else 
 		{
-			Battle_Camera.transform.position = new Vector3 (0,75,-60);
+			Battle_Camera.transform.position = new Vector3 (0,90,-55);
 		}
 	}
 
@@ -337,7 +337,7 @@ public class SceneBattle : MonoBehaviour {
 			if (!Patterns.TargetIsLive(Hero_One)) 
 			{
 				Hero_One_Icon.GetComponent<Button> ().onClick.RemoveAllListeners ();
-				if (Battle_CameraOn) 
+				if (Battle_CameraOn && Battle_Camera_Target.Equals(Hero_One)) 
 				{
 					Battle_CameraOn = false;
 					setBattleCameraTargetandGUITarget (null);
@@ -347,10 +347,10 @@ public class SceneBattle : MonoBehaviour {
 
 		if (Hero_Two != null) 
 		{
-			if (!Patterns.TargetIsLive(Hero_Two) || Hero_Two == null) 
+			if (!Patterns.TargetIsLive(Hero_Two)) 
 			{
 				Hero_Two_Icon.GetComponent<Button> ().onClick.RemoveAllListeners ();
-				if (Battle_CameraOn) 
+				if (Battle_CameraOn && Battle_Camera_Target.Equals(Hero_Two)) 
 				{
 					Battle_CameraOn = false;
 					setBattleCameraTargetandGUITarget (null);
@@ -360,10 +360,10 @@ public class SceneBattle : MonoBehaviour {
 
 		if (Hero_Three != null) 
 		{
-			if (!Patterns.TargetIsLive(Hero_Three) || Hero_Three == null) 
+			if (!Patterns.TargetIsLive(Hero_Three)) 
 			{
 				Hero_Three_Icon.GetComponent<Button> ().onClick.RemoveAllListeners ();
-				if (Battle_CameraOn) 
+				if (Battle_CameraOn && Battle_Camera_Target.Equals(Hero_Three)) 
 				{
 					Battle_CameraOn = false;
 					setBattleCameraTargetandGUITarget (null);
@@ -445,7 +445,7 @@ public class SceneBattle : MonoBehaviour {
 		float hpCurrent = (float)Patterns.getHealthPower (target);
 		float hpMax = (float)Patterns.getHealthPowerMax (target);
 		float hpBarValue = hpCurrent/hpMax;
-		float militaryStrengthCurrent = (float)Patterns.AlliesFriend(target , 0).Count;
+		float militaryStrengthCurrent = (float)Patterns.AlliesFriendList(target , 0).Count;
 		float leaderShip = (float)Patterns.getLeaderShip (target);
 		float militaryStrengthValue = militaryStrengthCurrent / leaderShip;
 		if (num == 1) 

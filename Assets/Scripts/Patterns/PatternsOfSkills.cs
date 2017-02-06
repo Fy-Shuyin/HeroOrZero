@@ -96,23 +96,23 @@ public class PatternsOfSkills
 
 		if (name == "NetherJianqi") 
 		{
-			type = obj.GetComponent<NetherJianqi> ().SkilType;
+			type = obj.GetComponent<NetherJianqi> ().SkillType;
 		}
 		if (name == "WarRant") 
 		{
-			type = obj.GetComponent<WarRant> ().SkilType;
+			type = obj.GetComponent<WarRant> ().SkillType;
 		}
 		if (name == "CrossSwords") 
 		{
-			type = obj.GetComponent<CrossSwords> ().SkilType;
+			type = obj.GetComponent<CrossSwords> ().SkillType;
 		}
 		if (name == "Barrier") 
 		{
-			type = obj.GetComponent<Barrier> ().SkilType;
+			type = obj.GetComponent<Barrier> ().SkillType;
 		}
 		if (name == "Captain") 
 		{
-			type = obj.GetComponent<Captain> ().SkilType;
+			type = obj.GetComponent<Captain> ().SkillType;
 		}
 
 		return type;
@@ -161,6 +161,31 @@ public class PatternsOfSkills
 		if (name == "CrossSwords") 
 		{
 			obj.GetComponent<CrossSwords> ().Spell ();
+			return;
+		}
+		if (name == "InstantChop") 
+		{
+			obj.GetComponent<InstantChop> ().Spell ();
+			return;
+		}
+		if (name == "PoisonBlade") 
+		{
+			obj.GetComponent<PoisonBlade> ().Spell ();
+			return;
+		}
+		if (name == "ShadowAttack") 
+		{
+			obj.GetComponent<ShadowAttack> ().Spell ();
+			return;
+		}
+		if (name == "SpiritSpear") 
+		{
+			obj.GetComponent<SpiritSpear> ().Spell ();
+			return;
+		}
+		if (name == "NightAndDream") 
+		{
+			obj.GetComponent<NightAndDream> ().Spell ();
 			return;
 		}
 	}

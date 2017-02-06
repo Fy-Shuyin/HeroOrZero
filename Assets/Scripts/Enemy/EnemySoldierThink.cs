@@ -5,7 +5,9 @@ public class EnemySoldierThink :  EnemyIState
 {
 	Vector3 EnemyVector, TargetVector;
 	public void Enter(EnemyController Enemy)
-	{}
+	{
+		Enemy.Target ();
+	}
 
 	public void Execute(EnemyController Enemy)
 	{

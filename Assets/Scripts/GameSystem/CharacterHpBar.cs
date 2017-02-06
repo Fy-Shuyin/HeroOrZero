@@ -26,13 +26,14 @@ public class CharacterHpBar : MonoBehaviour {
 
 		//Parent
 		transform.SetParent(canvasObject.transform);
+		transform.localScale = new Vector3 (1,1,1);
 
 		//Bar
 		HpBar.value = HpBar.maxValue;
 
 		//Hight
-		//hightCharacter = targetCharacter.transform.localScale.y * targetCharacter.GetComponent<Collider> ().bounds.size.y;
-		hightCharacter = targetCharacter.GetComponent<Collider> ().bounds.size.y;
+		hightCharacter = targetCharacter.transform.localScale.y * targetCharacter.GetComponent<Collider> ().bounds.size.y;
+		//hightCharacter = targetCharacter.GetComponent<Collider> ().bounds.size.y;
 		//Debug.Log (hightCharacter);
 	}
 

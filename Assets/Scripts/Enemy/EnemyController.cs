@@ -15,9 +15,10 @@ public class EnemyController : MonoBehaviour {
 	public string Type;					//怪物类型
 	public string CharacterName;		//人物名稱
 	public string CharacterType;		//人物性格
-	public string WeaponSound;		//武器声音
+	public string WeaponSound;			//武器声音
 	public int AttackType;				//攻击方式	true 近		false 远
 	public float AttackSpeed;			//攻击速度
+	public float AttackAngle;			//攻擊角度
 	public float AttackCooldown;		//攻击冷却
 	public float AttackRange;			//攻击距离
 	public int HealthPowerMax;			//最大生命值
@@ -60,6 +61,7 @@ public class EnemyController : MonoBehaviour {
 		Attribute.AttributeInitialize (Type , ref CharacterName , ref WeaponSound , ref AttackType , ref AttackSpeed , ref AttackRange , ref HealthPower , ref HealthPowerAdditional ,
 			ref Attack , ref AttackAdditional , ref Defence , ref DefenceAdditional , ref Dexterity , ref DexterityAdditional , ref Hit , ref HitAdditional , ref Agility , ref AgilityAdditional ,
 			ref Dodge , ref DodgeAdditional , ref Critical , ref CriticalAdditional , ref MoveSpeed , ref FieldOfVision , ref SightRange);
+		HealthPowerMax = HealthPower + HealthPowerAdditional;
 		EnemyAgent.speed = MoveSpeed/60f;
 		IsLive = true;
 
@@ -98,7 +100,7 @@ public class EnemyController : MonoBehaviour {
 
 	public void Target()
 	{
-		Collider[] cols = Patterns.Distance(gameObject,SightRange);
+		Collider[] cols = Patterns.DistanceList(gameObject,SightRange);
 		if (cols.Length > 0)
 		{
 			AttackTarget = cols[0].gameObject;
@@ -116,11 +118,11 @@ public class EnemyController : MonoBehaviour {
 		isSkill = false;
 		Vector3 point = gameObject.transform.position;
 		point.y += 1.5f;
-		var prefab = Resources.Load ("AttackResolution");
+		var prefab = Resources.Load ("AttackEffect/AttackResolution");
 		GameObject resolution = Instantiate (prefab) as GameObject;
 		resolution.transform.position = point;
 		var attackResolution = resolution.GetComponent<AttackResolution> ();
-		attackResolution.setAttAttr (TargetTag, gameObject.transform.position , AttackTarget , AttackType , AttackSpeed ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
+		attackResolution.setAttAttr (gameObject.transform.position , AttackTarget , AttackType , AttackSpeed , AttackAngle ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
 	}
 
 	void Death()

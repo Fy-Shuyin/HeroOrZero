@@ -4,11 +4,10 @@ using System.Collections;
 public class Barrier : MonoBehaviour {
 
 	private int Level;
-	public string SkilType;
+	public string SkillType;
 	public int SkillMethod;
 	private string Effect;
 	private float Value;
-	private float ValueLevel;
 	public int RealValue;
 	private Vector3 TriggerPoint;
 
@@ -17,20 +16,14 @@ public class Barrier : MonoBehaviour {
 		skllInitialize ();
 	}
 
-	void Update () 
-	{
-	
-	}
-
 	void skllInitialize()
 	{
 		Level = 1;
-		SkilType = "Buff";
+		SkillType = "Buff";
 		SkillMethod = 4;
 		Effect = "WarRant_Effect";		
-		Value = 5;//25%
-		ValueLevel = 3;
-		RealValue = (int)(Value + (ValueLevel * Level));
+		Value = 8;//8%
+		RealValue = (int)Value;
 		TriggerPoint = new Vector3 ();
 	}
 }

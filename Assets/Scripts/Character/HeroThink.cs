@@ -6,6 +6,10 @@ public class HeroThink : HeroIState
 	Vector3 HeroVector, TargetVector;
 	public void Enter(HeroController Hero)
 	{
+		if (!Hero.AImode) 
+		{
+			//Hero.Target ();
+		}
 	}
 
 	public void Execute(HeroController Hero)

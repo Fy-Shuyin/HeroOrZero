@@ -3,21 +3,28 @@ using System.Collections;
 
 public class AttackResolution : MonoBehaviour {
 
-	public bool isSkill;
-	public string Effect;
-	public float EffectTime;
-	public Vector3 TriggerPoint;
-	public GameObject Target;
-	public string TargetTag;
-	public int AttackType;				//是否飛行
-	public int SkillType;				//单体 群体
-	public float Speed;					//飛行速度
-	public float Attack;				//物理攻击力
-	public float Hit;					//命中率
-	public float Critical;				//暴击率
-	public float TargetDefence;			//目标防御
-	public float TargetDodge;			//目标闪避
-	public bool Action;
+	PatternsOfAttribute Attribute = new PatternsOfAttribute();
+
+	private bool isSkill;
+	private Vector3 TriggerPoint;
+	private GameObject Target;
+	private string TargetTag;
+	private string Effect;				//特效
+	private float EffectTime;			//特效持續時間
+	private int AttackType;				//是否飛行
+	private int SkillMethod;			//单体 群体
+	private float Speed;				//飛行速度
+	private float Angle;				//角度
+	private float Attack;				//物理攻击力
+	private float Hit;					//命中率
+	private float Critical;				//暴击率
+	private float TargetDefence;		//目标防御
+	private float TargetDodge;			//目标闪避
+	private bool Action;
+	private Vector3 Vector;
+	private float VerticalSpeed;
+	private float HorizontalSpeed;
+	private float TimeCount;
 
 	void Update () 
 	{
@@ -27,56 +34,104 @@ public class AttackResolution : MonoBehaviour {
 		}
 		if (Action) 
 		{
-			Vector3 vector = (Target.transform.position - TriggerPoint).normalized;
-			if (isSkill) 
+			if (Speed != 0) 
 			{
-				if (AttackType == 1 && SkillType == 1)
+/*				if (Angle != 0 && AttackType == 1) 
 				{
-					vector *= Speed * 2 * Time.deltaTime;
-					gameObject.transform.position += vector;
+					if (VerticalSpeed == 0 && HorizontalSpeed == 0) 
+					{
+						VerticalSpeed = Speed * Mathf.Sin (Angle * Mathf.PI / 180);
+						HorizontalSpeed = Speed * Mathf.Cos (Angle * Mathf.PI / 180);
+						Vector *= HorizontalSpeed * Time.deltaTime;
+						TimeCount = 0;
+					}
+					TimeCount += Time.deltaTime;
+					float time = VerticalSpeed / 2;
+					Debug.Log ("垂直初始速度 " + VerticalSpeed + "减少量 " + (2 * TimeCount) + "速度 " + (VerticalSpeed - (2 * TimeCount)));
+					if (VerticalSpeed - (2 * TimeCount) > 0) {
+
+						Vector.y = (VerticalSpeed * TimeCount - TimeCount * TimeCount);
+						Debug.Log ("垂直距离1 " + Vector.y );
+					} else {
+						Vector.y = -(TimeCount * TimeCount);
+						Debug.Log ("垂直距离2 " + Vector.y );
+					}
+
 				}
-			} 
-			else
-			{
-				vector *= 5 * Time.deltaTime;
-				gameObject.transform.position += vector;
+*/
+				if (AttackType == 1) 
+				{
+					Vector = (Target.transform.position - gameObject.transform.position).normalized;
+					Vector *= Speed * Time.deltaTime;
+				}
+				else 
+				{
+					Vector = (Target.transform.position - TriggerPoint).normalized;
+					Vector *= Speed * Time.deltaTime;
+				}
+				gameObject.transform.position += Vector;
 			}
 		}
 	}
-	public void setAttAttr(string targetTag ,  Vector3 triggerPoint , GameObject target , int attackType , float speed , float att , float hit , float cri)
+	/// <summary>
+	/// 設置普通攻擊數值
+	/// </summary>
+	/// <param name="triggerPoint">單位的位置</param>
+	/// <param name="target">攻擊對象</param>
+	/// <param name="attackType">攻擊類型</param>
+	/// <param name="speed">攻擊速度(遠程攻擊有效)</param>
+	/// <param name="angle">攻擊角度(遠程攻擊有效)</param>
+	/// <param name="att">攻擊力</param>
+	/// <param name="hit">命中率</param>
+	/// <param name="cri">爆擊率</param>
+	public void setAttAttr(Vector3 triggerPoint , GameObject target , int attackType , float speed , float angle , float att , float hit , float cri)
 	{
-		this.isSkill = false;
-		this.AttackType = attackType;
-		this.Speed = speed;
-		this.TargetTag = targetTag;
-		this.TriggerPoint = triggerPoint;
-		this.Target = target;
-		this.Attack = att;
-		this.Hit = hit;
-		this.Critical = cri;
-		this.Action = true;
-		Destroy(gameObject,1.5f);
+		isSkill = false;
+		TriggerPoint = triggerPoint;
+		Target = target;
+		TargetTag = target.tag;
+		AttackType = attackType;
+		Speed = speed * 2.5f;
+		Angle = angle;
+		Attack = att;
+		Hit = hit;
+		Critical = cri;
+		Action = true;
+		Destroy(gameObject,2f);
 	}
-
-	public void setSkillAttr(string targetTag , Vector3 triggerPoint , GameObject target , string eft , float eftTime , int attackType , int skillType , float speed , float att , float hit , float cri)
+	/// <summary>
+	/// 設置技能攻擊數值
+	/// </summary>
+	/// <param name="triggerPoint">單位的位置</param>
+	/// <param name="target">攻擊對象</param>
+	/// <param name="eft">特效名稱</param>
+	/// <param name="eftTime">特效持續時間</param>
+	/// <param name="skillType">技能類型</param>
+	/// <param name="speed">技能速度(遠程技能有效)</param>
+	/// <param name="angle">技能飛行角度(遠程技能有效)</param>
+	/// <param name="att">攻擊力</param>
+	/// <param name="hit">命中率</param>
+	/// <param name="cri">爆擊率</param>
+	public void setSkillAttr( Vector3 triggerPoint , GameObject target , string eft , float eftTime , int skillMethod , float speed , float angle , float att , float hit , float cri , bool action)
 	{
-		this.isSkill = true;
-		this.TargetTag = targetTag;
-		this.TriggerPoint = triggerPoint;
-		this.Target = target;
-		this.Effect = eft;
-		this.EffectTime = eftTime;
-		this.AttackType = attackType;
-		this.SkillType = skillType;
-		this.Speed = speed;
-		this.Attack = att;
-		this.Hit = hit;
-		this.Critical = cri;
-		this.Action = true;
+		isSkill = true;
+		TriggerPoint = triggerPoint;
+		Target = target;
+		TargetTag = target.tag;
+		Effect = eft;
+		EffectTime = eftTime;
+		SkillMethod = skillMethod;
+		Speed = speed * 2.5f;
+		Angle = angle;
+		Attack = att;
+		Hit = hit;
+		Critical = cri;
+		Action = action;
 	}
 
 	void OnTriggerEnter(Collider collider)
 	{
+		//碰觸到邊界的時候
 		if (collider.tag == "Finish")
 		{
 			Destroy(gameObject);
@@ -104,7 +159,7 @@ public class AttackResolution : MonoBehaviour {
 			//图标 文字生成
 
 		}
-
+		//當碰觸目標為守護對象時
 		if (collider.tag == "Guardian")
 		{
 			Destroy(gameObject);
@@ -123,78 +178,57 @@ public class AttackResolution : MonoBehaviour {
 			}
 			collider.GetComponent<TownHallAttribute> ().HealthPower -= damage;
 		}
-
+		//當碰觸到目標單位且不是守護對象時
 		if (collider.tag == TargetTag && collider.tag != "Guardian")
 		{
-			if (SkillType <= 1) 
-			{
-				Destroy(gameObject);
-			}
+			///當是技能的時候判定特效
 			if (isSkill) 
 			{
-				if (Effect != null) 
+				if (SkillMethod == 1) 
 				{
-					loadEffect (collider , Effect , EffectTime);
+					Destroy (gameObject);
+				}
+				if (Effect != "")
+				{
+					loadEffect (collider, Effect, EffectTime);
 				}
 			}
-
+			else 
+			{
+				if (AttackType <= 1)
+					Destroy (gameObject);
+			}
+			///防禦技能判定
 			if (isSkillBarrier (collider)) 
 			{
 				return;
 			}
-
-			if (TargetTag == "Ally") 
-			{
-				Component com = collider.GetComponent<HeroController> ();
-				if (com != null)
-				{
-					TargetDefence = collider.GetComponent<HeroController> ().Defence + collider.GetComponent<HeroController> ().DefenceAdditional;
-					TargetDodge = collider.GetComponent<HeroController> ().Dodge + collider.GetComponent<HeroController> ().DodgeAdditional;
-				}
-				else
-				{
-					TargetDefence = collider.GetComponent<FriendController> ().Defence + collider.GetComponent<FriendController> ().DefenceAdditional;
-					TargetDodge = collider.GetComponent<FriendController> ().Dodge + collider.GetComponent<FriendController> ().DodgeAdditional;
-				}
-			}
-			if (TargetTag == "Enemy") 
-			{
-				TargetDefence = collider.GetComponent<EnemyController> ().Defence + collider.GetComponent<EnemyController> ().DefenceAdditional;
-				TargetDodge = collider.GetComponent<EnemyController> ().Dodge + collider.GetComponent<EnemyController> ().DodgeAdditional;
-			}
-
-			if (Random.Range (0, 101) <= (int)(Hit - Hit * TargetDodge/100)) 
+				
+			TargetDodge = Attribute.getDodge (collider.gameObject);
+			if (Random.Range (0, 101) <= (int)(Hit - Hit * TargetDodge / 100)) 
 			{
 				if (Random.Range (0, 101) <= (int)Critical) 
 				{
 					Attack *= 2;
 				}
 
-				int damage = (int)(Attack - TargetDefence);
-				if (damage <= 0) 
+				TargetDefence = Attribute.getDefence (collider.gameObject);
+				int damage = (int)(TargetDefence - Attack);
+				if (damage >= 0) 
 				{
-					damage = 1;
+					damage = -1;
 				}
-				if (TargetTag == "Ally") 
-				{
-					Component com = collider.GetComponent<HeroController> ();
-					if (com != null) 
-					{
-						collider.GetComponent<HeroController> ().HealthPower -= damage;
-					}
-					else
-					{
-						collider.GetComponent<FriendController> ().HealthPower -= damage;
-					}
-				}
-				if (TargetTag == "Enemy") 
-				{
-					collider.GetComponent<EnemyController> ().HealthPower -= damage;
-				}
+				Attribute.setHealthPower (collider.gameObject, damage);
 			}
 		}
 	}
 
+	/// <summary>
+	/// 當技能特效不為空的時候創造特效
+	/// </summary>
+	/// <param name="collider">單位的Collider</param>
+	/// <param name="eftName">緊跟特效的名字</param>
+	/// <param name="destroyTime">特效存在時間</param>
 	void loadEffect(Collider collider , string eftName , float destroyTime)
 	{
 		if (!eftName.Equals ("")) 
@@ -211,7 +245,11 @@ public class AttackResolution : MonoBehaviour {
 
 		}
 	}
-
+	/// <summary>
+	/// Barrier技能防禦判定
+	/// </summary>
+	/// <returns><c>true</c>, 隨機數在概率以內, <c>false</c> 隨機數在概率外</returns>
+	/// <param name="collider">單位的Collider</param>
 	bool isSkillBarrier(Collider collider)
 	{
 		bool isExist = false;

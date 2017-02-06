@@ -13,8 +13,8 @@ public class HeroController : MonoBehaviour
 	public NavMeshAgent HeroAgent;
 	public Animator HeroAnimator;
 
-	private bool AImode;
-	Ray TouchRay;
+	public bool AImode;
+	private Ray TouchRay;
 	public Vector3 TouchPosition;
 
 	public string CharacterName;		//人物名稱
@@ -25,6 +25,7 @@ public class HeroController : MonoBehaviour
 	public int AttackType;				//攻击方式	0 近		1 远
 	public float AttackSpeed;			//攻击速度
 	public float AttackRange;			//攻击距离
+	public float AttackAngle;			//攻击角度
 	public int HealthPowerMax;			//最大生命值
 	public int HealthPower;				//生命值
 	public int HealthPowerAdditional;	//追加生命值
@@ -46,6 +47,7 @@ public class HeroController : MonoBehaviour
 	public float FieldOfVision;			//视野范围
 	public float SightRange;			//追击距离
 	public bool IsLive;					//存活
+	public float StopTime;				//停止事件
 
 	public ArrayList ActiveSkill;		//主动技能
 	public ArrayList ActiveSkillSelect;	//选择的主动技能
@@ -56,8 +58,10 @@ public class HeroController : MonoBehaviour
 	public int[]	FriendsNumber;		//友軍數量
 	public int 		Command;			//命令
 
+	private Collider HeroCollider;
 	public Vector3 MovePoint;			//移动地点
 	public GameObject AttackTarget;		//攻击目标
+	private GameObject AttackTargetEffect;
 	public string AttackTargetTag;		//目标类型
 	public float AttackCooldown;		//攻擊冷卻
 	string Type;
@@ -90,6 +94,7 @@ public class HeroController : MonoBehaviour
 		Skills.setSkills (gameObject, ActiveSkillSelect);
 		Skills.setSkills (gameObject, PassiveSkillSelect);
 
+		HeroCollider = gameObject.GetComponent<Collider> ();
 		AttackTarget = null;
 		AImode = true;
 
@@ -109,6 +114,14 @@ public class HeroController : MonoBehaviour
 		{
 			Manual ();
 		}
+		else 
+		{
+			if (AttackTargetEffect != null) 
+			{
+				Destroy(AttackTargetEffect.transform.FindChild ("AttactTarget(Clone)").gameObject);
+				AttackTargetEffect = null;
+			}
+		}
 		Death ();
 	}
 	//モードを設定する
@@ -125,6 +138,19 @@ public class HeroController : MonoBehaviour
 	void Manual()
 	{
 		FingerEvent. ClickPoint (gameObject);
+		if (AttackTarget != null && AttackTarget != AttackTargetEffect) 
+		{
+			if (AttackTargetEffect != null) 
+			{
+				Destroy(AttackTargetEffect.transform.FindChild ("AttactTarget(Clone)").gameObject);
+			}
+			AttackTargetEffect = AttackTarget;
+			var prefab = Resources.Load ("AttackEffect/AttactTarget");
+			GameObject effect = Instantiate (prefab) as GameObject;
+			effect.transform.position = AttackTarget.transform.position;
+			effect.transform.SetParent(AttackTarget.transform);
+			effect.transform.localScale = new Vector3 (1,1,1);
+		}
 	}
 
 	public void ChangeState(HeroIState nextState)
@@ -145,10 +171,15 @@ public class HeroController : MonoBehaviour
 			ChangeState (new HeroMove ());
 		}
 	}
+	public void ChangeToStopStage(float stopTime)
+	{
+		StopTime = stopTime;
+		ChangeState (new HeroStop ());
+	}
 
 	public void Target()
 	{
-		Collider[] cols = Patterns.Distance(gameObject,FieldOfVision);
+		Collider[] cols = Patterns.DistanceList(gameObject,FieldOfVision);
 		if (cols.Length > 0) 
 		{
 			AttackTarget = cols[0].gameObject;
@@ -170,12 +201,26 @@ public class HeroController : MonoBehaviour
 	public void runAttack()
 	{
 		Vector3 point = gameObject.transform.position;
-		point.y += 2f;
-		var prefab = Resources.Load ("AttackResolution");
-		GameObject resolution = Instantiate (prefab) as GameObject;
-		resolution.transform.position = point;
-		var attackResolution = resolution.GetComponent<AttackResolution> ();
-		attackResolution.setAttAttr (AttackTargetTag, gameObject.transform.position , AttackTarget , AttackType , AttackSpeed ,Attack + AttackAdditional , Hit + HitAdditional, Critical + CriticalAdditional);
+
+		if (AttackType == 0) 
+		{
+			point.y += HeroCollider.bounds.size.y/2;
+			var prefab = Resources.Load ("AttackEffect/AttackResolution");
+			GameObject resolution = Instantiate (prefab) as GameObject;
+			resolution.transform.position = point;
+			var attackResolution = resolution.GetComponent<AttackResolution> ();
+			attackResolution.setAttAttr (gameObject.transform.position, AttackTarget, AttackType, AttackSpeed, AttackAngle ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
+		}
+		if (AttackType == 1) 
+		{
+			//攻击模型数据库待添加
+			point.y += HeroCollider.bounds.size.y;
+			var prefab = Resources.Load ("AttackEffect/MageAttack");
+			GameObject resolution = Instantiate (prefab) as GameObject;
+			resolution.transform.position = point;
+			var attackResolution = resolution.AddComponent<AttackResolution> ();
+			attackResolution.setAttAttr (gameObject.transform.position, AttackTarget, AttackType, AttackSpeed, AttackAngle ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
+		}
 	}
 
 	public void Death()

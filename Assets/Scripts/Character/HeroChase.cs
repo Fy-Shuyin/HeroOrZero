@@ -31,7 +31,7 @@ public class HeroChase : HeroIState
 		TargetVector = Hero.AttackTarget.transform.position;
 		if (Vector3.Distance (HeroVector, TargetVector) < Hero.AttackRange) 
 		{
-			Hero.ChangeState (new HeroAttack());
+			Hero.ChangeState (new HeroThink());
 			return;
 		}
 		if (Vector3.Distance (HeroVector, TargetVector) > Hero.SightRange) 

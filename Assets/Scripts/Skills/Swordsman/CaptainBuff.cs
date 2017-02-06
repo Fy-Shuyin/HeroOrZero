@@ -17,8 +17,9 @@ public class CaptainBuff : MonoBehaviour {
 	{
 		if (runEffect) 
 		{
-			bool isLife = Attribute.TargetIsLive (gameObject);
-			if (Trigger == null || !isLife) 
+			bool targetIsLive = Attribute.TargetIsLive (gameObject);
+			bool triggerIsLive = Attribute.TargetIsLive (Trigger);
+			if (Trigger == null || !triggerIsLive || !targetIsLive) 
 			{
 				lessSkillAtt (gameObject , ValueUp);
 				runEffect = false;
@@ -52,7 +53,7 @@ public class CaptainBuff : MonoBehaviour {
 	{
 		this.Trigger = trigger;
 		this.ValueUp = value;
-		this.Range = range;
+		this.Range = range+1;
 
 		var prefab = Resources.Load ("SkillEffect/" + effectName);
 		effect = Instantiate (prefab) as GameObject;
