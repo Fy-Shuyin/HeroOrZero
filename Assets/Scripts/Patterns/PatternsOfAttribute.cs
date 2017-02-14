@@ -3,6 +3,24 @@ using System.Collections;
 
 public class PatternsOfAttribute
 {
+	/// <summary>
+	/// 获取敌对的tag
+	/// </summary>
+	/// <returns>敌对tag</returns>
+	/// <param name="obj">自己</param>
+	public string HostileTag(GameObject obj)
+	{
+		string result = "";
+		if (obj.transform.tag == "Ally") 
+		{
+			result = "Enemy";
+		}
+		if (obj.transform.tag == "Enemy") 
+		{
+			result =  "Ally";
+		}
+		return result;
+	}
 	///<summary>
 	/// 目标是否存活
 	/// </summary>

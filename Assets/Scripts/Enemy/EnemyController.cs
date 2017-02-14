@@ -122,7 +122,7 @@ public class EnemyController : MonoBehaviour {
 		GameObject resolution = Instantiate (prefab) as GameObject;
 		resolution.transform.position = point;
 		var attackResolution = resolution.GetComponent<AttackResolution> ();
-		attackResolution.setAttAttr (gameObject.transform.position , AttackTarget , AttackType , AttackSpeed , AttackAngle ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
+		attackResolution.setAttAttr (gameObject , AttackTarget , AttackType , AttackSpeed , AttackAngle ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
 	}
 
 	void Death()

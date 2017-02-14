@@ -98,10 +98,10 @@ public class HeroController : MonoBehaviour
 		AttackTarget = null;
 		AImode = true;
 
-		var prefab = Resources.Load<GameObject> ("UI/CharacterHpBar");
-		var hpBarObject = GameObject.Instantiate<GameObject> (prefab);
-		var hpBar = hpBarObject.GetComponent<CharacterHpBar> ();
-		hpBar.Initialize (gameObject);
+		//var prefab = Resources.Load<GameObject> ("UI/CharacterHpBar");
+		//var hpBarObject = GameObject.Instantiate<GameObject> (prefab);
+		//var hpBar = hpBarObject.GetComponent<CharacterHpBar> ();
+		//hpBar.Initialize (gameObject);
 
 		Hero_State = new HeroIdle ();
 		Hero_State.Enter (this);
@@ -209,17 +209,19 @@ public class HeroController : MonoBehaviour
 			GameObject resolution = Instantiate (prefab) as GameObject;
 			resolution.transform.position = point;
 			var attackResolution = resolution.GetComponent<AttackResolution> ();
-			attackResolution.setAttAttr (gameObject.transform.position, AttackTarget, AttackType, AttackSpeed, AttackAngle ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
+			attackResolution.setAttAttr (gameObject, AttackTarget, AttackType, AttackSpeed, AttackAngle ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
 		}
 		if (AttackType == 1) 
 		{
 			//攻击模型数据库待添加
+			point.x -= HeroCollider.bounds.size.x * gameObject.transform.forward.normalized.x;
 			point.y += HeroCollider.bounds.size.y;
+			point.z -= HeroCollider.bounds.size.z * gameObject.transform.forward.normalized.z;
 			var prefab = Resources.Load ("AttackEffect/MageAttack");
 			GameObject resolution = Instantiate (prefab) as GameObject;
 			resolution.transform.position = point;
 			var attackResolution = resolution.AddComponent<AttackResolution> ();
-			attackResolution.setAttAttr (gameObject.transform.position, AttackTarget, AttackType, AttackSpeed, AttackAngle ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
+			attackResolution.setAttAttr (gameObject, AttackTarget, AttackType, AttackSpeed, AttackAngle ,Attack + AttackAdditional, Hit + HitAdditional, Critical + CriticalAdditional);
 		}
 	}
 

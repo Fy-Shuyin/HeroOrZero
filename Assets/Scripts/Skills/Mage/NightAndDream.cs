@@ -102,7 +102,7 @@ public class NightAndDream : MonoBehaviour
 		SpellRange = 15f;
 		LiveTime = 3f;			
 		Value = 100;
-		Cooldown = 2f;
+		Cooldown = 20f;
 		TriggerPoint = new Vector3 ();
 		Target = null;
 	}

@@ -72,7 +72,7 @@ public class ShadowAttack : MonoBehaviour {
 			GameObject AttackResolution = Instantiate (prefab2) as GameObject;
 			AttackResolution.transform.position = TriggerPoint;
 			var attRes = AttackResolution.GetComponent<AttackResolution> ();
-			attRes.setSkillAttr (TriggerPoint, AttackTarget, Effect, EffectTime, SkillMethod, Speed, Angle, Attack, Hit, Critical, true);
+			attRes.setSkillAttr (gameObject, AttackTarget, Effect, EffectTime, SkillMethod, Speed, Angle, Attack, Hit, Critical, true);
 			ArrayList targetList = patterns.TargetList (Target, 20);
 			if (targetList.Count > 0) 
 			{

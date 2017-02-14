@@ -92,6 +92,7 @@
      <Compile Include="Assets\Scripts\Skills\Assassin\PoisonBladeDebuff.cs" />
      <Compile Include="Assets\Scripts\Skills\Assassin\ShadowAttack.cs" />
      <Compile Include="Assets\Scripts\Skills\Mage\BloodthirstyGlare.cs" />
+     <Compile Include="Assets\Scripts\Skills\Mage\BloodthirstyGlareEffect.cs" />
      <Compile Include="Assets\Scripts\Skills\Mage\FireShield.cs" />
      <Compile Include="Assets\Scripts\Skills\Mage\NightAndDream.cs" />
      <Compile Include="Assets\Scripts\Skills\Mage\SpiritSpear.cs" />
@@ -110,12 +111,8 @@
      <Compile Include="Assets\Scripts\Skills\Swordsman\CrossSwords.cs" />
      <Compile Include="Assets\Scripts\Skills\Swordsman\NetherJianqi.cs" />
      <Compile Include="Assets\Scripts\Skills\Swordsman\WarRant.cs" />
-     <None Include="Assets\Shader\longjuanfeng_bland.shader" />
-     <None Include="Assets\Shader\hhh.shader" />
-     <None Include="Assets\Shader\longjuanfeng_add.shader" />
-     <None Include="Assets\Shader\longjuanfeng_add2.shader" />
-     <None Include="Assets\Shader\longjuanfeng_g.shader" />
-     <None Include="Assets\Shader\ggg.shader" />
+     <Compile Include="Assets\Scripts\snopshot.cs" />
+     <None Include="Assets\Shader\BloodthirstyGlare.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

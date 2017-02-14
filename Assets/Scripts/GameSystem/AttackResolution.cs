@@ -6,7 +6,7 @@ public class AttackResolution : MonoBehaviour {
 	PatternsOfAttribute Attribute = new PatternsOfAttribute();
 
 	private bool isSkill;
-	private Vector3 TriggerPoint;
+	private GameObject Trigger;
 	private GameObject Target;
 	private string TargetTag;
 	private string Effect;				//特效
@@ -61,14 +61,12 @@ public class AttackResolution : MonoBehaviour {
 */
 				if (AttackType == 1) 
 				{
-					Vector = (Target.transform.position - gameObject.transform.position).normalized;
-					Vector *= Speed * Time.deltaTime;
+					Speed += 2;
 				}
-				else 
-				{
-					Vector = (Target.transform.position - TriggerPoint).normalized;
-					Vector *= Speed * Time.deltaTime;
-				}
+				Vector3 targetPoint = Target.transform.position;
+				targetPoint.y += Target.GetComponent<Collider> ().bounds.size.y / 2;
+				Vector = (targetPoint - gameObject.transform.position).normalized;
+				Vector *= Speed * Time.deltaTime;
 				gameObject.transform.position += Vector;
 			}
 		}
@@ -84,10 +82,10 @@ public class AttackResolution : MonoBehaviour {
 	/// <param name="att">攻擊力</param>
 	/// <param name="hit">命中率</param>
 	/// <param name="cri">爆擊率</param>
-	public void setAttAttr(Vector3 triggerPoint , GameObject target , int attackType , float speed , float angle , float att , float hit , float cri)
+	public void setAttAttr(GameObject trigger , GameObject target , int attackType , float speed , float angle , float att , float hit , float cri)
 	{
 		isSkill = false;
-		TriggerPoint = triggerPoint;
+		Trigger = trigger;
 		Target = target;
 		TargetTag = target.tag;
 		AttackType = attackType;
@@ -112,10 +110,10 @@ public class AttackResolution : MonoBehaviour {
 	/// <param name="att">攻擊力</param>
 	/// <param name="hit">命中率</param>
 	/// <param name="cri">爆擊率</param>
-	public void setSkillAttr( Vector3 triggerPoint , GameObject target , string eft , float eftTime , int skillMethod , float speed , float angle , float att , float hit , float cri , bool action)
+	public void setSkillAttr( GameObject trigger , GameObject target , string eft , float eftTime , int skillMethod , float speed , float angle , float att , float hit , float cri , bool action)
 	{
 		isSkill = true;
-		TriggerPoint = triggerPoint;
+		Trigger = trigger;
 		Target = target;
 		TargetTag = target.tag;
 		Effect = eft;
@@ -160,7 +158,7 @@ public class AttackResolution : MonoBehaviour {
 
 		}
 		//當碰觸目標為守護對象時
-		if (collider.tag == "Guardian")
+		if (collider.tag == "Guardian" && Trigger.tag.Equals("Enemy"))
 		{
 			Destroy(gameObject);
 			if (isSkill) 

@@ -188,5 +188,10 @@ public class PatternsOfSkills
 			obj.GetComponent<NightAndDream> ().Spell ();
 			return;
 		}
+		if (name == "BloodthirstyGlare") 
+		{
+			obj.GetComponent<BloodthirstyGlare> ().Spell ();
+			return;
+		}
 	}
 }

@@ -72,7 +72,7 @@ public class NetherJianqi : MonoBehaviour
 		effect.transform.position = TriggerPoint;
 		effect.transform.LookAt (Target.transform.position);
 		var attRes = effect.AddComponent<AttackResolution> ();
-		attRes.setSkillAttr (TriggerPoint, Target, Effect, EffectTime, SkillMethod, Speed, Angle, Attack, Hit, Critical, true);
+		attRes.setSkillAttr (gameObject, Target, Effect, EffectTime, SkillMethod, Speed, Angle, Attack, Hit, Critical, true);
 		Destroy(effect,1.5f);
 	}
 

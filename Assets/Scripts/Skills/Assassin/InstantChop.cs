@@ -111,7 +111,7 @@ public class InstantChop : MonoBehaviour {
 		GameObject AttackResolution = Instantiate (prefab) as GameObject;
 		AttackResolution.transform.position = TriggerPoint;
 		var attRes = AttackResolution.GetComponent<AttackResolution> ();
-		attRes.setSkillAttr (TriggerPoint, Target, Effect, EffectTime, SkillMethod, Speed, Angle, Attack, Hit, Critical, true);
+		attRes.setSkillAttr (gameObject, Target, Effect, EffectTime, SkillMethod, Speed, Angle, Attack, Hit, Critical, true);
 	}
 
 	public void Spell()

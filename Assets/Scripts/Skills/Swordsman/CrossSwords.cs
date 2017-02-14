@@ -72,7 +72,7 @@ public class CrossSwords : MonoBehaviour {
 		var attObj = effect.AddComponent<ObjectEffect> ();
 		attObj.setAttribute (true , "y" , Speed * 2);
 		var attRes = effect.AddComponent<AttackResolution> ();
-		attRes.setSkillAttr (TriggerPoint, Target, Effect, EffectTime, SkillMethod, Speed, Angle, Attack, Hit, Critical, false);
+		attRes.setSkillAttr (gameObject, Target, Effect, EffectTime, SkillMethod, Speed, Angle, Attack, Hit, Critical, false);
 		var effectRigid = effect.GetComponent<Rigidbody>();
 		Vector3 forse;
 		forse = gameObject.transform.forward;

@@ -164,6 +164,12 @@ public class SceneBattle : MonoBehaviour {
 		{
 			setHero (HeroList);
 		}
+		/*HeroLoad ("Swordman",0);
+		HeroLoad ("Assassin",1);
+		HeroLoad ("Mage",2);
+		EnemyLoadName = "SnowWolf";
+		EnemyLoadNum = 1;*/
+
 	}
 
 	void GameOver()
@@ -315,7 +321,7 @@ public class SceneBattle : MonoBehaviour {
 			ArrayList list = (ArrayList)enemyList [i];
 			EnemyLoadName = list[0].ToString();
 			EnemyLoadNum = (int)list[1];
-			//EnemyLoadNum = 2;
+			EnemyLoadNum = 2;
 		}
 	}
 
