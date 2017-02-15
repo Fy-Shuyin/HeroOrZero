@@ -16,7 +16,7 @@ public class LoneWalker : MonoBehaviour {
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 	}
 
 	void Update () 
@@ -56,7 +56,7 @@ public class LoneWalker : MonoBehaviour {
 		}
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		Level = 1;
 		SkillType = "Permanent";

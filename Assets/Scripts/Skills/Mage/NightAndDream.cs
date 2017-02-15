@@ -24,7 +24,7 @@ public class NightAndDream : MonoBehaviour
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 	}
 
 	void Update () 
@@ -90,7 +90,7 @@ public class NightAndDream : MonoBehaviour
 		}
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		isTrigger = false;
 		isSpell = false;

@@ -29,7 +29,7 @@ public class InstantChop : MonoBehaviour {
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 	}
 		
 	void Update () 
@@ -56,7 +56,7 @@ public class InstantChop : MonoBehaviour {
 		}
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		isTrigger = false;
 		isSpell = false;

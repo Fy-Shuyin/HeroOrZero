@@ -29,7 +29,7 @@ public class NetherJianqi : MonoBehaviour
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 	}
 	
 	void Update () 
@@ -76,7 +76,7 @@ public class NetherJianqi : MonoBehaviour
 		Destroy(effect,1.5f);
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		isTrigger = false;
 		isSpell = false;

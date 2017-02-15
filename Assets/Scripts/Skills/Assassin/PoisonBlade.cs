@@ -24,7 +24,7 @@ public class PoisonBlade : MonoBehaviour {
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 	}
 
 	void Update () 
@@ -91,7 +91,7 @@ public class PoisonBlade : MonoBehaviour {
 		}
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		isTrigger = false;
 		isSpell = false;

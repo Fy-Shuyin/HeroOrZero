@@ -17,7 +17,7 @@ public class Captain : MonoBehaviour {
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 		var prefab = Resources.Load ("Skills/Captain");
 		Effect = Instantiate (prefab) as GameObject;
 		Effect.transform.SetParent(gameObject.transform);
@@ -44,7 +44,7 @@ public class Captain : MonoBehaviour {
 		}
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		Level = 1;
 		SkillType = "Buff";

@@ -26,7 +26,7 @@ public class BloodthirstyGlare : MonoBehaviour {
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 	}
 	
 
@@ -54,7 +54,7 @@ public class BloodthirstyGlare : MonoBehaviour {
 		}
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		isTrigger = false;
 		isSpell = false;

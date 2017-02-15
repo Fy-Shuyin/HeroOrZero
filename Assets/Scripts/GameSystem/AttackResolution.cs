@@ -6,8 +6,8 @@ public class AttackResolution : MonoBehaviour {
 	PatternsOfAttribute Attribute = new PatternsOfAttribute();
 
 	private bool isSkill;
-	private GameObject Trigger;
-	private GameObject Target;
+	public GameObject Trigger;
+	public GameObject Target;
 	private string TargetTag;
 	private string Effect;				//特效
 	private float EffectTime;			//特效持續時間

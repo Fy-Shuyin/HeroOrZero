@@ -28,7 +28,7 @@ public class CrossSwords : MonoBehaviour {
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 	}
 
 
@@ -81,7 +81,7 @@ public class CrossSwords : MonoBehaviour {
 		Destroy (effect, LifeTime);
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		isTrigger = false;
 		isSpell = false;

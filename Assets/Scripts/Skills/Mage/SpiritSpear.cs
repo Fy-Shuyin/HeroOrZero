@@ -30,7 +30,7 @@ public class SpiritSpear : MonoBehaviour
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 	}
 
 	void Update () 
@@ -57,7 +57,7 @@ public class SpiritSpear : MonoBehaviour
 		}
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		isTrigger = false;
 		isSpell = false;

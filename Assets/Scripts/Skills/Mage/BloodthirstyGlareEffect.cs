@@ -57,9 +57,7 @@ public class BloodthirstyGlareEffect : MonoBehaviour {
 
 	void OnTriggerEnter(Collider collider)
 	{
-		Debug.Log ("targetTag - " + targetTag + "  colliderTag - " + collider.tag);
 		if (collider.tag == targetTag) {
-			Debug.Log ("IN");
 			Damage (collider.gameObject);
 		}
 	}
@@ -67,7 +65,6 @@ public class BloodthirstyGlareEffect : MonoBehaviour {
 	void OnTriggerExit(Collider collider)
 	{
 		if (collider.tag == targetTag) {
-			Debug.Log ("OUT");
 			Damage (collider.gameObject);
 		}
 	}
@@ -88,7 +85,6 @@ public class BloodthirstyGlareEffect : MonoBehaviour {
 				damage = -1;
 			}
 			attribute.setHealthPower (obj, damage);
-			Debug.Log ("Damage");
 		}
 	}
 }

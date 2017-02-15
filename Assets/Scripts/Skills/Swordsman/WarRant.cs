@@ -25,7 +25,7 @@ public class WarRant : MonoBehaviour
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 	}
 
 	void Update () 
@@ -77,7 +77,7 @@ public class WarRant : MonoBehaviour
 
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		isTrigger = false;
 		isSpell = false;

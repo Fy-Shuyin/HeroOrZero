@@ -14,7 +14,7 @@ public class DrawBlood : MonoBehaviour {
 
 	void Start () 
 	{
-		SkllInitialize ();
+		SkillInitialize ();
 	}
 
 	void Update () 
@@ -47,7 +47,7 @@ public class DrawBlood : MonoBehaviour {
 		}
 	}
 
-	void SkllInitialize()
+	void SkillInitialize()
 	{
 		Level = 1;
 		SkillType = "Permanent";

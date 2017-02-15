@@ -13,10 +13,10 @@ public class Barrier : MonoBehaviour {
 
 	void Start () 
 	{
-		skllInitialize ();
+		skillInitialize ();
 	}
 
-	void skllInitialize()
+	void skillInitialize()
 	{
 		Level = 1;
 		SkillType = "Buff";
