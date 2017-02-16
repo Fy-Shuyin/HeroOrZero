@@ -6,9 +6,9 @@ public class HeroThink : HeroIState
 	Vector3 HeroVector, TargetVector;
 	public void Enter(HeroController Hero)
 	{
-		if (!Hero.AImode) 
+		if (Hero.AImode) 
 		{
-			//Hero.Target ();
+			Hero.Target ();
 		}
 	}
 
@@ -26,6 +26,10 @@ public class HeroThink : HeroIState
 		}
 		else
 		{
+			if (Hero.Think ()) 
+			{
+				return;
+			}
 			HeroVector = Hero.gameObject.transform.position;
 			TargetVector = Hero.AttackTarget.transform.position;
 			if (Vector3.Distance (HeroVector, TargetVector) < Hero.AttackRange) 

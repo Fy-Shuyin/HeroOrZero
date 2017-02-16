@@ -9,7 +9,11 @@ public class PatternsOfSkills
 		var skill = obj.GetComponent (name);
 		return skill;
 	}
-
+	/// <summary>
+	/// 设定技能
+	/// </summary>
+	/// <param name="obj">单位</param>
+	/// <param name="selectskills">技能表</param>
 	public void setSkills(GameObject obj , ArrayList selectskills)
 	{
 		foreach (string skill in selectskills) 
@@ -76,76 +80,11 @@ public class PatternsOfSkills
 			}
 		}
 	}
-
-	public int getSkillTypeCount (GameObject obj, ArrayList name , string type)
-	{
-		int i = 0;
-		foreach (string skill in name) 
-		{
-			if (type == getSkillType (obj, skill)) 
-			{
-				i++;
-			}
-		}
-		return i;
-	}
-
-	public string getSkillType(GameObject obj,string name)
-	{
-		string type = "";
-
-		if (name == "NetherJianqi") 
-		{
-			type = obj.GetComponent<NetherJianqi> ().SkillType;
-		}
-		if (name == "WarRant") 
-		{
-			type = obj.GetComponent<WarRant> ().SkillType;
-		}
-		if (name == "CrossSwords") 
-		{
-			type = obj.GetComponent<CrossSwords> ().SkillType;
-		}
-		if (name == "Barrier") 
-		{
-			type = obj.GetComponent<Barrier> ().SkillType;
-		}
-		if (name == "Captain") 
-		{
-			type = obj.GetComponent<Captain> ().SkillType;
-		}
-
-		return type;
-	}
-
-	public int getSkillMethod(GameObject obj,string name)
-	{
-		int method = 0;
-
-		if (name == "NetherJianqi") 
-		{
-			method = obj.GetComponent<NetherJianqi> ().SkillMethod;
-		}
-		if (name == "WarRant") 
-		{
-			method = obj.GetComponent<WarRant> ().SkillMethod;
-		}
-		if (name == "CrossSwords") 
-		{
-			method = obj.GetComponent<CrossSwords> ().SkillMethod;
-		}
-		if (name == "Barrier") 
-		{
-			method = obj.GetComponent<Barrier> ().SkillMethod;
-		}
-		if (name == "Captain") 
-		{
-			method = obj.GetComponent<Captain> ().SkillMethod;
-		}
-
-		return method;
-	}
-
+	/// <summary>
+	/// 释放技能
+	/// </summary>
+	/// <param name="obj">单位</param>
+	/// <param name="name">技能名称</param>
 	public void SkillSpell(GameObject obj , string name)
 	{
 		if (name == "NetherJianqi") 
@@ -193,5 +132,162 @@ public class PatternsOfSkills
 			obj.GetComponent<BloodthirstyGlare> ().Spell ();
 			return;
 		}
+	}
+	/// <summary>
+	/// 获取技能方法号码
+	/// </summary>
+	/// <returns>技能方法号码</returns>
+	/// <param name="obj">单位</param>
+	/// <param name="skillName">技能名字</param>
+	public int getSkillMethod(GameObject obj,string skillName)
+	{
+		int method = 0;
+
+		if (skillName == "NetherJianqi") 
+		{
+			method = obj.GetComponent<NetherJianqi> ().SkillMethod;
+		}
+		if (skillName == "WarRant") 
+		{
+			method = obj.GetComponent<WarRant> ().SkillMethod;
+		}
+		if (skillName == "CrossSwords") 
+		{
+			method = obj.GetComponent<CrossSwords> ().SkillMethod;
+		}
+		if (skillName == "Barrier") 
+		{
+			method = obj.GetComponent<Barrier> ().SkillMethod;
+		}
+		if (skillName == "Captain") 
+		{
+			method = obj.GetComponent<Captain> ().SkillMethod;
+		}
+		if (skillName == "InstantChop") 
+		{
+			method = obj.GetComponent<InstantChop> ().SkillMethod;
+		}
+		if (skillName == "PoisonBlade") 
+		{
+			method = obj.GetComponent<PoisonBlade> ().SkillMethod;
+		}
+		if (skillName == "ShadowAttack") 
+		{
+			method = obj.GetComponent<ShadowAttack> ().SkillMethod;
+		}
+		if (skillName == "LoneWalker") 
+		{
+			method = obj.GetComponent<LoneWalker> ().SkillMethod;
+		}
+		if (skillName == "DrawBlood") 
+		{
+			method = obj.GetComponent<DrawBlood> ().SkillMethod;
+		}
+		if (skillName == "SpiritSpear") 
+		{
+			method = obj.GetComponent<SpiritSpear> ().SkillMethod;
+		}
+		if (skillName == "NightAndDream") 
+		{
+			method = obj.GetComponent<NightAndDream> ().SkillMethod;
+		}
+		if (skillName == "BloodthirstyGlare") 
+		{
+			method = obj.GetComponent<BloodthirstyGlare> ().SkillMethod;
+		}
+		if (skillName == "FireShield") 
+		{
+			method = obj.GetComponent<FireShield> ().SkillMethod;
+		}
+		if (skillName == "VoodooCurse") 
+		{
+			method = obj.GetComponent<VoodooCurse> ().SkillMethod;
+		}
+		return method;
+	}
+
+	public bool isSpell(GameObject obj,string skillName)
+	{
+		bool isSpell = false;
+
+		if (skillName == "NetherJianqi") 
+		{
+			isSpell = obj.GetComponent<NetherJianqi> ().isTrigger;
+		}
+		if (skillName == "WarRant") 
+		{
+			isSpell = obj.GetComponent<WarRant> ().isTrigger;
+		}
+		if (skillName == "CrossSwords") 
+		{
+			isSpell = obj.GetComponent<CrossSwords> ().isTrigger;
+		}
+		if (skillName == "InstantChop") 
+		{
+			isSpell = obj.GetComponent<InstantChop> ().isTrigger;
+		}
+		if (skillName == "PoisonBlade") 
+		{
+			isSpell = obj.GetComponent<PoisonBlade> ().isTrigger;
+		}
+		if (skillName == "ShadowAttack") 
+		{
+			isSpell = obj.GetComponent<ShadowAttack> ().isTrigger;
+		}
+		if (skillName == "SpiritSpear") 
+		{
+			isSpell = obj.GetComponent<SpiritSpear> ().isTrigger;
+		}
+		if (skillName == "NightAndDream") 
+		{
+			isSpell = obj.GetComponent<NightAndDream> ().isTrigger;
+		}
+		if (skillName == "BloodthirstyGlare") 
+		{
+			isSpell = obj.GetComponent<BloodthirstyGlare> ().isTrigger;
+		}
+		return !isSpell;
+	}
+	/// <summary>
+	/// 获取指定类型的技能
+	/// </summary>
+	/// <returns>技能的List</returns>
+	/// <param name="obj">单位</param>
+	/// <param name="skillMethod">技能数字的号码</param>
+	public ArrayList skillList(GameObject obj, int skillMethod)
+	{
+		ArrayList skills = new ArrayList ();
+		foreach (string skill in attribute.getActiveSkillSelect(obj)) 
+		{
+			if (skillMethod == getSkillMethod (obj, skill)) 
+			{
+				skills.Add (skill);
+			}
+		}
+		return skills;
+	}
+	/// <summary>
+	/// 释放技能是否成功
+	/// </summary>
+	/// <returns><c>true</c> 成功 <c>false</c> 失败 </returns>
+	/// <param name="obj">单位</param>
+	/// <param name="target">目标</param>
+	/// <param name="skillMethod">技能种类</param>
+	public bool isSpellSuccess(GameObject obj, GameObject target, bool isChange, int skillMethod)
+	{
+		ArrayList skillsList = new ArrayList ();
+		skillsList = skillList (obj, skillMethod);
+		if (skillsList.Count > 0) 
+		{
+			foreach (string skill in skillsList) 
+			{
+				if (isSpell (obj, skill)) 
+				{
+					attribute.setSpellStage (obj, target, isChange, skill);
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

@@ -49,6 +49,7 @@ public class HeroController : MonoBehaviour
 	public bool IsLive;					//存活
 	public float StopTime;				//停止事件
 
+	public string SpellSkillName;
 	public ArrayList ActiveSkill;		//主动技能
 	public ArrayList ActiveSkillSelect;	//选择的主动技能
 	public ArrayList PassiveSkill;		//被动技能
@@ -61,10 +62,10 @@ public class HeroController : MonoBehaviour
 	private Collider HeroCollider;
 	public Vector3 MovePoint;			//移动地点
 	public GameObject AttackTarget;		//攻击目标
-	private GameObject AttackTargetEffect;
+	private GameObject AttackTargetEffect;//攻击目标的显示的特效
 	public string AttackTargetTag;		//目标类型
 	public float AttackCooldown;		//攻擊冷卻
-	string Type;
+	private string Type;				//人物职业
 
 	void Start () 
 	{
@@ -85,8 +86,7 @@ public class HeroController : MonoBehaviour
 			ref Defence , ref DefenceAdditional , ref Dexterity , ref DexterityAdditional , ref Hit , ref HitAdditional , ref Agility , ref AgilityAdditional ,
 			ref Dodge , ref DodgeAdditional , ref Critical , ref CriticalAdditional , ref MoveSpeed , ref FieldOfVision , ref SightRange);
 		HealthPowerMax = HealthPower + HealthPowerAdditional;
-		CharacterType = Character.CharcterType (gameObject, 1);
-		Character.runCharcterType (gameObject);
+		CharacterType = Character.CharacterType (gameObject, 3);
 		HeroAgent.speed = MoveSpeed/60f;
 		Attribute.SkillsInitialize (Type , ref ActiveSkill , ref ActiveSkillSelect , ref PassiveSkill , ref PassiveSkillSelect);
 		ActiveSkillSelect = ActiveSkill;
@@ -137,7 +137,11 @@ public class HeroController : MonoBehaviour
 	//操作モード
 	void Manual()
 	{
-		FingerEvent. ClickPoint (gameObject);
+		if (!Hero_State.ToString ().Equals ("HeroStop")) 
+		{
+			FingerEvent. ClickPoint (gameObject);
+		}
+
 		if (AttackTarget != null && AttackTarget != AttackTargetEffect) 
 		{
 			if (AttackTargetEffect != null) 
@@ -171,6 +175,15 @@ public class HeroController : MonoBehaviour
 			ChangeState (new HeroMove ());
 		}
 	}
+	public void ChangeToSpellSkillStage(GameObject target, bool isChange, string skillName)
+	{
+		if (isChange) {
+			AttackTarget = target;
+			AttackTargetTag = target.tag;
+		}
+		SpellSkillName = skillName;
+		ChangeState (new HeroSpellSkills ());
+	}
 	public void ChangeToStopStage(float stopTime)
 	{
 		StopTime = stopTime;
@@ -196,6 +209,11 @@ public class HeroController : MonoBehaviour
 	public void movePoint(Vector3 point)
 	{
 		HeroAgent.SetDestination (point);
+	}
+
+	public bool Think()
+	{
+		return Character.runThinkType (gameObject, CharacterType);
 	}
 
 	public void runAttack()

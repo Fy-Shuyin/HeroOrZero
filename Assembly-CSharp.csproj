@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{A4CC53E5-8BB3-6A63-4E15-0A8F39AD8C3D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_3;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;ENABLE_RUNTIME_GI;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_NETWORK;ENABLE_UNITYWEBREQUEST;ENABLE_TEXTUREID_MAP;PLAYERCONNECTION_LISTENS_FIXED_PORT;DEBUGGER_LISTENS_FIXED_PORT;PLATFORM_SUPPORTS_ADS_ID;SUPPORT_ENVIRONMENT_VARIABLES;PLATFORM_SUPPORTS_PROFILER;PLATFORM_HAS_NO_SUPPORT_FOR_BUCKET_ALLOCATOR;STRICTCPP_NEW_DELETE_SIGNATURES;HAS_NEON_SKINNIG;UNITY_INPUT_SIMULATE_EVENTS;PLATFORM_ALWAYS_USES_STDOUT_FOR_LOG;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;UNITY_IOS;UNITY_IPHONE;UNITY_IPHONE_API;SUPPORT_MULTIPLE_DISPLAYS;ENABLE_IL2CPP;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;CROSS_PLATFORM_INPUT;MOBILE_INPUT;ENABLE_IOS_ON_DEMAND_RESOURCES;ENABLE_IOS_APP_SLICING</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Scripts\Character\FriendController.cs" />
+     <Compile Include="Assets\Scripts\Character\HeroAttack.cs" />
+     <Compile Include="Assets\Scripts\Character\HeroChase.cs" />
+     <Compile Include="Assets\Scripts\Character\HeroController.cs" />
+     <Compile Include="Assets\Scripts\Character\HeroDeath.cs" />
+     <Compile Include="Assets\Scripts\Character\HeroIdle.cs" />
+     <Compile Include="Assets\Scripts\Character\HeroMove.cs" />
+     <Compile Include="Assets\Scripts\Character\HeroSpellSkills.cs" />
+     <Compile Include="Assets\Scripts\Character\HeroStop.cs" />
+     <Compile Include="Assets\Scripts\Character\HeroThink.cs" />
+     <Compile Include="Assets\Scripts\Character\TownHallAttribute.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyBossAttack.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyDeath.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyIdle.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyMove.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemySoldierAttack.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemySoldierThink.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyStop.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyVariationAttack.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\AgainStage.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\AttackResolution.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\CharacterAttribute.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\CharacterHpBar.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\CharacterIState.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\DBAccess.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\FingerEvent.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\GameSystem.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\LoadStage.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\ObjectEffect.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\SQLiteDemo.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\SceneBattle.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\SceneStart.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\SceneStatus.cs" />
+     <Compile Include="Assets\Scripts\GameSystem\SceneUIManeger.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfAttribute.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfCharacter.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfEnthusiast.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfHelper.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfLeader.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfMotivator.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfPeacemaker.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfReformer.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfRomantic.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfSkeptic.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfSkills.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfThinker.cs" />
+     <Compile Include="Assets\Scripts\Patterns\PatternsOfThinking.cs" />
+     <Compile Include="Assets\Scripts\Skills\Assassin\DrawBlood.cs" />
+     <Compile Include="Assets\Scripts\Skills\Assassin\InstantChop.cs" />
+     <Compile Include="Assets\Scripts\Skills\Assassin\LoneWalker.cs" />
+     <Compile Include="Assets\Scripts\Skills\Assassin\PoisonBlade.cs" />
+     <Compile Include="Assets\Scripts\Skills\Assassin\PoisonBladeDebuff.cs" />
+     <Compile Include="Assets\Scripts\Skills\Assassin\ShadowAttack.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\AbsoluteDefense.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\Adad.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\Biizzard.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\DarkClaw.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\Electriferous.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\EvilContract.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\Freeze.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\IceBall.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\Prestige.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\Thunder.cs" />
+     <Compile Include="Assets\Scripts\Skills\Enemy\WildBite.cs" />
+     <Compile Include="Assets\Scripts\Skills\Mage\BloodthirstyGlare.cs" />
+     <Compile Include="Assets\Scripts\Skills\Mage\BloodthirstyGlareEffect.cs" />
+     <Compile Include="Assets\Scripts\Skills\Mage\FireShield.cs" />
+     <Compile Include="Assets\Scripts\Skills\Mage\NightAndDream.cs" />
+     <Compile Include="Assets\Scripts\Skills\Mage\SpiritSpear.cs" />
+     <Compile Include="Assets\Scripts\Skills\Mage\VoodooCurse.cs" />
+     <Compile Include="Assets\Scripts\Skills\Passive\AGIUP.cs" />
+     <Compile Include="Assets\Scripts\Skills\Passive\ATTUP.cs" />
+     <Compile Include="Assets\Scripts\Skills\Passive\CITUP.cs" />
+     <Compile Include="Assets\Scripts\Skills\Passive\DEFUP.cs" />
+     <Compile Include="Assets\Scripts\Skills\Passive\DEXUP.cs" />
+     <Compile Include="Assets\Scripts\Skills\Passive\DodgeUP.cs" />
+     <Compile Include="Assets\Scripts\Skills\Passive\HITUP.cs" />
+     <Compile Include="Assets\Scripts\Skills\Passive\HPUP.cs" />
+     <Compile Include="Assets\Scripts\Skills\Swordsman\Barrier.cs" />
+     <Compile Include="Assets\Scripts\Skills\Swordsman\Captain.cs" />
+     <Compile Include="Assets\Scripts\Skills\Swordsman\CaptainBuff.cs" />
+     <Compile Include="Assets\Scripts\Skills\Swordsman\CrossSwords.cs" />
+     <Compile Include="Assets\Scripts\Skills\Swordsman\NetherJianqi.cs" />
+     <Compile Include="Assets\Scripts\Skills\Swordsman\WarRant.cs" />
+     <None Include="Assets\Shader\BloodthirstyGlare.shader" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.Data.Sqlite">
+ <HintPath>/Users/Tom/Documents/UnityFile/HeroOrZero/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Data">
+ <HintPath>/Users/Tom/Documents/UnityFile/HeroOrZero/Assets/Plugins/System.Data.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

@@ -52,20 +52,9 @@ public class PatternsOfAttribute
 		}
 	}
 	///<summary>
-	/// 友军的数量 包含自己
-	/// </summary>
-	/// <returns>友军的数量
-	public int NumberOfAllies(GameObject obj , float range)
-	{
-		string Tag = obj.gameObject.tag;
-		int Layer = 1 << LayerMask.NameToLayer (Tag);
-		Collider[] cols = Physics.OverlapSphere(obj.transform.position, range, Layer);
-		return cols.Length;
-	}
-	///<summary>
 	/// 友军的集合
 	/// </summary>
-	/// <param name="range">范围 当为0时包含自己 不为0时范围内除自己意外友军</param>
+	/// <param name="range">范围 当为0时为自己配下友军 不为0时范围内除自己意外友军</param>
 	/// <returns>友军的List
 	public ArrayList AlliesFriendList(GameObject obj , float range)
 	{
@@ -119,7 +108,7 @@ public class PatternsOfAttribute
 		return cols.Length;
 	}
 	/// <summary>
-	/// 目标单位的周围相同类型的集合 包含自己
+	/// 目标单位的周围相同类型的集合 包含目标
 	/// </summary>
 	/// <returns>集合</returns>
 	/// <param name="obj">单位</param>
@@ -136,47 +125,17 @@ public class PatternsOfAttribute
 		return enemyList;
 	}
 	///<summary>
-	/// 判断对对方的伤害是否大于当前生命值的10%
+	/// 获取单位对目标的伤害
 	/// </summary>
-	/// <returns> 若大于 返回1 若小于 返回0
-	public int Damage(GameObject tigger , GameObject target)
+	/// <returns> 伤害值
+	public float Damage(GameObject tigger , GameObject target)
 	{
-		int MinMax = -1;
 		float att = getAttack(tigger);
 		float def = getDefence(target);
-		float hp = getHealthPower(target);
-		if (att - def > hp * 0.1) 
-		{
-			MinMax = 1;
-		}
-		if (att - def <= hp * 0.1) 
-		{
-			MinMax = 0;
-		}
-		return MinMax;
+		return att-def;
 	}
 	///<summary>
-	/// 判断对自己的伤害是否大于当前生命值的10%
-	/// </summary>
-	/// <returns> 若大于 返回1 若小于 返回0
-	public int Injury(GameObject tigger , GameObject target)
-	{
-		int MinMax = -1;
-		float hp = getHealthPower(tigger);
-		float def = getDefence(tigger);
-		float att = getAttack(target);
-		if (att - def > hp * 0.1) 
-		{
-			MinMax = 1;
-		}
-		if (att - def <= hp * 0.1) 
-		{
-			MinMax = 0;
-		}
-		return MinMax;
-	}
-	///<summary>
-	/// 范围内Object的HPList
+	/// 范围单位周围敌人的HPList
 	/// </summary>
 	/// <param name="range">范围</param>
 	/// <returns>HP从少到多排血的ColliderLIst
@@ -211,14 +170,14 @@ public class PatternsOfAttribute
 	{
 		var col1 = obj1.GetComponent<Collider> ();
 		Vector3 obj1Point = obj1.transform.position;
-		obj1Point.x += obj1.transform.forward.normalized.x * col1.bounds.size.x;
+		//obj1Point.x += obj1.transform.forward.normalized.x * col1.bounds.size.x;
 		obj1Point.y = 0;
-		obj1Point.z += obj1.transform.forward.normalized.z * col1.bounds.size.z;
+		//obj1Point.z += obj1.transform.forward.normalized.z * col1.bounds.size.z;
 		var col2 = obj2.GetComponent<Collider> ();
 		Vector3 obj2Point = obj2.transform.position;
-		obj2Point.x += obj2.transform.forward.normalized.x * col2.bounds.size.x;
+		//obj2Point.x += obj2.transform.forward.normalized.x * col2.bounds.size.x;
 		obj2Point.y = 0;
-		obj2Point.z += obj2.transform.forward.normalized.z * col2.bounds.size.z;
+		//obj2Point.z += obj2.transform.forward.normalized.z * col2.bounds.size.z;
 		float distance = Vector3.Distance (obj1Point , obj2Point);
 		return distance;
 	}
@@ -227,7 +186,7 @@ public class PatternsOfAttribute
 	/// 范围内object与选取单位的距离
 	/// </summary>
 	/// <param name="range">范围
-	/// <returns>与选取单位等同数量的距离List
+	/// <returns>按从近到远顺序的选取单位List
 	public Collider[] DistanceList(GameObject obj , float range)
 	{
 		int Layer = getTargetLayer(obj);
@@ -240,8 +199,14 @@ public class PatternsOfAttribute
 			{
 				for (i = 0; i < cols.Length - j; i++) 
 				{
-					float a = Vector3.Distance (obj.transform.position, cols[i].transform.position);
-					float b = Vector3.Distance (obj.transform.position, cols[i+1].transform.position);
+					Vector3 objPoint = obj.transform.position;
+					objPoint.y = 0;
+					Vector3 col1Point = cols[i].transform.position;
+					col1Point.y = 0;
+					Vector3 col2Point = cols[i+1].transform.position;
+					col1Point.y = 0;
+					float a = Vector3.Distance (objPoint, col1Point);
+					float b = Vector3.Distance (objPoint, col2Point);
 					if (a > b) 
 					{
 						select = cols [i];
@@ -353,16 +318,6 @@ public class PatternsOfAttribute
 		{
 			obj.GetComponent<EnemyController> ().Command = value;
 		}
-	}
-	/// <summary>
-	/// Skills the target.
-	/// </summary>
-	public bool SkillTarget(GameObject obj , float range)
-	{
-		bool target = false;
-		Collider[] cols = Physics.OverlapSphere(obj.transform.position, range, 1 << 11);
-
-		return target;
 	}
 	/// <summary>
 	/// 获取单位敌对的层
@@ -924,5 +879,36 @@ public class PatternsOfAttribute
 		if (obj.transform.tag == "Enemy") 
 			agent = obj.GetComponent<EnemyController> ().EnemyAgent;
 		return agent;
+	}
+	/// <summary>
+	/// 移动到移动状态
+	/// </summary>
+	/// <param name="obj">单位</param>
+	/// <param name="movePoint">移动目标点</param>
+	public void setMoveStage(GameObject obj, Vector3 movePoint)
+	{
+		if (obj.transform.tag == "Ally") 
+		{
+			if (obj.GetComponent<HeroController> () != null) 
+			{
+				obj.GetComponent<HeroController> ().ChangeToMoveStage (movePoint);
+			}
+		}
+	}
+	/// <summary>
+	/// 移动到释放技能的状态
+	/// </summary>
+	/// <param name="obj">单位</param>
+	/// <param name="skillName">技能名字</param>
+	public void setSpellStage(GameObject obj, GameObject target, bool isChange, string skillName)
+	{
+		if (obj.transform.tag == "Ally") 
+		{
+			if (obj.GetComponent<HeroController> () != null) 
+			{
+				obj.GetComponent<HeroController> ().SpellSkillName = skillName;
+				obj.GetComponent<HeroController> ().ChangeToSpellSkillStage (target, isChange, skillName);
+			}
+		}
 	}
 }

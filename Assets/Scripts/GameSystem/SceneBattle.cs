@@ -69,9 +69,10 @@ public class SceneBattle : MonoBehaviour {
 	private float StageStartCountDown;
 	private float StageTime;
 	private ArrayList HeroList;
-	private ArrayList EnemyList;
-	public string EnemyLoadName;
-	public int EnemyLoadNum;
+	private Hashtable EnemyTable;
+	public string[] EnemyLoadName;
+	public int[] EnemyLoadNum;
+	private int EnemyListNum;
 	private float LoadRepeat;
 	private bool cameraON; 
 	private Vector3[] point;
@@ -99,7 +100,9 @@ public class SceneBattle : MonoBehaviour {
 		point [2] = GameObject.Find ("StandbyPosition (2)").transform.position;
 		point [3] = GameObject.Find ("StandbyPosition (3)").transform.position;
 
-		StageLevel = 10; 
+		EnemyLoadName = new string[3];
+		EnemyLoadNum = new int[3];
+		StageLevel = 0; 
 	}
 
 	void Start ()
@@ -126,7 +129,7 @@ public class SceneBattle : MonoBehaviour {
 			{
 				LoadRepeat = 0;
 			}
-			if (LoadRepeat == 0 && EnemyLoadNum != 0) 
+			if (LoadRepeat == 0 && EnemyLoadNum[EnemyListNum] != 0) 
 			{
 				EnemyLoad ();
 				LoadRepeat = 1f;
@@ -143,7 +146,7 @@ public class SceneBattle : MonoBehaviour {
 	void StageListen()
 	{
 		int count = Patterns.NumberOfEnemies ();
-		if (count == 0 && EnemyLoadNum == 0) 
+		if (count == 0 && EnemyLoadNum[EnemyListNum] == 0) 
 		{
 			StageStartCountDown = 3;
 			StageTime = 0;
@@ -158,8 +161,8 @@ public class SceneBattle : MonoBehaviour {
 		{
 			StartCoroutine(GameOver(5f , 3));
 		}
-		gameSystem.BattleStart (StageLevel , ref HeroList , ref EnemyList);
-		setEnemy (EnemyList);
+		gameSystem.BattleStart (StageLevel , ref HeroList , ref EnemyTable);
+		setEnemy (EnemyTable);
 		if (StageLevel == 1 || StageLevel == 6 || StageLevel == 11 || StageLevel == 15) 
 		{
 			setHero (HeroList);
@@ -313,27 +316,30 @@ public class SceneBattle : MonoBehaviour {
 		}
 	}
 
-	void setEnemy(ArrayList enemyList)
+	void setEnemy(Hashtable enemyTable)
 	{
 		LoadRepeat = 2;
-		for (int i = 0; i < enemyList.Count; i++) 
+		EnemyListNum = 0;
+		int i = 0;
+		foreach(DictionaryEntry enemy in enemyTable)
 		{
-			ArrayList list = (ArrayList)enemyList [i];
-			EnemyLoadName = list[0].ToString();
-			EnemyLoadNum = (int)list[1];
-			EnemyLoadNum = 2;
+			EnemyLoadName[i] = enemy.Key.ToString();
+			EnemyLoadNum[i] = (int)enemy.Value;
+			i++;
 		}
 	}
 
 	void EnemyLoad()
 	{
-		var prefab = Resources.Load("Enemies/" + EnemyLoadName);
+		var prefab = Resources.Load("Enemies/" + EnemyLoadName[EnemyListNum]);
 		var enemy = Instantiate(prefab) as GameObject;
 		enemy.AddComponent<EnemyController> ();
 		float x = Random.Range(-25f, 25f);
 		float z = 60f;
 		enemy.transform.position = new Vector3(x, 1f,z);
-		EnemyLoadNum--;
+		EnemyLoadNum[EnemyListNum]--;
+		if (EnemyListNum < EnemyTable.Count && EnemyLoadNum [EnemyListNum] == 0)
+			EnemyListNum++;
 	}
 
 	void isHeroLive()

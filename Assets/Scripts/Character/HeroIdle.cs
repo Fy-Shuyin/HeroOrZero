@@ -24,7 +24,7 @@ public class HeroIdle : HeroIState
 			HeroVector = Hero.gameObject.transform.position;
 			TargetVector = Hero.AttackTarget.transform.position;
 			if(Vector3.Distance (HeroVector, TargetVector) < Hero.SightRange)
-			Hero.ChangeState (new HeroChase ());
+				Hero.ChangeState (new HeroThink ());
 			return;
 		}
 	}

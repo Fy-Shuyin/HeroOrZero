@@ -7,8 +7,8 @@ public class LoneWalker : MonoBehaviour {
 
 	private bool isAlone;
 	private int Level;
-	private string SkillType;
-	private int SkillMethod;
+	public string SkillType;
+	public int SkillMethod;
 	private float Range;
 	private float Value;
 	private GameObject leftHand;
@@ -21,8 +21,8 @@ public class LoneWalker : MonoBehaviour {
 
 	void Update () 
 	{
-		int allyNum = Attribute.NumberOfAllies (gameObject,Range);
-		if (allyNum == 1 && !isAlone) 
+		int allyNum = Attribute.AlliesFriendList (gameObject,Range).Count;
+		if (allyNum == 0 && !isAlone) 
 		{
 			addAttribute (gameObject, Value);
 			Transform[] transform = GetComponentsInChildren<Transform> (true);

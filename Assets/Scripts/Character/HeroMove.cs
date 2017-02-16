@@ -31,6 +31,5 @@ public class HeroMove : HeroIState
 		Hero.HeroAnimator.SetFloat ("Move",0);
 		Hero.HeroAgent.Stop ();
 		Hero.HeroAgent.velocity = Vector3.zero;
-		Hero.Target ();
 	}
 }

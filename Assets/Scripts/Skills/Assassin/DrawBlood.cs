@@ -6,8 +6,8 @@ public class DrawBlood : MonoBehaviour {
 	PatternsOfAttribute Patterns = new PatternsOfAttribute();
 
 	private int Level;
-	private string SkillType;
-	private int SkillMethod;
+	public string SkillType;
+	public  int SkillMethod;
 	public GameObject Target;
 	public GameObject CurrentTarget;
 	private int Value;	//回復する値

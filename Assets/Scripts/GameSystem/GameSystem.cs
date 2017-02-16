@@ -8,7 +8,7 @@ public class GameSystem
 	private DBAccess sql;
     SqliteDataReader reader;
 
-	public void BattleStart(int stageLevel , ref ArrayList heroList , ref ArrayList enemyList)
+	public void BattleStart(int stageLevel , ref ArrayList heroList , ref Hashtable enemyTable)
 	{
 		if (stageLevel > 15) 
 		{
@@ -19,7 +19,7 @@ public class GameSystem
 		{
 			heroList = Heros (stageLevel);
 		}
-		enemyList = Enemy (stageLevel);
+		enemyTable = Enemy (stageLevel);
 	}
 
 	ArrayList Heros(int num)
@@ -42,34 +42,25 @@ public class GameSystem
 		return heroList;
 	}
 
-	ArrayList Enemy(int num)
+	Hashtable Enemy(int num)
 	{
-		ArrayList enemyList = new ArrayList ();
+		Hashtable enemyTable = new Hashtable ();
 		string appDBPath = Application.dataPath + "/HeroOrZero.db";
 		sql = new DBAccess("Data Source = " + appDBPath);
 		reader = sql.ReadOneTable("StageAttribute", new string[] { "ID" }, new string[] { "==" }, new string[] { num.ToString() });
 		while (reader.Read ()) 
 		{
-			if(!reader.IsDBNull(reader.GetOrdinal("EnemyOne")))
-				enemyList.Add (EnemySet(reader.GetString(reader.GetOrdinal("EnemyOne")) , reader.GetInt32(reader.GetOrdinal("EnemyOneNum"))));
-			if(!reader.IsDBNull(reader.GetOrdinal("EnemyTwo")))
-				enemyList.Add (EnemySet(reader.GetString(reader.GetOrdinal("EnemyTwo")) , reader.GetInt32(reader.GetOrdinal("EnemyTwoNum"))));
-			if(!reader.IsDBNull(reader.GetOrdinal("EnemyThree")))
-				enemyList.Add (EnemySet(reader.GetString(reader.GetOrdinal("EnemyThree")) , reader.GetInt32(reader.GetOrdinal("EnemyThreeNum"))));
+			if (!reader.IsDBNull (reader.GetOrdinal ("EnemyOne")))
+				enemyTable.Add (reader.GetString (reader.GetOrdinal ("EnemyOne")), reader.GetInt32 (reader.GetOrdinal ("EnemyOneNum")));
+
+			if (!reader.IsDBNull (reader.GetOrdinal ("EnemyTwo")))
+				enemyTable.Add (reader.GetString (reader.GetOrdinal ("EnemyTwo")), reader.GetInt32 (reader.GetOrdinal ("EnemyTwoNum")));
+
+			if (!reader.IsDBNull (reader.GetOrdinal ("EnemyThree")))
+				enemyTable.Add (reader.GetString (reader.GetOrdinal ("EnemyThree")), reader.GetInt32 (reader.GetOrdinal ("EnemyThreeNum")));
 		}
 		sql.CloseConnection ();
-		return enemyList;
-	}
-
-	ArrayList EnemySet(string name , int num)
-	{
-		ArrayList list = new ArrayList ();
-		if (name != "" && num != 0) 
-		{ 	
-			list.Add (name);
-			list.Add (num);
-		}
-		return list;
+		return enemyTable;
 	}
 
 	public void ChangeData(string table , string key , string keyValue , string type , string value)

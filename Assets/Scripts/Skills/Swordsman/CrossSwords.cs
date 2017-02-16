@@ -60,8 +60,9 @@ public class CrossSwords : MonoBehaviour {
 	{
 		Collider collider = gameObject.GetComponent<Collider> ();
 		TriggerPoint = gameObject.transform.position;
+		TriggerPoint.x += gameObject.transform.forward.normalized.x * 3f;
 		TriggerPoint.y += collider.bounds.size.y/2;
-		TriggerPoint.z += 5f;
+		TriggerPoint.z += gameObject.transform.forward.normalized.z * 3f;
 		Hit = patterns.getHit(gameObject);
 		Critical = patterns.getCritical(gameObject);
 
