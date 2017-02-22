@@ -39,7 +39,7 @@ public class EnemyMove : EnemyIState
 		Enemy.EnemyAgent.velocity = Vector3.zero;
 	}
 
-	public void stateToThink(EnemyController Enemy , float attackRange)
+	private void stateToThink(EnemyController Enemy , float attackRange)
 	{
 		EnemyVector = Enemy.gameObject.transform.position;
 		TargetVector = Enemy.AttackTarget.transform.position;

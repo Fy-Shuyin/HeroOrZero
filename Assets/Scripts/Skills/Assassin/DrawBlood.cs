@@ -26,7 +26,6 @@ public class DrawBlood : MonoBehaviour {
 		{
 			if (!Patterns.TargetIsLive (Target) && Target != CurrentTarget) 
 			{
-				Debug.Log ("DrawBlood");
 				var prefab = Resources.Load ("Skills/DrawBlood");
 				GameObject effect = Instantiate (prefab) as GameObject;
 				Vector3 point = gameObject.transform.position;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic; 
 using UnityEngine.EventSystems;
 
 public class FingerEvent{
@@ -9,7 +10,7 @@ public class FingerEvent{
 	{
 		var putDown = Input.GetKey (KeyCode.Mouse0);
 		if (putDown) {
-			if (EventSystem.current.IsPointerOverGameObject ()) {
+			if (IsPointerOverGameObject (Input.mousePosition)) {
 				return;
 			}
 			Ray clickRay = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -30,7 +31,7 @@ public class FingerEvent{
 
 		if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) 
 		{
-			if (IsPointerOverGameObject (Input.GetTouch (0).fingerId)) 
+			if (IsPointerOverGameObject (Input.GetTouch(0).position)) 
 			{
 				return;
 			}
@@ -53,11 +54,13 @@ public class FingerEvent{
 		}    
 	}
 
-	bool IsPointerOverGameObject( int fingerId )
+	bool IsPointerOverGameObject(Vector2 touchPosition)
 	{
-		EventSystem eventSystem = EventSystem.current;
-		return ( eventSystem.IsPointerOverGameObject( fingerId )
-			&& eventSystem.currentSelectedGameObject != null );
+		PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+		eventDataCurrentPosition.position = new Vector2(touchPosition.x, touchPosition.y);
+		List<RaycastResult> results = new List<RaycastResult>();
+		EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+		return results.Count > 0;
 	}
 
 	public string ClickName()

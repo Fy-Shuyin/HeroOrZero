@@ -26,10 +26,13 @@ public class HeroThink : HeroIState
 		}
 		else
 		{
-			if (Hero.Think ()) 
+			/*if (Hero.AImode) 
 			{
-				return;
-			}
+				if (Hero.Think ()) 
+				{
+					return;
+				}
+			}*/
 			HeroVector = Hero.gameObject.transform.position;
 			TargetVector = Hero.AttackTarget.transform.position;
 			if (Vector3.Distance (HeroVector, TargetVector) < Hero.AttackRange) 

@@ -86,7 +86,7 @@ public class HeroController : MonoBehaviour
 			ref Defence , ref DefenceAdditional , ref Dexterity , ref DexterityAdditional , ref Hit , ref HitAdditional , ref Agility , ref AgilityAdditional ,
 			ref Dodge , ref DodgeAdditional , ref Critical , ref CriticalAdditional , ref MoveSpeed , ref FieldOfVision , ref SightRange);
 		HealthPowerMax = HealthPower + HealthPowerAdditional;
-		CharacterType = Character.CharacterType (gameObject, 3);
+		CharacterType = Character.CharacterType (gameObject, Random.Range(1,10));
 		HeroAgent.speed = MoveSpeed/60f;
 		Attribute.SkillsInitialize (Type , ref ActiveSkill , ref ActiveSkillSelect , ref PassiveSkill , ref PassiveSkillSelect);
 		ActiveSkillSelect = ActiveSkill;

@@ -74,12 +74,11 @@ public class BloodthirstyGlare : MonoBehaviour {
 	void skillStatus()
 	{
 		gameObject.GetComponent<HeroController> ().ChangeToStopStage (2f);
-		TriggerPoint = gameObject.transform.position;
+		TriggerPoint = Target.transform.position;
 		TriggerPoint.y = 0;
 		Hit = Attribute.getHit(gameObject);
 		Critical = Attribute.getCritical(gameObject);
 
-		Debug.Log ("att-" + Attack + "hit-" + Hit + "cri-" + Critical);
 		var prefab = Resources.Load (Effect);
 		GameObject effect = Instantiate (prefab) as GameObject;
 		effect.transform.position = TriggerPoint;
@@ -92,6 +91,12 @@ public class BloodthirstyGlare : MonoBehaviour {
 		if (isTrigger) 
 		{
 			Debug.Log ("Skills in preparation。");
+			return;
+		}
+		Target = Attribute.getAttactTarget (gameObject);
+		if (Target == null) 
+		{
+			Debug.Log ("no target");	
 			return;
 		}
 		Attribute.getAllyAnimator(gameObject).SetTrigger ("Attack");

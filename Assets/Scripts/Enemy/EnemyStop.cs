@@ -1,15 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyStop : MonoBehaviour {
+public class EnemyStop :  EnemyIState
+{
+	public float cooldown;
+	public void Enter(EnemyController Enemy)
+	{
+		cooldown = Enemy.StopTime;
+	}
 
-	// Use this for initialization
-	void Start () {
-	
+	public void Execute(EnemyController Enemy)
+	{
+		if (!Enemy.IsLive) 
+		{
+			Enemy.ChangeState (new EnemyDeath ());
+			return;
+		}
+		cooldown -= Time.deltaTime;
+		if (cooldown <= 0) 
+		{
+			Enemy.ChangeState (new EnemyMove ());
+			return;
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+	public void Exit(EnemyController Enemy)
+	{}
 }

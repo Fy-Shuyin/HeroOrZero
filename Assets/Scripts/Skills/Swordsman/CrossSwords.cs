@@ -66,7 +66,6 @@ public class CrossSwords : MonoBehaviour {
 		Hit = patterns.getHit(gameObject);
 		Critical = patterns.getCritical(gameObject);
 
-		Debug.Log ("att-" + Attack + "hit-" + Hit + "cri-" + Critical);
 		var prefab = Resources.Load ("Skills/CrossSword");
 		GameObject effect = Instantiate (prefab) as GameObject;
 		effect.transform.position = TriggerPoint;

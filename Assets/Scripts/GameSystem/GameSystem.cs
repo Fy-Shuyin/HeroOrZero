@@ -15,10 +15,10 @@ public class GameSystem
 			//All Clear
 		}
 		Debug.Log ("stage - " + stageLevel);
-		if (stageLevel == 1 || stageLevel == 6 || stageLevel == 11) 
-		{
+		//if (stageLevel == 1 || stageLevel == 6 || stageLevel == 11) 
+		//{
 			heroList = Heros (stageLevel);
-		}
+		//}
 		enemyTable = Enemy (stageLevel);
 	}
 
@@ -62,12 +62,27 @@ public class GameSystem
 		sql.CloseConnection ();
 		return enemyTable;
 	}
-
+	/// <summary>
+	/// 修改数据
+	/// </summary>
+	/// <param name="table">数据表</param>
+	/// <param name="key">名称</param>
+	/// <param name="keyValue">名称的值</param>
+	/// <param name="type">关键</param>
+	/// <param name="value">新的值</param>
 	public void ChangeData(string table , string key , string keyValue , string type , string value)
 	{
 		string appDBPath = Application.dataPath + "/HeroOrZero.db";
 		sql = new DBAccess("Data Source = " + appDBPath);
 		sql.UpdateValues(table, new string[]{ type }, new string[]{"'" + value + "'"}, key , "=", "'" + keyValue +"'");
+		sql.CloseConnection ();
+	}
+
+	public void DeleteData(string table , string key , string keyValue)
+	{
+		string appDBPath = Application.dataPath + "/HeroOrZero.db";
+		sql = new DBAccess("Data Source = " + appDBPath);
+		sql.DeleteValuesAND(table, new string[]{ key }, new string[]{"="}, new string[]{ "'" + keyValue + "'"});
 		sql.CloseConnection ();
 	}
 }

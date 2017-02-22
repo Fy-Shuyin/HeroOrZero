@@ -86,7 +86,6 @@ public class SpiritSpear : MonoBehaviour
 		Hit = Attribute.getHit(gameObject);
 		Critical = Attribute.getCritical(gameObject);
 
-		Debug.Log ("att-" + Attack + "hit-" + Hit + "cri-" + Critical);
 		var prefab = Resources.Load ("Skills/SpiritSpear");
 		GameObject effect = Instantiate (prefab) as GameObject;
 		effect.transform.position = TriggerPoint;

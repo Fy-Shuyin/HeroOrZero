@@ -163,10 +163,10 @@ public class SceneBattle : MonoBehaviour {
 		}
 		gameSystem.BattleStart (StageLevel , ref HeroList , ref EnemyTable);
 		setEnemy (EnemyTable);
-		if (StageLevel == 1 || StageLevel == 6 || StageLevel == 11 || StageLevel == 15) 
-		{
+		//if (StageLevel == 1 || StageLevel == 6 || StageLevel == 11 || StageLevel == 15) 
+		//{
 			setHero (HeroList);
-		}
+		//}
 		/*HeroLoad ("Swordman",0);
 		HeroLoad ("Assassin",1);
 		HeroLoad ("Mage",2);
@@ -238,12 +238,12 @@ public class SceneBattle : MonoBehaviour {
 				Hero_One = Instantiate (prefab_One) as GameObject;
 				Hero_One.AddComponent<HeroController> ();
 				Hero_One.transform.position = point [1];
+				Hero_One_Icon.SetActive (true);
+				string iconPath = ("Icon/Icon_" + Hero_One.gameObject.name).Replace ("(Clone)", ""); 
+				Hero_One_Icon.GetComponentInChildren<RawImage> ().texture = (Texture)Resources.Load (iconPath);
 				Hero_One_Icon.GetComponent<Button> ().onClick.AddListener (delegate() {
 					OnButtonClick (Hero_One);
 				});
-				string iconPath = ("Icon/Icon_" + Hero_One.gameObject.name).Replace ("(Clone)", ""); 
-				Hero_One_Icon.GetComponentInChildren<RawImage> ().texture = (Texture)Resources.Load (iconPath);
-				Hero_One_Icon.SetActive (true);
 			}
 		}
 
@@ -272,12 +272,12 @@ public class SceneBattle : MonoBehaviour {
 				Hero_Two = Instantiate (prefab_Two) as GameObject;
 				Hero_Two.AddComponent<HeroController> ();
 				Hero_Two.transform.position = point [2];
+				Hero_Two_Icon.SetActive (true);
+				string iconPath = ("Icon/Icon_" + Hero_Two.gameObject.name).Replace ("(Clone)", ""); 
+				Hero_Two_Icon.GetComponentInChildren<RawImage> ().texture = (Texture)Resources.Load (iconPath);
 				Hero_Two_Icon.GetComponent<Button> ().onClick.AddListener (delegate() {
 					OnButtonClick (Hero_Two);
 				});
-				string iconPath = ("Icon/Icon_" + Hero_Two.gameObject.name).Replace ("(Clone)", ""); 
-				Hero_Two_Icon.GetComponentInChildren<RawImage> ().texture = (Texture)Resources.Load (iconPath);
-				Hero_Two_Icon.SetActive (true);
 			}
 		}
 
@@ -306,12 +306,12 @@ public class SceneBattle : MonoBehaviour {
 				Hero_Three = Instantiate (prefab_Three) as GameObject;
 				Hero_Three.AddComponent<HeroController> ();
 				Hero_Three.transform.position = point [3];
+				Hero_Three_Icon.SetActive (true);
+				string iconPath = ("Icon/Icon_" + Hero_Three.gameObject.name).Replace ("(Clone)", ""); 
+				Hero_Three_Icon.GetComponentInChildren<RawImage> ().texture = (Texture)Resources.Load (iconPath);
 				Hero_Three_Icon.GetComponent<Button> ().onClick.AddListener (delegate() {
 					OnButtonClick (Hero_Three);
 				});
-				string iconPath = ("Icon/Icon_" + Hero_Three.gameObject.name).Replace ("(Clone)", ""); 
-				Hero_Three_Icon.GetComponentInChildren<RawImage> ().texture = (Texture)Resources.Load (iconPath);
-				Hero_Three_Icon.SetActive (true);
 			}
 		}
 	}
@@ -432,6 +432,7 @@ public class SceneBattle : MonoBehaviour {
 		}
 		else
 		{
+			UI_Hero_All_One.SetActive (true);
 			HeroAllStatusTexture (target1, 1);
 		}
 		if (target2 == null) 
@@ -440,6 +441,7 @@ public class SceneBattle : MonoBehaviour {
 		}
 		else
 		{
+			UI_Hero_All_Two.SetActive (true);
 			HeroAllStatusTexture (target2, 2);
 		}
 		if (target3 == null) 
@@ -448,6 +450,7 @@ public class SceneBattle : MonoBehaviour {
 		}
 		else
 		{
+			UI_Hero_All_Three.SetActive (true);
 			HeroAllStatusTexture (target3, 3);
 		}
 	}

@@ -42,6 +42,7 @@ public class EnemyController : MonoBehaviour {
 	public float FieldOfVision;			//视野范围
 	public float SightRange;			//追击距离
 	public bool IsLive;					//存活
+	public float StopTime;				//停止时间
 
 	public ArrayList ActiveSkillSelect;	//选择的主动技能
 	public ArrayList PassiveSkillSelect;//选择的被动技能

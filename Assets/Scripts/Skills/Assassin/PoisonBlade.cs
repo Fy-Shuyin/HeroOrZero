@@ -70,24 +70,27 @@ public class PoisonBlade : MonoBehaviour {
 		yield return new WaitForSeconds(waitTime);
 		isPoison = true;
 		Target = patterns.getAttactTarget (gameObject);
-		Vector3 targetPoint = Target.transform.position;
-		Collider collider = Target.GetComponent<Collider> ();
-		targetPoint.x += (collider.bounds.size.x/2) * collider.transform.forward.normalized.x;
-		targetPoint.y += (collider.bounds.size.y/2);
-		targetPoint.z += (collider.bounds.size.z/2) * collider.transform.forward.normalized.z;
-		var prefab = Resources.Load ("Skills/PoisonBlade");
-		GameObject effect = Instantiate (prefab) as GameObject;
-		effect.transform.position = targetPoint;
-		Destroy (effect, LiveTime);
-		if (Target.GetComponent<PoisonBladeDebuff> () == null) 
+		if (Target != null) 
 		{
-			var debuff = Target.AddComponent<PoisonBladeDebuff> ();
-			debuff.setAttribute (Effect, Attack, LiveTime);
-		}
-		else
-		{
-			var debuff = Target.GetComponent<PoisonBladeDebuff> ();
-			debuff.setAttribute (Effect, Attack, LiveTime);
+			Vector3 targetPoint = Target.transform.position;
+			Collider collider = Target.GetComponent<Collider> ();
+			targetPoint.x += (collider.bounds.size.x/2) * collider.transform.forward.normalized.x;
+			targetPoint.y += (collider.bounds.size.y/2);
+			targetPoint.z += (collider.bounds.size.z/2) * collider.transform.forward.normalized.z;
+			var prefab = Resources.Load ("Skills/PoisonBlade");
+			GameObject effect = Instantiate (prefab) as GameObject;
+			effect.transform.position = targetPoint;
+			Destroy (effect, LiveTime);
+			if (Target.GetComponent<PoisonBladeDebuff> () == null) 
+			{
+				var debuff = Target.AddComponent<PoisonBladeDebuff> ();
+				debuff.setAttribute (Effect, Attack, LiveTime);
+			}
+			else
+			{
+				var debuff = Target.GetComponent<PoisonBladeDebuff> ();
+				debuff.setAttribute (Effect, Attack, LiveTime);
+			}	
 		}
 	}
 

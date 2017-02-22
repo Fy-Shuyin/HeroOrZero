@@ -119,7 +119,6 @@ public class PatternsOfThinking
 			{
 				Vector3 point = obj.transform.position;
 				point -= obj.transform.forward.normalized * 15;
-				Debug.Log (point);
 				attribute.setMoveStage (obj, point);
 				return true;
 			}

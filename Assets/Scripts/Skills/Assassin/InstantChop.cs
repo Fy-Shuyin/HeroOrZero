@@ -83,7 +83,6 @@ public class InstantChop : MonoBehaviour {
 		Hit = patterns.getHit(gameObject);
 		Critical = patterns.getCritical(gameObject);
 
-		Debug.Log ("att-" + Attack + "hit-" + Hit + "cri-" + Critical);
 		var prefab = Resources.Load ("Skills/InstantChop");
 		GameObject effect = Instantiate (prefab) as GameObject;
 		effect.transform.position = TriggerPoint;

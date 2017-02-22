@@ -57,7 +57,6 @@ public class WarRant : MonoBehaviour
 		TriggerPoint = gameObject.transform.position;
 		float realAttack = patterns.getAttack(gameObject) * (Attack/100);
 		float reakEffectTime = EffectTime + (EffectTimeLevel * Level);
-		Debug.Log ("att-" + realAttack + "time-" + reakEffectTime);
 		var prefab = Resources.Load ("Skills/WarRant");
 		GameObject effect = Instantiate (prefab) as GameObject;
 		effect.transform.position = TriggerPoint;
