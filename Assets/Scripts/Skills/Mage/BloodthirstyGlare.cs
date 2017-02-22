@@ -21,8 +21,8 @@ public class BloodthirstyGlare : MonoBehaviour {
 	private float Attack;				//攻击力
 	private float Hit;					//命中率
 	private float Critical;				//暴击率
-	private float Cooldown;				//冷却时间
-	private float CooldownCount;
+	public float Cooldown;				//冷却时间
+	public float CooldownCount;
 
 	void Start () 
 	{

@@ -248,6 +248,48 @@ public class PatternsOfSkills
 		}
 		return !isSpell;
 	}
+	public float getSkillCooldown(GameObject obj,string skillName)
+	{
+		float cooldown = 0;
+
+		if (skillName == "NetherJianqi") 
+		{
+			cooldown = obj.GetComponent<NetherJianqi> ().CooldownCount / obj.GetComponent<NetherJianqi> ().Cooldown;
+		}
+		if (skillName == "WarRant") 
+		{
+			cooldown = obj.GetComponent<WarRant> ().CooldownCount / obj.GetComponent<WarRant> ().Cooldown;
+		}
+		if (skillName == "CrossSwords") 
+		{
+			cooldown = obj.GetComponent<CrossSwords> ().CooldownCount / obj.GetComponent<CrossSwords> ().Cooldown;
+		}
+		if (skillName == "InstantChop") 
+		{
+			cooldown = obj.GetComponent<InstantChop> ().CooldownCount / obj.GetComponent<InstantChop> ().Cooldown;
+		}
+		if (skillName == "PoisonBlade") 
+		{
+			cooldown = obj.GetComponent<PoisonBlade> ().CooldownCount / obj.GetComponent<PoisonBlade> ().Cooldown;
+		}
+		if (skillName == "ShadowAttack") 
+		{
+			cooldown = obj.GetComponent<ShadowAttack> ().CooldownCount / obj.GetComponent<ShadowAttack> ().Cooldown;
+		}
+		if (skillName == "SpiritSpear") 
+		{
+			cooldown = obj.GetComponent<SpiritSpear> ().CooldownCount / obj.GetComponent<SpiritSpear> ().Cooldown;
+		}
+		if (skillName == "NightAndDream") 
+		{
+			cooldown = obj.GetComponent<NightAndDream> ().CooldownCount / obj.GetComponent<NightAndDream> ().Cooldown;
+		}
+		if (skillName == "BloodthirstyGlare") 
+		{
+			cooldown = obj.GetComponent<BloodthirstyGlare> ().CooldownCount / obj.GetComponent<BloodthirstyGlare> ().Cooldown;
+		}
+		return cooldown;
+	}
 	/// <summary>
 	/// 获取指定类型的技能
 	/// </summary>

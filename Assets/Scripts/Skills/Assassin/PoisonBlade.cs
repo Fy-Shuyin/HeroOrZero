@@ -17,8 +17,8 @@ public class PoisonBlade : MonoBehaviour {
 	private float EffectTime;
 	private float LiveTime;				//存在时间
 	private float Attack;				//攻击力
-	private float Cooldown;				//冷却时间
-	private float CooldownCount;
+	public float Cooldown;				//冷却时间
+	public float CooldownCount;
 	private int attackCountdown;
 	private bool isPoison;
 

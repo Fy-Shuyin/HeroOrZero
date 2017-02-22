@@ -48,10 +48,13 @@ public class SceneBattle : MonoBehaviour {
 
 	public Button UI_Hero_One_Skill_Active1;
 	public RawImage UI_Hero_One_Skill_Active1_Texture;
+	public Image UI_Hero_One_Skill_Active1_Mask;
 	public Button UI_Hero_One_Skill_Active2;
 	public RawImage UI_Hero_One_Skill_Active2_Texture;
+	public Image UI_Hero_One_Skill_Active2_Mask;
 	public Button UI_Hero_One_Skill_Active3;
 	public RawImage UI_Hero_One_Skill_Active3_Texture;
+	public Image UI_Hero_One_Skill_Active3_Mask;
 	public Image UI_Hero_One_Skill_Passive1;
 	public RawImage UI_Hero_One_Skill_Passive1_Texture;
 	public Image UI_Hero_One_Skill_Passive2;
@@ -501,6 +504,14 @@ public class SceneBattle : MonoBehaviour {
 			UI_Hero_One_DefIcon_Value.text = Patterns.getDefence (target).ToString ();
 			UI_Hero_One_DexIcon_Value.text = Patterns.getDexterity (target).ToString ();
 			UI_Hero_One_AgiIcon_Value.text = Patterns.getAgility (target).ToString ();
+
+			//SkillMask
+			ArrayList activeSkill = Patterns.getActiveSkillSelect (target);
+			UI_Hero_One_Skill_Active1_Mask.GetComponent<Image>().fillAmount = Skills.getSkillCooldown(target , activeSkill[0].ToString());
+			UI_Hero_One_Skill_Active2_Mask.GetComponent<Image>().fillAmount = Skills.getSkillCooldown(target , activeSkill[1].ToString());
+			UI_Hero_One_Skill_Active3_Mask.GetComponent<Image>().fillAmount = Skills.getSkillCooldown(target , activeSkill[2].ToString());
+
+
 			HeroOneStatusTexture (target);
 		}
 	}

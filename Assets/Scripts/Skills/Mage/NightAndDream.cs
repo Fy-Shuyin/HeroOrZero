@@ -19,8 +19,8 @@ public class NightAndDream : MonoBehaviour
 	private float SpellRange;			//影响范围
 	private float LiveTime;				//存在时间
 	private int  Value;				//回复力
-	private float Cooldown;				//冷却时间
-	private float CooldownCount;
+	public float Cooldown;				//冷却时间
+	public float CooldownCount;
 
 	void Start () 
 	{
