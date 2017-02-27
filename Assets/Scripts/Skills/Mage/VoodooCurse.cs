@@ -41,7 +41,7 @@ public class VoodooCurse : MonoBehaviour {
 				var prefab = Resources.Load (EffectName);
 				GameObject effect = Instantiate (prefab) as GameObject;
 				effect.transform.position = TriggerPoint;
-				effect.transform.SetParent (trigger.transform);
+				effect.transform.SetParent (target.transform);
 				Destroy (effect, 1f);
 				int realAttack = (int)(attribute.getHealthPower (target) * Attack / -100);
 				attribute.setHealthPower (target, realAttack);
